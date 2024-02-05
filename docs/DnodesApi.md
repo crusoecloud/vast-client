@@ -4,33 +4,33 @@ All URIs are relative to */*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CarriersControlLed**](CarriersApi.md#CarriersControlLed) | **Patch** /carriers/{id}/control_led/ | Control Slot LED
-[**CarriersHighlight**](CarriersApi.md#CarriersHighlight) | **Patch** /carriers/{id}/highlight/ | This endpoint highlights the control Slot
-[**CarriersList**](CarriersApi.md#CarriersList) | **Get** /carriers/ | List Carriers
-[**CarriersPartialUpdate**](CarriersApi.md#CarriersPartialUpdate) | **Patch** /carriers/{id}/ | Activate or Deactivate a Carrier
-[**CarriersRead**](CarriersApi.md#CarriersRead) | **Get** /carriers/{id}/ | Return Details of One Carrier
-[**ResetPci**](CarriersApi.md#ResetPci) | **Patch** /carriers/{id}/reset_pci/ | This endpoint power cycles the given Slot
+[**ControlLed**](DnodesApi.md#ControlLed) | **Patch** /dnodes/{id}/control_led/ | Control DNode LED
+[**DnodesList**](DnodesApi.md#DnodesList) | **Get** /dnodes/ | List DNodes
+[**DnodesPartialUpdate**](DnodesApi.md#DnodesPartialUpdate) | **Patch** /dnodes/{id}/ | Activate/Deactivate/Replace/Power On/Off DNode
+[**DnodesRead**](DnodesApi.md#DnodesRead) | **Get** /dnodes/{id}/ | Return Details of a DNode
+[**Highlight**](DnodesApi.md#Highlight) | **Patch** /dnodes/{id}/highlight/ | Highlight DNode
+[**Rename**](DnodesApi.md#Rename) | **Patch** /dnodes/{id}/rename/ | Rename DNode
 
-# **CarriersControlLed**
-> CarriersControlLed(ctx, id, optional)
-Control Slot LED
+# **ControlLed**
+> ControlLed(ctx, id, optional)
+Control DNode LED
 
-This endpoint controls a slot LED
+This endpoint controls a DNode LED
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **id** | **string**| Slot ID | 
- **optional** | ***CarriersApiCarriersControlLedOpts** | optional parameters | nil if no parameters
+  **id** | **string**| DNode ID | 
+ **optional** | ***DnodesApiControlLedOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a CarriersApiCarriersControlLedOpts struct
+Optional parameters are passed through a pointer to a DnodesApiControlLedOpts struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **body** | [**optional.Interface of IdControlLedBody5**](IdControlLedBody5.md)|  | 
+ **body** | [**optional.Interface of IdControlLedBody1**](IdControlLedBody1.md)|  | 
 
 ### Return type
 
@@ -47,22 +47,34 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **CarriersHighlight**
-> AsyncTaskInResponse CarriersHighlight(ctx, id)
-This endpoint highlights the control Slot
+# **DnodesList**
+> []DNode DnodesList(ctx, optional)
+List DNodes
 
-This endpoint highlights the control Slot
+This endpoint returns a list of Dnodes in the cluster, with optional filtering.
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **id** | **string**| slot ID | 
+ **optional** | ***DnodesApiDnodesListOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a DnodesApiDnodesListOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **page** | **optional.String**|  | 
+ **ip** | **optional.String**| Filter by DNode IP | 
+ **state** | **optional.String**| Filter by DNode state | 
+ **clusterName** | **optional.String**|  | 
+ **clusterId** | **optional.Int32**|  | 
+ **name** | **optional.String**| Filter by DNode name | 
+ **enabled** | **optional.Bool**| List only enabled DNodes | 
 
 ### Return type
 
-[**AsyncTaskInResponse**](AsyncTaskInResponse.md)
+[**[]DNode**](DNode.md)
 
 ### Authorization
 
@@ -75,62 +87,26 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **CarriersList**
-> []Carrier CarriersList(ctx, optional)
-List Carriers
+# **DnodesPartialUpdate**
+> AsyncTaskInResponse DnodesPartialUpdate(ctx, id, optional)
+Activate/Deactivate/Replace/Power On/Off DNode
 
-This endpoint lists carriers.
-
-### Required Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***CarriersApiCarriersListOpts** | optional parameters | nil if no parameters
-
-### Optional Parameters
-Optional parameters are passed through a pointer to a CarriersApiCarriersListOpts struct
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **state** | **optional.String**| Filter by carrier state | 
- **dboxName** | **optional.String**| Filter by parent DBox name | 
- **dboxId** | **optional.String**| Filter by parent DBox ID | 
-
-### Return type
-
-[**[]Carrier**](Carrier.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **CarriersPartialUpdate**
-> AsyncTaskInResponse CarriersPartialUpdate(ctx, id, optional)
-Activate or Deactivate a Carrier
-
-This endpoint activates or deactivates a carrier.
+This endpoint activates, deactivates, replaces, powers off and powers on a DNode.
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **id** | **string**| Carrier ID | 
- **optional** | ***CarriersApiCarriersPartialUpdateOpts** | optional parameters | nil if no parameters
+  **id** | **string**| DNode ID | 
+ **optional** | ***DnodesApiDnodesPartialUpdateOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a CarriersApiCarriersPartialUpdateOpts struct
+Optional parameters are passed through a pointer to a DnodesApiDnodesPartialUpdateOpts struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **body** | [**optional.Interface of CarriersIdBody**](CarriersIdBody.md)|  | 
+ **body** | [**optional.Interface of DnodesIdBody**](DnodesIdBody.md)|  | 
 
 ### Return type
 
@@ -147,22 +123,22 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **CarriersRead**
-> Carrier CarriersRead(ctx, id)
-Return Details of One Carrier
+# **DnodesRead**
+> DNode DnodesRead(ctx, id)
+Return Details of a DNode
 
-This endpoint returns details of a specific carrier.
+This endpoint returns details of a DNode.
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **id** | **string**|  | 
+  **id** | **string**| DNode ID | 
 
 ### Return type
 
-[**Carrier**](Carrier.md)
+[**DNode**](DNode.md)
 
 ### Authorization
 
@@ -175,18 +151,18 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **ResetPci**
-> AsyncTaskInResponse ResetPci(ctx, id)
-This endpoint power cycles the given Slot
+# **Highlight**
+> AsyncTaskInResponse Highlight(ctx, id)
+Highlight DNode
 
-This endpoint power cycles the given Slot
+This endpoint highlights a DNode
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **id** | **string**| slot ID | 
+  **id** | **string**| DNode ID | 
 
 ### Return type
 
@@ -200,6 +176,42 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: */*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **Rename**
+> Rename(ctx, id, optional)
+Rename DNode
+
+This endpoint renames a DNode.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **id** | **string**| DNode ID | 
+ **optional** | ***DnodesApiRenameOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a DnodesApiRenameOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **body** | [**optional.Interface of IdRenameBody1**](IdRenameBody1.md)|  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

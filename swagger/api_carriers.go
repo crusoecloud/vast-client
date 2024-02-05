@@ -24,22 +24,125 @@ var (
 	_ context.Context
 )
 
-type CboxesApiService service
+type CarriersApiService service
 /*
-CboxesApiService Control CBox LEDs
-This endpoint controls CBox LEDs (on/off)
+CarriersApiService List Carriers
+This endpoint lists carriers.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id CBox ID
- * @param optional nil or *CboxesApiCboxesControlLedOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of IdControlLedBody3) - 
+ * @param optional nil or *CarriersApiCarriersListOpts - Optional Parameters:
+     * @param "State" (optional.String) -  Filter by carrier state
+     * @param "DboxName" (optional.String) -  Filter by parent DBox name
+     * @param "DboxId" (optional.String) -  Filter by parent DBox ID
+@return []Carrier
+*/
+
+type CarriersApiCarriersListOpts struct {
+    State optional.String
+    DboxName optional.String
+    DboxId optional.String
+}
+
+func (a *CarriersApiService) CarriersList(ctx context.Context, localVarOptionals *CarriersApiCarriersListOpts) ([]Carrier, *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		localVarReturnValue []Carrier
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/carriers/"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if localVarOptionals != nil && localVarOptionals.State.IsSet() {
+		localVarQueryParams.Add("state", parameterToString(localVarOptionals.State.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.DboxName.IsSet() {
+		localVarQueryParams.Add("dbox__name", parameterToString(localVarOptionals.DboxName.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.DboxId.IsSet() {
+		localVarQueryParams.Add("dbox__id", parameterToString(localVarOptionals.DboxId.Value(), ""))
+	}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"*/*"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		if localVarHttpResponse.StatusCode == 200 {
+			var v []Carrier
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		return localVarReturnValue, localVarHttpResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHttpResponse, nil
+}
+/*
+CarriersApiService Activate or Deactivate a Carrier
+This endpoint activates or deactivates a carrier.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param id Carrier ID
+ * @param optional nil or *CarriersApiCarriersPartialUpdateOpts - Optional Parameters:
+     * @param "Body" (optional.Interface of CarriersIdBody) - 
 @return AsyncTaskInResponse
 */
 
-type CboxesApiCboxesControlLedOpts struct {
+type CarriersApiCarriersPartialUpdateOpts struct {
     Body optional.Interface
 }
 
-func (a *CboxesApiService) CboxesControlLed(ctx context.Context, id string, localVarOptionals *CboxesApiCboxesControlLedOpts) (AsyncTaskInResponse, *http.Response, error) {
+func (a *CarriersApiService) CarriersPartialUpdate(ctx context.Context, id string, localVarOptionals *CarriersApiCarriersPartialUpdateOpts) (AsyncTaskInResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")
 		localVarPostBody   interface{}
@@ -49,7 +152,7 @@ func (a *CboxesApiService) CboxesControlLed(ctx context.Context, id string, loca
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/cboxes/{id}/control_led/"
+	localVarPath := a.client.cfg.BasePath + "/carriers/{id}/"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -124,37 +227,29 @@ func (a *CboxesApiService) CboxesControlLed(ctx context.Context, id string, loca
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
-CboxesApiService List CBoxes
-This endpoint lists the CBoxes that belong to the cluster.
+CarriersApiService Return Details of One Carrier
+This endpoint returns details of a specific carrier.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param optional nil or *CboxesApiCboxesListOpts - Optional Parameters:
-     * @param "Page" (optional.String) - 
-@return []CBox
+ * @param id
+@return Carrier
 */
-
-type CboxesApiCboxesListOpts struct {
-    Page optional.String
-}
-
-func (a *CboxesApiService) CboxesList(ctx context.Context, localVarOptionals *CboxesApiCboxesListOpts) ([]CBox, *http.Response, error) {
+func (a *CarriersApiService) CarriersRead(ctx context.Context, id string) (Carrier, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue []CBox
+		localVarReturnValue Carrier
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/cboxes/"
+	localVarPath := a.client.cfg.BasePath + "/carriers/{id}/"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.Page.IsSet() {
-		localVarQueryParams.Add("page", parameterToString(localVarOptionals.Page.Value(), ""))
-	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -202,7 +297,7 @@ func (a *CboxesApiService) CboxesList(ctx context.Context, localVarOptionals *Cb
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v []CBox
+			var v Carrier
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -217,20 +312,20 @@ func (a *CboxesApiService) CboxesList(ctx context.Context, localVarOptionals *Cb
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
-CboxesApiService Modify CBox
-This endpoint modifies a CBox description.
+CarriersApiService Control Slot LED
+This endpoint controls a slot LED
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id CBox ID
- * @param optional nil or *CboxesApiCboxesPartialUpdateOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of CboxesIdBody) - 
+ * @param id Slot ID
+ * @param optional nil or *CarriersApiControlLedOpts - Optional Parameters:
+     * @param "Body" (optional.Interface of IdControlLedBody5) - 
 
 */
 
-type CboxesApiCboxesPartialUpdateOpts struct {
+type CarriersApiControlLedOpts struct {
     Body optional.Interface
 }
 
-func (a *CboxesApiService) CboxesPartialUpdate(ctx context.Context, id string, localVarOptionals *CboxesApiCboxesPartialUpdateOpts) (*http.Response, error) {
+func (a *CarriersApiService) ControlLed(ctx context.Context, id string, localVarOptionals *CarriersApiControlLedOpts) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")
 		localVarPostBody   interface{}
@@ -240,7 +335,7 @@ func (a *CboxesApiService) CboxesPartialUpdate(ctx context.Context, id string, l
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/cboxes/{id}/"
+	localVarPath := a.client.cfg.BasePath + "/carriers/{id}/control_led/"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -298,23 +393,23 @@ func (a *CboxesApiService) CboxesPartialUpdate(ctx context.Context, id string, l
 	return localVarHttpResponse, nil
 }
 /*
-CboxesApiService Return Details of a CBox
-This endpoint returns details of a CBox.
+CarriersApiService This endpoint highlights the control Slot
+This endpoint highlights the control Slot
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id CBox ID
-@return CBox
+ * @param id slot ID
+@return AsyncTaskInResponse
 */
-func (a *CboxesApiService) CboxesRead(ctx context.Context, id string) (CBox, *http.Response, error) {
+func (a *CarriersApiService) Highlight(ctx context.Context, id string) (AsyncTaskInResponse, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Get")
+		localVarHttpMethod = strings.ToUpper("Patch")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue CBox
+		localVarReturnValue AsyncTaskInResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/cboxes/{id}/"
+	localVarPath := a.client.cfg.BasePath + "/carriers/{id}/highlight/"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -368,7 +463,7 @@ func (a *CboxesApiService) CboxesRead(ctx context.Context, id string) (CBox, *ht
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v CBox
+			var v AsyncTaskInResponse
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -383,23 +478,23 @@ func (a *CboxesApiService) CboxesRead(ctx context.Context, id string) (CBox, *ht
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
-CboxesApiService Refreshes cbox uid to match it&#x27;s cnodes chassis serial
-This endpoint refreshes cbox uid to match it&#x27;s cnodes chassis serial.
+CarriersApiService This endpoint power cycles the given Slot
+This endpoint power cycles the given Slot
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id CBox ID
-
+ * @param id slot ID
+@return AsyncTaskInResponse
 */
-func (a *CboxesApiService) RefreshUid(ctx context.Context, id string) (*http.Response, error) {
+func (a *CarriersApiService) ResetPci(ctx context.Context, id string) (AsyncTaskInResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		
+		localVarReturnValue AsyncTaskInResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/cboxes/{id}/refresh_uid"
+	localVarPath := a.client.cfg.BasePath + "/carriers/{id}/reset_pci/"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -416,7 +511,7 @@ func (a *CboxesApiService) RefreshUid(ctx context.Context, id string) (*http.Res
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{}
+	localVarHttpHeaderAccepts := []string{"*/*"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -425,28 +520,45 @@ func (a *CboxesApiService) RefreshUid(ctx context.Context, id string) (*http.Res
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
 	localVarHttpResponse.Body.Close()
 	if err != nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
 			body: localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		return localVarHttpResponse, newErr
+		if localVarHttpResponse.StatusCode == 200 {
+			var v AsyncTaskInResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
-	return localVarHttpResponse, nil
+	return localVarReturnValue, localVarHttpResponse, nil
 }

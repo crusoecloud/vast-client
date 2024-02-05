@@ -24,118 +24,22 @@ var (
 	_ context.Context
 )
 
-type CnodesApiService service
+type DtraysApiService service
 /*
-CnodesApiService Add CNode
-This endpoint adds a CNode to the cluster.
+DtraysApiService Control DTray (DNode) LEDs
+This endpoint controls the DTray (DNode) LEDs
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param optional nil or *CnodesApiCnodesAddOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of CnodesBody) - 
-@return AsyncCNode
-*/
-
-type CnodesApiCnodesAddOpts struct {
-    Body optional.Interface
-}
-
-func (a *CnodesApiService) CnodesAdd(ctx context.Context, localVarOptionals *CnodesApiCnodesAddOpts) (AsyncCNode, *http.Response, error) {
-	var (
-		localVarHttpMethod = strings.ToUpper("Post")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		localVarReturnValue AsyncCNode
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/cnodes/"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"*/*"}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	// body params
-	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
-		localVarOptionalBody:= localVarOptionals.Body.Value()
-		localVarPostBody = &localVarOptionalBody
-	}
-	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHttpResponse, err := a.client.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-	localVarHttpResponse.Body.Close()
-	if err != nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode < 300 {
-		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
-			return localVarReturnValue, localVarHttpResponse, err
-		}
-	}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		if localVarHttpResponse.StatusCode == 201 {
-			var v AsyncCNode
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		return localVarReturnValue, localVarHttpResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHttpResponse, nil
-}
-/*
-CnodesApiService Control CNode LED
-This endpoint controls the CNode LED
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id CNode ID
- * @param optional nil or *CnodesApiCnodesControlLedOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of IdControlLedBody) - 
+ * @param id DTray ID
+ * @param optional nil or *DtraysApiControlLedOpts - Optional Parameters:
+     * @param "Body" (optional.Interface of IdControlLedBody4) - 
 
 */
 
-type CnodesApiCnodesControlLedOpts struct {
+type DtraysApiControlLedOpts struct {
     Body optional.Interface
 }
 
-func (a *CnodesApiService) CnodesControlLed(ctx context.Context, id string, localVarOptionals *CnodesApiCnodesControlLedOpts) (*http.Response, error) {
+func (a *DtraysApiService) ControlLed(ctx context.Context, id string, localVarOptionals *DtraysApiControlLedOpts) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")
 		localVarPostBody   interface{}
@@ -145,7 +49,7 @@ func (a *CnodesApiService) CnodesControlLed(ctx context.Context, id string, loca
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/cnodes/{id}/control_led/"
+	localVarPath := a.client.cfg.BasePath + "/dtrays/{id}/control_led/"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -203,128 +107,35 @@ func (a *CnodesApiService) CnodesControlLed(ctx context.Context, id string, loca
 	return localVarHttpResponse, nil
 }
 /*
-CnodesApiService HighLight CNode
-This endpoint highlights a CNode.
+DtraysApiService List DTrays
+This endpoint lists the all DTrays.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id CNode ID
-@return AsyncTaskInResponse
-*/
-func (a *CnodesApiService) CnodesHighlight(ctx context.Context, id string) (AsyncTaskInResponse, *http.Response, error) {
-	var (
-		localVarHttpMethod = strings.ToUpper("Patch")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		localVarReturnValue AsyncTaskInResponse
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/cnodes/{id}/highlight/"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"*/*"}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHttpResponse, err := a.client.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-	localVarHttpResponse.Body.Close()
-	if err != nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode < 300 {
-		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
-			return localVarReturnValue, localVarHttpResponse, err
-		}
-	}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		if localVarHttpResponse.StatusCode == 200 {
-			var v AsyncTaskInResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		return localVarReturnValue, localVarHttpResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHttpResponse, nil
-}
-/*
-CnodesApiService List Cnodes
-Get the list of cnodes already assigned to cluster.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param optional nil or *CnodesApiCnodesListOpts - Optional Parameters:
+ * @param optional nil or *DtraysApiDtraysListOpts - Optional Parameters:
      * @param "Page" (optional.String) - 
-     * @param "Ip" (optional.String) -  Filter by CNode IP
-     * @param "State" (optional.String) -  Filter by state
-     * @param "ClusterName" (optional.String) - 
-     * @param "ClusterId" (optional.Int32) - 
-     * @param "Name" (optional.String) -  Filter by CNode name
-     * @param "Enabled" (optional.Bool) -  Return only enabled CNodes
-     * @param "VippoolId" (optional.Int32) - 
-@return []CNode
+     * @param "State" (optional.String) - 
+     * @param "Name" (optional.String) - 
+     * @param "Enabled" (optional.Bool) - 
+@return []DTray
 */
 
-type CnodesApiCnodesListOpts struct {
+type DtraysApiDtraysListOpts struct {
     Page optional.String
-    Ip optional.String
     State optional.String
-    ClusterName optional.String
-    ClusterId optional.Int32
     Name optional.String
     Enabled optional.Bool
-    VippoolId optional.Int32
 }
 
-func (a *CnodesApiService) CnodesList(ctx context.Context, localVarOptionals *CnodesApiCnodesListOpts) ([]CNode, *http.Response, error) {
+func (a *DtraysApiService) DtraysList(ctx context.Context, localVarOptionals *DtraysApiDtraysListOpts) ([]DTray, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue []CNode
+		localVarReturnValue []DTray
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/cnodes/"
+	localVarPath := a.client.cfg.BasePath + "/dtrays/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -333,26 +144,14 @@ func (a *CnodesApiService) CnodesList(ctx context.Context, localVarOptionals *Cn
 	if localVarOptionals != nil && localVarOptionals.Page.IsSet() {
 		localVarQueryParams.Add("page", parameterToString(localVarOptionals.Page.Value(), ""))
 	}
-	if localVarOptionals != nil && localVarOptionals.Ip.IsSet() {
-		localVarQueryParams.Add("ip", parameterToString(localVarOptionals.Ip.Value(), ""))
-	}
 	if localVarOptionals != nil && localVarOptionals.State.IsSet() {
 		localVarQueryParams.Add("state", parameterToString(localVarOptionals.State.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.ClusterName.IsSet() {
-		localVarQueryParams.Add("cluster_name", parameterToString(localVarOptionals.ClusterName.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.ClusterId.IsSet() {
-		localVarQueryParams.Add("cluster_id", parameterToString(localVarOptionals.ClusterId.Value(), ""))
 	}
 	if localVarOptionals != nil && localVarOptionals.Name.IsSet() {
 		localVarQueryParams.Add("name", parameterToString(localVarOptionals.Name.Value(), ""))
 	}
 	if localVarOptionals != nil && localVarOptionals.Enabled.IsSet() {
 		localVarQueryParams.Add("enabled", parameterToString(localVarOptionals.Enabled.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.VippoolId.IsSet() {
-		localVarQueryParams.Add("vippool_id", parameterToString(localVarOptionals.VippoolId.Value(), ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
@@ -401,7 +200,7 @@ func (a *CnodesApiService) CnodesList(ctx context.Context, localVarOptionals *Cn
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v []CNode
+			var v []DTray
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -416,20 +215,20 @@ func (a *CnodesApiService) CnodesList(ctx context.Context, localVarOptionals *Cn
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
-CnodesApiService Activate/Deactivate/Replace/Power On/Off CNode
-This endpoint activates, deactivates, replaces, powers off and powers on a CNode.
+DtraysApiService Activate/Deactivate DTray
+This endpoint activates, deactivates a DTray.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id CNode ID
- * @param optional nil or *CnodesApiCnodesPartialUpdateOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of CnodesIdBody) - 
+ * @param id DTray ID
+ * @param optional nil or *DtraysApiDtraysPartialUpdateOpts - Optional Parameters:
+     * @param "Body" (optional.Interface of DtraysIdBody) - 
 @return AsyncTaskInResponse
 */
 
-type CnodesApiCnodesPartialUpdateOpts struct {
+type DtraysApiDtraysPartialUpdateOpts struct {
     Body optional.Interface
 }
 
-func (a *CnodesApiService) CnodesPartialUpdate(ctx context.Context, id string, localVarOptionals *CnodesApiCnodesPartialUpdateOpts) (AsyncTaskInResponse, *http.Response, error) {
+func (a *DtraysApiService) DtraysPartialUpdate(ctx context.Context, id string, localVarOptionals *DtraysApiDtraysPartialUpdateOpts) (AsyncTaskInResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")
 		localVarPostBody   interface{}
@@ -439,7 +238,7 @@ func (a *CnodesApiService) CnodesPartialUpdate(ctx context.Context, id string, l
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/cnodes/{id}/"
+	localVarPath := a.client.cfg.BasePath + "/dtrays/{id}/"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -514,23 +313,23 @@ func (a *CnodesApiService) CnodesPartialUpdate(ctx context.Context, id string, l
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
-CnodesApiService Return Details of a CNode
-This endpoint returns details of a CNode.
+DtraysApiService Return Details of a DTray
+This endpoint returns details of a DTray.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id CNode ID
-@return CNode
+ * @param id DTray ID
+@return DTray
 */
-func (a *CnodesApiService) CnodesRead(ctx context.Context, id string) (CNode, *http.Response, error) {
+func (a *DtraysApiService) DtraysRead(ctx context.Context, id string) (DTray, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue CNode
+		localVarReturnValue DTray
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/cnodes/{id}/"
+	localVarPath := a.client.cfg.BasePath + "/dtrays/{id}/"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -584,7 +383,7 @@ func (a *CnodesApiService) CnodesRead(ctx context.Context, id string) (CNode, *h
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v CNode
+			var v DTray
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -599,115 +398,20 @@ func (a *CnodesApiService) CnodesRead(ctx context.Context, id string) (CNode, *h
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
-CnodesApiService Remove CNode
-This endpoint removes a CNode from the cluster.
+DtraysApiService Rename Dtray
+This endpoint renames a Dtray.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id CNode ID
- * @param optional nil or *CnodesApiCnodesRemoveOpts - Optional Parameters:
-     * @param "Force" (optional.Bool) -  Force CNode removal
-@return AsyncTaskInResponse
-*/
-
-type CnodesApiCnodesRemoveOpts struct {
-    Force optional.Bool
-}
-
-func (a *CnodesApiService) CnodesRemove(ctx context.Context, id string, localVarOptionals *CnodesApiCnodesRemoveOpts) (AsyncTaskInResponse, *http.Response, error) {
-	var (
-		localVarHttpMethod = strings.ToUpper("Delete")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		localVarReturnValue AsyncTaskInResponse
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/cnodes/{id}/"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if localVarOptionals != nil && localVarOptionals.Force.IsSet() {
-		localVarQueryParams.Add("force", parameterToString(localVarOptionals.Force.Value(), ""))
-	}
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"*/*"}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHttpResponse, err := a.client.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-	localVarHttpResponse.Body.Close()
-	if err != nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode < 300 {
-		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
-			return localVarReturnValue, localVarHttpResponse, err
-		}
-	}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		if localVarHttpResponse.StatusCode == 200 {
-			var v AsyncTaskInResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		return localVarReturnValue, localVarHttpResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHttpResponse, nil
-}
-/*
-CnodesApiService Rename CNode
-This endpoint renames a CNode.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id CNode ID
- * @param optional nil or *CnodesApiCnodesRenameOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of IdRenameBody) - 
+ * @param id Dtray ID
+ * @param optional nil or *DtraysApiRenameOpts - Optional Parameters:
+     * @param "Body" (optional.Interface of IdRenameBody2) - 
 
 */
 
-type CnodesApiCnodesRenameOpts struct {
+type DtraysApiRenameOpts struct {
     Body optional.Interface
 }
 
-func (a *CnodesApiService) CnodesRename(ctx context.Context, id string, localVarOptionals *CnodesApiCnodesRenameOpts) (*http.Response, error) {
+func (a *DtraysApiService) Rename(ctx context.Context, id string, localVarOptionals *DtraysApiRenameOpts) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")
 		localVarPostBody   interface{}
@@ -717,7 +421,7 @@ func (a *CnodesApiService) CnodesRename(ctx context.Context, id string, localVar
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/cnodes/{id}/rename/"
+	localVarPath := a.client.cfg.BasePath + "/dtrays/{id}/rename/"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
 
 	localVarHeaderParams := make(map[string]string)

@@ -24,22 +24,22 @@ var (
 	_ context.Context
 )
 
-type DtraysApiService service
+type DnodesApiService service
 /*
-DtraysApiService Control DTray (DNode) LEDs
-This endpoint controls the DTray (DNode) LEDs
+DnodesApiService Control DNode LED
+This endpoint controls a DNode LED
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id DTray ID
- * @param optional nil or *DtraysApiDtraysControlLedOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of IdControlLedBody4) - 
+ * @param id DNode ID
+ * @param optional nil or *DnodesApiControlLedOpts - Optional Parameters:
+     * @param "Body" (optional.Interface of IdControlLedBody1) - 
 
 */
 
-type DtraysApiDtraysControlLedOpts struct {
+type DnodesApiControlLedOpts struct {
     Body optional.Interface
 }
 
-func (a *DtraysApiService) DtraysControlLed(ctx context.Context, id string, localVarOptionals *DtraysApiDtraysControlLedOpts) (*http.Response, error) {
+func (a *DnodesApiService) ControlLed(ctx context.Context, id string, localVarOptionals *DnodesApiControlLedOpts) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")
 		localVarPostBody   interface{}
@@ -49,7 +49,7 @@ func (a *DtraysApiService) DtraysControlLed(ctx context.Context, id string, loca
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/dtrays/{id}/control_led/"
+	localVarPath := a.client.cfg.BasePath + "/dnodes/{id}/control_led/"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -107,35 +107,41 @@ func (a *DtraysApiService) DtraysControlLed(ctx context.Context, id string, loca
 	return localVarHttpResponse, nil
 }
 /*
-DtraysApiService List DTrays
-This endpoint lists the all DTrays.
+DnodesApiService List DNodes
+This endpoint returns a list of Dnodes in the cluster, with optional filtering.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param optional nil or *DtraysApiDtraysListOpts - Optional Parameters:
+ * @param optional nil or *DnodesApiDnodesListOpts - Optional Parameters:
      * @param "Page" (optional.String) - 
-     * @param "State" (optional.String) - 
-     * @param "Name" (optional.String) - 
-     * @param "Enabled" (optional.Bool) - 
-@return []DTray
+     * @param "Ip" (optional.String) -  Filter by DNode IP
+     * @param "State" (optional.String) -  Filter by DNode state
+     * @param "ClusterName" (optional.String) - 
+     * @param "ClusterId" (optional.Int32) - 
+     * @param "Name" (optional.String) -  Filter by DNode name
+     * @param "Enabled" (optional.Bool) -  List only enabled DNodes
+@return []DNode
 */
 
-type DtraysApiDtraysListOpts struct {
+type DnodesApiDnodesListOpts struct {
     Page optional.String
+    Ip optional.String
     State optional.String
+    ClusterName optional.String
+    ClusterId optional.Int32
     Name optional.String
     Enabled optional.Bool
 }
 
-func (a *DtraysApiService) DtraysList(ctx context.Context, localVarOptionals *DtraysApiDtraysListOpts) ([]DTray, *http.Response, error) {
+func (a *DnodesApiService) DnodesList(ctx context.Context, localVarOptionals *DnodesApiDnodesListOpts) ([]DNode, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue []DTray
+		localVarReturnValue []DNode
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/dtrays/"
+	localVarPath := a.client.cfg.BasePath + "/dnodes/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -144,8 +150,17 @@ func (a *DtraysApiService) DtraysList(ctx context.Context, localVarOptionals *Dt
 	if localVarOptionals != nil && localVarOptionals.Page.IsSet() {
 		localVarQueryParams.Add("page", parameterToString(localVarOptionals.Page.Value(), ""))
 	}
+	if localVarOptionals != nil && localVarOptionals.Ip.IsSet() {
+		localVarQueryParams.Add("ip", parameterToString(localVarOptionals.Ip.Value(), ""))
+	}
 	if localVarOptionals != nil && localVarOptionals.State.IsSet() {
 		localVarQueryParams.Add("state", parameterToString(localVarOptionals.State.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.ClusterName.IsSet() {
+		localVarQueryParams.Add("cluster__name", parameterToString(localVarOptionals.ClusterName.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.ClusterId.IsSet() {
+		localVarQueryParams.Add("cluster__id", parameterToString(localVarOptionals.ClusterId.Value(), ""))
 	}
 	if localVarOptionals != nil && localVarOptionals.Name.IsSet() {
 		localVarQueryParams.Add("name", parameterToString(localVarOptionals.Name.Value(), ""))
@@ -200,7 +215,7 @@ func (a *DtraysApiService) DtraysList(ctx context.Context, localVarOptionals *Dt
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v []DTray
+			var v []DNode
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -215,20 +230,20 @@ func (a *DtraysApiService) DtraysList(ctx context.Context, localVarOptionals *Dt
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
-DtraysApiService Activate/Deactivate DTray
-This endpoint activates, deactivates a DTray.
+DnodesApiService Activate/Deactivate/Replace/Power On/Off DNode
+This endpoint activates, deactivates, replaces, powers off and powers on a DNode.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id DTray ID
- * @param optional nil or *DtraysApiDtraysPartialUpdateOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of DtraysIdBody) - 
+ * @param id DNode ID
+ * @param optional nil or *DnodesApiDnodesPartialUpdateOpts - Optional Parameters:
+     * @param "Body" (optional.Interface of DnodesIdBody) - 
 @return AsyncTaskInResponse
 */
 
-type DtraysApiDtraysPartialUpdateOpts struct {
+type DnodesApiDnodesPartialUpdateOpts struct {
     Body optional.Interface
 }
 
-func (a *DtraysApiService) DtraysPartialUpdate(ctx context.Context, id string, localVarOptionals *DtraysApiDtraysPartialUpdateOpts) (AsyncTaskInResponse, *http.Response, error) {
+func (a *DnodesApiService) DnodesPartialUpdate(ctx context.Context, id string, localVarOptionals *DnodesApiDnodesPartialUpdateOpts) (AsyncTaskInResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")
 		localVarPostBody   interface{}
@@ -238,7 +253,7 @@ func (a *DtraysApiService) DtraysPartialUpdate(ctx context.Context, id string, l
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/dtrays/{id}/"
+	localVarPath := a.client.cfg.BasePath + "/dnodes/{id}/"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -313,23 +328,23 @@ func (a *DtraysApiService) DtraysPartialUpdate(ctx context.Context, id string, l
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
-DtraysApiService Return Details of a DTray
-This endpoint returns details of a DTray.
+DnodesApiService Return Details of a DNode
+This endpoint returns details of a DNode.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id DTray ID
-@return DTray
+ * @param id DNode ID
+@return DNode
 */
-func (a *DtraysApiService) DtraysRead(ctx context.Context, id string) (DTray, *http.Response, error) {
+func (a *DnodesApiService) DnodesRead(ctx context.Context, id string) (DNode, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue DTray
+		localVarReturnValue DNode
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/dtrays/{id}/"
+	localVarPath := a.client.cfg.BasePath + "/dnodes/{id}/"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -383,7 +398,7 @@ func (a *DtraysApiService) DtraysRead(ctx context.Context, id string) (DTray, *h
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v DTray
+			var v DNode
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -398,20 +413,105 @@ func (a *DtraysApiService) DtraysRead(ctx context.Context, id string) (DTray, *h
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
-DtraysApiService Rename Dtray
-This endpoint renames a Dtray.
+DnodesApiService Highlight DNode
+This endpoint highlights a DNode
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id Dtray ID
- * @param optional nil or *DtraysApiDtraysRenameOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of IdRenameBody2) - 
+ * @param id DNode ID
+@return AsyncTaskInResponse
+*/
+func (a *DnodesApiService) Highlight(ctx context.Context, id string) (AsyncTaskInResponse, *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Patch")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		localVarReturnValue AsyncTaskInResponse
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/dnodes/{id}/highlight/"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"*/*"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		if localVarHttpResponse.StatusCode == 200 {
+			var v AsyncTaskInResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		return localVarReturnValue, localVarHttpResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHttpResponse, nil
+}
+/*
+DnodesApiService Rename DNode
+This endpoint renames a DNode.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param id DNode ID
+ * @param optional nil or *DnodesApiRenameOpts - Optional Parameters:
+     * @param "Body" (optional.Interface of IdRenameBody1) - 
 
 */
 
-type DtraysApiDtraysRenameOpts struct {
+type DnodesApiRenameOpts struct {
     Body optional.Interface
 }
 
-func (a *DtraysApiService) DtraysRename(ctx context.Context, id string, localVarOptionals *DtraysApiDtraysRenameOpts) (*http.Response, error) {
+func (a *DnodesApiService) Rename(ctx context.Context, id string, localVarOptionals *DnodesApiRenameOpts) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")
 		localVarPostBody   interface{}
@@ -421,7 +521,7 @@ func (a *DtraysApiService) DtraysRename(ctx context.Context, id string, localVar
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/dtrays/{id}/rename/"
+	localVarPath := a.client.cfg.BasePath + "/dnodes/{id}/rename/"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
 
 	localVarHeaderParams := make(map[string]string)

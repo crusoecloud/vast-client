@@ -11,12 +11,12 @@ package swagger
 type VastCatalogQueryDataInputSchema struct {
 	// Defines the filters
 	Filters *interface{} `json:"filters"`
+	// Defines which fields should be displayed
+	Fields []string `json:"fields,omitempty"`
 	// Target source path
 	Path string `json:"path"`
 	// Tenant ID
 	TenantId int32 `json:"tenant_id,omitempty"`
 	// The name of the snapshot, the latest version is taken by default
 	Snapshot string `json:"snapshot,omitempty"`
-	// Defines which fields should be displayed
-	Fields []string `json:"fields,omitempty"`
 }

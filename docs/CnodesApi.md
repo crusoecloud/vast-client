@@ -5,13 +5,13 @@ All URIs are relative to */*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CnodesAdd**](CnodesApi.md#CnodesAdd) | **Post** /cnodes/ | Add CNode
-[**CnodesControlLed**](CnodesApi.md#CnodesControlLed) | **Patch** /cnodes/{id}/control_led/ | Control CNode LED
-[**CnodesHighlight**](CnodesApi.md#CnodesHighlight) | **Patch** /cnodes/{id}/highlight/ | HighLight CNode
 [**CnodesList**](CnodesApi.md#CnodesList) | **Get** /cnodes/ | List Cnodes
 [**CnodesPartialUpdate**](CnodesApi.md#CnodesPartialUpdate) | **Patch** /cnodes/{id}/ | Activate/Deactivate/Replace/Power On/Off CNode
 [**CnodesRead**](CnodesApi.md#CnodesRead) | **Get** /cnodes/{id}/ | Return Details of a CNode
 [**CnodesRemove**](CnodesApi.md#CnodesRemove) | **Delete** /cnodes/{id}/ | Remove CNode
-[**CnodesRename**](CnodesApi.md#CnodesRename) | **Patch** /cnodes/{id}/rename/ | Rename CNode
+[**ControlLed**](CnodesApi.md#ControlLed) | **Patch** /cnodes/{id}/control_led/ | Control CNode LED
+[**Highlight**](CnodesApi.md#Highlight) | **Patch** /cnodes/{id}/highlight/ | HighLight CNode
+[**Rename**](CnodesApi.md#Rename) | **Patch** /cnodes/{id}/rename/ | Rename CNode
 
 # **CnodesAdd**
 > AsyncCNode CnodesAdd(ctx, optional)
@@ -43,70 +43,6 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: */*
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **CnodesControlLed**
-> CnodesControlLed(ctx, id, optional)
-Control CNode LED
-
-This endpoint controls the CNode LED
-
-### Required Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **id** | **string**| CNode ID | 
- **optional** | ***CnodesApiCnodesControlLedOpts** | optional parameters | nil if no parameters
-
-### Optional Parameters
-Optional parameters are passed through a pointer to a CnodesApiCnodesControlLedOpts struct
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **body** | [**optional.Interface of IdControlLedBody**](IdControlLedBody.md)|  | 
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **CnodesHighlight**
-> AsyncTaskInResponse CnodesHighlight(ctx, id)
-HighLight CNode
-
-This endpoint highlights a CNode.
-
-### Required Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **id** | **string**| CNode ID | 
-
-### Return type
-
-[**AsyncTaskInResponse**](AsyncTaskInResponse.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
  - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -252,8 +188,72 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **CnodesRename**
-> CnodesRename(ctx, id, optional)
+# **ControlLed**
+> ControlLed(ctx, id, optional)
+Control CNode LED
+
+This endpoint controls the CNode LED
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **id** | **string**| CNode ID | 
+ **optional** | ***CnodesApiControlLedOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a CnodesApiControlLedOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **body** | [**optional.Interface of IdControlLedBody**](IdControlLedBody.md)|  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **Highlight**
+> AsyncTaskInResponse Highlight(ctx, id)
+HighLight CNode
+
+This endpoint highlights a CNode.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **id** | **string**| CNode ID | 
+
+### Return type
+
+[**AsyncTaskInResponse**](AsyncTaskInResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **Rename**
+> Rename(ctx, id, optional)
 Rename CNode
 
 This endpoint renames a CNode.
@@ -264,10 +264,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
   **id** | **string**| CNode ID | 
- **optional** | ***CnodesApiCnodesRenameOpts** | optional parameters | nil if no parameters
+ **optional** | ***CnodesApiRenameOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a CnodesApiCnodesRenameOpts struct
+Optional parameters are passed through a pointer to a CnodesApiRenameOpts struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 

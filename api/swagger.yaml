@@ -2760,7 +2760,7 @@ paths:
       - cnodes
       summary: Control CNode LED
       description: This endpoint controls the CNode LED
-      operationId: cnodes_control_led
+      operationId: control_led
       parameters:
       - name: id
         in: path
@@ -2787,7 +2787,7 @@ paths:
       - cnodes
       summary: HighLight CNode
       description: This endpoint highlights a CNode.
-      operationId: cnodes_highlight
+      operationId: highlight
       parameters:
       - name: id
         in: path
@@ -2810,7 +2810,7 @@ paths:
       - cnodes
       summary: Rename CNode
       description: This endpoint renames a CNode.
-      operationId: cnodes_rename
+      operationId: rename
       parameters:
       - name: id
         in: path
@@ -2963,7 +2963,7 @@ paths:
       - dnodes
       summary: Control DNode LED
       description: This endpoint controls a DNode LED
-      operationId: dnodes_control_led
+      operationId: control_led
       parameters:
       - name: id
         in: path
@@ -2990,7 +2990,7 @@ paths:
       - dnodes
       summary: Highlight DNode
       description: This endpoint highlights a DNode
-      operationId: dnodes_highlight
+      operationId: highlight
       parameters:
       - name: id
         in: path
@@ -3013,7 +3013,7 @@ paths:
       - dnodes
       summary: Rename DNode
       description: This endpoint renames a DNode.
-      operationId: dnodes_rename
+      operationId: rename
       parameters:
       - name: id
         in: path
@@ -3158,7 +3158,7 @@ paths:
       - dboxes
       summary: Control DBox LEDs
       description: This endpoint controls DBox LEDs (on/off)
-      operationId: dboxes_control_led
+      operationId: control_led
       parameters:
       - name: id
         in: path
@@ -3283,7 +3283,7 @@ paths:
       - cboxes
       summary: Control CBox LEDs
       description: This endpoint controls CBox LEDs (on/off)
-      operationId: cboxes_control_led
+      operationId: control_led
       parameters:
       - name: id
         in: path
@@ -3412,7 +3412,7 @@ paths:
       - dtrays
       summary: Control DTray (DNode) LEDs
       description: This endpoint controls the DTray (DNode) LEDs
-      operationId: dtrays_control_led
+      operationId: control_led
       parameters:
       - name: id
         in: path
@@ -3439,7 +3439,7 @@ paths:
       - dtrays
       summary: Rename Dtray
       description: This endpoint renames a Dtray.
-      operationId: dtrays_rename
+      operationId: rename
       parameters:
       - name: id
         in: path
@@ -4589,7 +4589,7 @@ paths:
       - carriers
       summary: Control Slot LED
       description: This endpoint controls a slot LED
-      operationId: carriers_control_led
+      operationId: control_led
       parameters:
       - name: id
         in: path
@@ -4616,7 +4616,7 @@ paths:
       - carriers
       summary: This endpoint highlights the control Slot
       description: This endpoint highlights the control Slot
-      operationId: carriers_highlight
+      operationId: highlight
       parameters:
       - name: id
         in: path
@@ -17758,6 +17758,11 @@ components:
           type: object
           properties: {}
           description: Defines the filters
+        fields:
+          type: array
+          description: Defines which fields should be displayed
+          items:
+            type: string
     VastCatalogQueryDataInputSchema:
       allOf:
       - $ref: '#/components/schemas/BaseQueryDataInputSchema'

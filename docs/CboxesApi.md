@@ -4,32 +4,66 @@ All URIs are relative to */*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DtraysControlLed**](DtraysApi.md#DtraysControlLed) | **Patch** /dtrays/{id}/control_led/ | Control DTray (DNode) LEDs
-[**DtraysList**](DtraysApi.md#DtraysList) | **Get** /dtrays/ | List DTrays
-[**DtraysPartialUpdate**](DtraysApi.md#DtraysPartialUpdate) | **Patch** /dtrays/{id}/ | Activate/Deactivate DTray
-[**DtraysRead**](DtraysApi.md#DtraysRead) | **Get** /dtrays/{id}/ | Return Details of a DTray
-[**DtraysRename**](DtraysApi.md#DtraysRename) | **Patch** /dtrays/{id}/rename/ | Rename Dtray
+[**CboxesList**](CboxesApi.md#CboxesList) | **Get** /cboxes/ | List CBoxes
+[**CboxesPartialUpdate**](CboxesApi.md#CboxesPartialUpdate) | **Patch** /cboxes/{id}/ | Modify CBox
+[**CboxesRead**](CboxesApi.md#CboxesRead) | **Get** /cboxes/{id}/ | Return Details of a CBox
+[**ControlLed**](CboxesApi.md#ControlLed) | **Patch** /cboxes/{id}/control_led/ | Control CBox LEDs
+[**RefreshUid**](CboxesApi.md#RefreshUid) | **Patch** /cboxes/{id}/refresh_uid | Refreshes cbox uid to match it&#x27;s cnodes chassis serial
 
-# **DtraysControlLed**
-> DtraysControlLed(ctx, id, optional)
-Control DTray (DNode) LEDs
+# **CboxesList**
+> []CBox CboxesList(ctx, optional)
+List CBoxes
 
-This endpoint controls the DTray (DNode) LEDs
+This endpoint lists the CBoxes that belong to the cluster.
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **id** | **string**| DTray ID | 
- **optional** | ***DtraysApiDtraysControlLedOpts** | optional parameters | nil if no parameters
+ **optional** | ***CboxesApiCboxesListOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a DtraysApiDtraysControlLedOpts struct
+Optional parameters are passed through a pointer to a CboxesApiCboxesListOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **page** | **optional.String**|  | 
+
+### Return type
+
+[**[]CBox**](CBox.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: */*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **CboxesPartialUpdate**
+> CboxesPartialUpdate(ctx, id, optional)
+Modify CBox
+
+This endpoint modifies a CBox description.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **id** | **string**| CBox ID | 
+ **optional** | ***CboxesApiCboxesPartialUpdateOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a CboxesApiCboxesPartialUpdateOpts struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **body** | [**optional.Interface of IdControlLedBody4**](IdControlLedBody4.md)|  | 
+ **body** | [**optional.Interface of CboxesIdBody**](CboxesIdBody.md)|  | 
 
 ### Return type
 
@@ -46,31 +80,22 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **DtraysList**
-> []DTray DtraysList(ctx, optional)
-List DTrays
+# **CboxesRead**
+> CBox CboxesRead(ctx, id)
+Return Details of a CBox
 
-This endpoint lists the all DTrays.
+This endpoint returns details of a CBox.
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***DtraysApiDtraysListOpts** | optional parameters | nil if no parameters
-
-### Optional Parameters
-Optional parameters are passed through a pointer to a DtraysApiDtraysListOpts struct
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **page** | **optional.String**|  | 
- **state** | **optional.String**|  | 
- **name** | **optional.String**|  | 
- **enabled** | **optional.Bool**|  | 
+  **id** | **string**| CBox ID | 
 
 ### Return type
 
-[**[]DTray**](DTray.md)
+[**CBox**](CBox.md)
 
 ### Authorization
 
@@ -83,26 +108,26 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **DtraysPartialUpdate**
-> AsyncTaskInResponse DtraysPartialUpdate(ctx, id, optional)
-Activate/Deactivate DTray
+# **ControlLed**
+> AsyncTaskInResponse ControlLed(ctx, id, optional)
+Control CBox LEDs
 
-This endpoint activates, deactivates a DTray.
+This endpoint controls CBox LEDs (on/off)
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **id** | **string**| DTray ID | 
- **optional** | ***DtraysApiDtraysPartialUpdateOpts** | optional parameters | nil if no parameters
+  **id** | **string**| CBox ID | 
+ **optional** | ***CboxesApiControlLedOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a DtraysApiDtraysPartialUpdateOpts struct
+Optional parameters are passed through a pointer to a CboxesApiControlLedOpts struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **body** | [**optional.Interface of DtraysIdBody**](DtraysIdBody.md)|  | 
+ **body** | [**optional.Interface of IdControlLedBody3**](IdControlLedBody3.md)|  | 
 
 ### Return type
 
@@ -119,54 +144,18 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **DtraysRead**
-> DTray DtraysRead(ctx, id)
-Return Details of a DTray
+# **RefreshUid**
+> RefreshUid(ctx, id)
+Refreshes cbox uid to match it's cnodes chassis serial
 
-This endpoint returns details of a DTray.
-
-### Required Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **id** | **string**| DTray ID | 
-
-### Return type
-
-[**DTray**](DTray.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **DtraysRename**
-> DtraysRename(ctx, id, optional)
-Rename Dtray
-
-This endpoint renames a Dtray.
+This endpoint refreshes cbox uid to match it's cnodes chassis serial.
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **id** | **string**| Dtray ID | 
- **optional** | ***DtraysApiDtraysRenameOpts** | optional parameters | nil if no parameters
-
-### Optional Parameters
-Optional parameters are passed through a pointer to a DtraysApiDtraysRenameOpts struct
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **body** | [**optional.Interface of IdRenameBody2**](IdRenameBody2.md)|  | 
+  **id** | **string**| CBox ID | 
 
 ### Return type
 
@@ -178,7 +167,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

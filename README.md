@@ -271,6 +271,7 @@ Class | Method | HTTP request | Description
 *NisApi* | [**NisSetPosixPrimary**](docs/NisApi.md#nissetposixprimary) | **Patch** /nis/{id}/set_posix_primary/ | Set NIS as Primary POSIX Provider
 *NisApi* | [**Refresh**](docs/NisApi.md#refresh) | **Patch** /nis/refresh/ | Refresh NIS Cache
 *NvramsApi* | [**NvramFormat**](docs/NvramsApi.md#nvramformat) | **Patch** /nvrams/{id}/format/ | Format NVRAM
+*NvramsApi* | [**NvramsList**](docs/NvramsApi.md#nvramslist) | **Get** /nvrams/ | List NVRAMs
 *NvramsApi* | [**NvramsPartialUpdate**](docs/NvramsApi.md#nvramspartialupdate) | **Patch** /nvrams/{id}/ | Activate or Deactivate an NVRAM
 *NvramsApi* | [**NvramsRead**](docs/NvramsApi.md#nvramsread) | **Get** /nvrams/{id}/ | Return Details of an NVRAM
 *ObjectpermissionsApi* | [**ObjectpermissionsList**](docs/ObjectpermissionsApi.md#objectpermissionslist) | **Get** /permissions/objects/ | List Object Permissions
@@ -301,6 +302,7 @@ Class | Method | HTTP request | Description
 *ProtectedpathsApi* | [**ProtectedpathsResume**](docs/ProtectedpathsApi.md#protectedpathsresume) | **Patch** /protectedpaths/{id}/resume | Resume snapshot restore on protected path.
 *ProtectedpathsApi* | [**ProtectedpathsStop**](docs/ProtectedpathsApi.md#protectedpathsstop) | **Patch** /protectedpaths/{id}/stop | Stops snapshot restore on protected path.
 *ProtectedpathsApi* | [**ProtectedpathsValidate**](docs/ProtectedpathsApi.md#protectedpathsvalidate) | **Get** /protectedpaths/{id}/validate | Returns validations results for Protected Path.
+*ProtectionpoliciesApi* | [**ProtectionpoliciesCreate**](docs/ProtectionpoliciesApi.md#protectionpoliciescreate) | **Post** /protectionpolicies/ | Create Protection Policy
 *ProtectionpoliciesApi* | [**ProtectionpoliciesDelete**](docs/ProtectionpoliciesApi.md#protectionpoliciesdelete) | **Delete** /protectionpolicies/{id}/ | Delete Protection Policy
 *ProtectionpoliciesApi* | [**ProtectionpoliciesList**](docs/ProtectionpoliciesApi.md#protectionpolicieslist) | **Get** /protectionpolicies/ | Return Protection Policies
 *ProtectionpoliciesApi* | [**ProtectionpoliciesPartialUpdate**](docs/ProtectionpoliciesApi.md#protectionpoliciespartialupdate) | **Patch** /protectionpolicies/{id}/ | Modify a Protection Policy
@@ -433,6 +435,7 @@ Class | Method | HTTP request | Description
 *UsersApi* | [**UsersRefresh**](docs/UsersApi.md#usersrefresh) | **Patch** /users/refresh/ | Refresh User
 *UsersApi* | [**UsersRemoveKey**](docs/UsersApi.md#usersremovekey) | **Delete** /users/{id}/access_keys/ | Remove S3 Access Key Pair
 *VastcatalogconfigApi* | [**VastcatalogconfigColumns**](docs/VastcatalogconfigApi.md#vastcatalogconfigcolumns) | **Get** /bigcatalogconfig/columns/ | Receives Vast Catalog columns
+*VastcatalogconfigApi* | [**VastcatalogconfigCreate**](docs/VastcatalogconfigApi.md#vastcatalogconfigcreate) | **Post** /bigcatalogconfig/ | Create a Vast DB Config
 *VastcatalogconfigApi* | [**VastcatalogconfigDelete**](docs/VastcatalogconfigApi.md#vastcatalogconfigdelete) | **Delete** /bigcatalogconfig/{id}/ | Delete Vast Catalog Config and Vast Catalog Policy.
 *VastcatalogconfigApi* | [**VastcatalogconfigList**](docs/VastcatalogconfigApi.md#vastcatalogconfiglist) | **Get** /bigcatalogconfig/ | List of Vast Catalog Config
 *VastcatalogconfigApi* | [**VastcatalogconfigModify**](docs/VastcatalogconfigApi.md#vastcatalogconfigmodify) | **Patch** /bigcatalogconfig/{id}/ | Modify Vast Catalog Config
@@ -447,8 +450,10 @@ Class | Method | HTTP request | Description
 *ViewpoliciesApi* | [**AddRemoteMapping**](docs/ViewpoliciesApi.md#addremotemapping) | **Post** /viewpolicies/{id}/remote_mapping/ | 
 *ViewpoliciesApi* | [**RefreshNetgroups**](docs/ViewpoliciesApi.md#refreshnetgroups) | **Patch** /viewpolicies/{id}/refresh_netgroups/ | refresh View policy netgroups
 *ViewpoliciesApi* | [**RemoveRemoteMapping**](docs/ViewpoliciesApi.md#removeremotemapping) | **Delete** /viewpolicies/{id}/remote_mapping/ | 
+*ViewpoliciesApi* | [**ViewpoliciesCreate**](docs/ViewpoliciesApi.md#viewpoliciescreate) | **Post** /viewpolicies/ | Create View Policy
 *ViewpoliciesApi* | [**ViewpoliciesDelete**](docs/ViewpoliciesApi.md#viewpoliciesdelete) | **Delete** /viewpolicies/{id}/ | Delete View Policy.
 *ViewpoliciesApi* | [**ViewpoliciesList**](docs/ViewpoliciesApi.md#viewpolicieslist) | **Get** /viewpolicies/ | List View Policies
+*ViewpoliciesApi* | [**ViewpoliciesPartialUpdate**](docs/ViewpoliciesApi.md#viewpoliciespartialupdate) | **Patch** /viewpolicies/{id}/ | Modify a View Policy
 *ViewpoliciesApi* | [**ViewpoliciesRead**](docs/ViewpoliciesApi.md#viewpoliciesread) | **Get** /viewpolicies/{id}/ | Return Details of a View Policy
 *ViewsApi* | [**CheckPermissionsTemplates**](docs/ViewsApi.md#checkpermissionstemplates) | **Post** /views/{id}/check_permissions_templates/ | Check permissions templates
 *ViewsApi* | [**CloseSmbHandle**](docs/ViewsApi.md#closesmbhandle) | **Delete** /views/close_smb_handle/ | Close open SMB filehandles
@@ -519,6 +524,7 @@ Class | Method | HTTP request | Description
  - [AttachedUser](docs/AttachedUser.md)
  - [BaseQueryDataInputSchema](docs/BaseQueryDataInputSchema.md)
  - [BasicSettings](docs/BasicSettings.md)
+ - [BigcatalogconfigBody](docs/BigcatalogconfigBody.md)
  - [BigcatalogconfigIdBody](docs/BigcatalogconfigIdBody.md)
  - [BigcatalogindexedcolumnsAddBody](docs/BigcatalogindexedcolumnsAddBody.md)
  - [BigcatalogindexedcolumnsRemoveBody](docs/BigcatalogindexedcolumnsRemoveBody.md)
@@ -712,6 +718,7 @@ Class | Method | HTTP request | Description
  - [ProtectedpathsBody](docs/ProtectedpathsBody.md)
  - [ProtectedpathsIdBody](docs/ProtectedpathsIdBody.md)
  - [ProtectionPolicy](docs/ProtectionPolicy.md)
+ - [ProtectionpoliciesBody](docs/ProtectionpoliciesBody.md)
  - [ProtectionpoliciesIdBody](docs/ProtectionpoliciesIdBody.md)
  - [ProtocolHandle](docs/ProtocolHandle.md)
  - [Psu](docs/Psu.md)
@@ -817,6 +824,8 @@ Class | Method | HTTP request | Description
  - [ViewPolicy](docs/ViewPolicy.md)
  - [ViewPolicyProtocolsAudit](docs/ViewPolicyProtocolsAudit.md)
  - [ViewShareAcl](docs/ViewShareAcl.md)
+ - [ViewpoliciesBody](docs/ViewpoliciesBody.md)
+ - [ViewpoliciesIdBody](docs/ViewpoliciesIdBody.md)
  - [ViewsBody](docs/ViewsBody.md)
  - [ViewsCheckPermissionsTemplatesResponse](docs/ViewsCheckPermissionsTemplatesResponse.md)
  - [ViewsCheckPermissionsTemplatesResponseTemplateDirPath](docs/ViewsCheckPermissionsTemplatesResponseTemplateDirPath.md)

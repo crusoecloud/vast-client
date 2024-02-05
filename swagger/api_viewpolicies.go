@@ -254,6 +254,102 @@ func (a *ViewpoliciesApiService) RemoveRemoteMapping(ctx context.Context, id str
 	return localVarHttpResponse, nil
 }
 /*
+ViewpoliciesApiService Create View Policy
+This endpoint creates a view policy.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param optional nil or *ViewpoliciesApiViewpoliciesCreateOpts - Optional Parameters:
+     * @param "Body" (optional.Interface of ViewpoliciesBody) - 
+@return ViewPolicy
+*/
+
+type ViewpoliciesApiViewpoliciesCreateOpts struct {
+    Body optional.Interface
+}
+
+func (a *ViewpoliciesApiService) ViewpoliciesCreate(ctx context.Context, localVarOptionals *ViewpoliciesApiViewpoliciesCreateOpts) (ViewPolicy, *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Post")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		localVarReturnValue ViewPolicy
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/viewpolicies/"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"*/*"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
+		
+		localVarOptionalBody:= localVarOptionals.Body.Value()
+		localVarPostBody = &localVarOptionalBody
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		if localVarHttpResponse.StatusCode == 201 {
+			var v ViewPolicy
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		return localVarReturnValue, localVarHttpResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHttpResponse, nil
+}
+/*
 ViewpoliciesApiService Delete View Policy.
 This endpoint deletes a view policy.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -468,6 +564,87 @@ func (a *ViewpoliciesApiService) ViewpoliciesList(ctx context.Context, localVarO
 	}
 
 	return localVarReturnValue, localVarHttpResponse, nil
+}
+/*
+ViewpoliciesApiService Modify a View Policy
+Modify a view policy.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param id
+ * @param optional nil or *ViewpoliciesApiViewpoliciesPartialUpdateOpts - Optional Parameters:
+     * @param "Body" (optional.Interface of ViewpoliciesIdBody) - 
+
+*/
+
+type ViewpoliciesApiViewpoliciesPartialUpdateOpts struct {
+    Body optional.Interface
+}
+
+func (a *ViewpoliciesApiService) ViewpoliciesPartialUpdate(ctx context.Context, id string, localVarOptionals *ViewpoliciesApiViewpoliciesPartialUpdateOpts) (*http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Patch")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/viewpolicies/{id}/"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
+		
+		localVarOptionalBody:= localVarOptionals.Body.Value()
+		localVarPostBody = &localVarOptionalBody
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarHttpResponse, err
+	}
+
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		return localVarHttpResponse, newErr
+	}
+
+	return localVarHttpResponse, nil
 }
 /*
 ViewpoliciesApiService Return Details of a View Policy

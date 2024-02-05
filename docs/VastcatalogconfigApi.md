@@ -5,6 +5,7 @@ All URIs are relative to */*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**VastcatalogconfigColumns**](VastcatalogconfigApi.md#VastcatalogconfigColumns) | **Get** /bigcatalogconfig/columns/ | Receives Vast Catalog columns
+[**VastcatalogconfigCreate**](VastcatalogconfigApi.md#VastcatalogconfigCreate) | **Post** /bigcatalogconfig/ | Create a Vast DB Config
 [**VastcatalogconfigDelete**](VastcatalogconfigApi.md#VastcatalogconfigDelete) | **Delete** /bigcatalogconfig/{id}/ | Delete Vast Catalog Config and Vast Catalog Policy.
 [**VastcatalogconfigList**](VastcatalogconfigApi.md#VastcatalogconfigList) | **Get** /bigcatalogconfig/ | List of Vast Catalog Config
 [**VastcatalogconfigModify**](VastcatalogconfigApi.md#VastcatalogconfigModify) | **Patch** /bigcatalogconfig/{id}/ | Modify Vast Catalog Config
@@ -30,6 +31,40 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: */*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **VastcatalogconfigCreate**
+> VastCatalogConfig VastcatalogconfigCreate(ctx, optional)
+Create a Vast DB Config
+
+This endpoint creates a Vast Catalog Config
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+ **optional** | ***VastcatalogconfigApiVastcatalogconfigCreateOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a VastcatalogconfigApiVastcatalogconfigCreateOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**optional.Interface of BigcatalogconfigBody**](BigcatalogconfigBody.md)|  | 
+
+### Return type
+
+[**VastCatalogConfig**](VastCatalogConfig.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: */*
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

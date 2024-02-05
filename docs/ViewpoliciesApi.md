@@ -7,8 +7,10 @@ Method | HTTP request | Description
 [**AddRemoteMapping**](ViewpoliciesApi.md#AddRemoteMapping) | **Post** /viewpolicies/{id}/remote_mapping/ | 
 [**RefreshNetgroups**](ViewpoliciesApi.md#RefreshNetgroups) | **Patch** /viewpolicies/{id}/refresh_netgroups/ | refresh View policy netgroups
 [**RemoveRemoteMapping**](ViewpoliciesApi.md#RemoveRemoteMapping) | **Delete** /viewpolicies/{id}/remote_mapping/ | 
+[**ViewpoliciesCreate**](ViewpoliciesApi.md#ViewpoliciesCreate) | **Post** /viewpolicies/ | Create View Policy
 [**ViewpoliciesDelete**](ViewpoliciesApi.md#ViewpoliciesDelete) | **Delete** /viewpolicies/{id}/ | Delete View Policy.
 [**ViewpoliciesList**](ViewpoliciesApi.md#ViewpoliciesList) | **Get** /viewpolicies/ | List View Policies
+[**ViewpoliciesPartialUpdate**](ViewpoliciesApi.md#ViewpoliciesPartialUpdate) | **Patch** /viewpolicies/{id}/ | Modify a View Policy
 [**ViewpoliciesRead**](ViewpoliciesApi.md#ViewpoliciesRead) | **Get** /viewpolicies/{id}/ | Return Details of a View Policy
 
 # **AddRemoteMapping**
@@ -107,6 +109,40 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **ViewpoliciesCreate**
+> ViewPolicy ViewpoliciesCreate(ctx, optional)
+Create View Policy
+
+This endpoint creates a view policy.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+ **optional** | ***ViewpoliciesApiViewpoliciesCreateOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a ViewpoliciesApiViewpoliciesCreateOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**optional.Interface of ViewpoliciesBody**](ViewpoliciesBody.md)|  | 
+
+### Return type
+
+[**ViewPolicy**](ViewPolicy.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **ViewpoliciesDelete**
 > ViewpoliciesDelete(ctx, id)
 Delete View Policy.
@@ -177,6 +213,42 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: */*
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **ViewpoliciesPartialUpdate**
+> ViewpoliciesPartialUpdate(ctx, id, optional)
+Modify a View Policy
+
+Modify a view policy.
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **id** | **string**|  | 
+ **optional** | ***ViewpoliciesApiViewpoliciesPartialUpdateOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a ViewpoliciesApiViewpoliciesPartialUpdateOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **body** | [**optional.Interface of ViewpoliciesIdBody**](ViewpoliciesIdBody.md)|  | 
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

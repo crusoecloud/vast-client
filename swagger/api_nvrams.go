@@ -111,6 +111,129 @@ func (a *NvramsApiService) NvramFormat(ctx context.Context, id string) (AsyncTas
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
+NvramsApiService List NVRAMs
+This endpoint lists NVRAMs.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param optional nil or *NvramsApiNvramsListOpts - Optional Parameters:
+     * @param "Page" (optional.String) - 
+     * @param "State" (optional.String) -  Filter by NVRAM state
+     * @param "Sn" (optional.String) -  Filter by NVRAM serial number
+     * @param "Model" (optional.String) -  Filter by NVRAM model
+     * @param "DboxName" (optional.String) -  Filter by parent DBox name
+     * @param "DboxId" (optional.String) -  Filter by parent DBox ID
+     * @param "FwVersion" (optional.String) -  Filter by NVRAM firmware version
+@return []Nvram
+*/
+
+type NvramsApiNvramsListOpts struct {
+    Page optional.String
+    State optional.String
+    Sn optional.String
+    Model optional.String
+    DboxName optional.String
+    DboxId optional.String
+    FwVersion optional.String
+}
+
+func (a *NvramsApiService) NvramsList(ctx context.Context, localVarOptionals *NvramsApiNvramsListOpts) ([]Nvram, *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		localVarReturnValue []Nvram
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/nvrams/"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if localVarOptionals != nil && localVarOptionals.Page.IsSet() {
+		localVarQueryParams.Add("page", parameterToString(localVarOptionals.Page.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.State.IsSet() {
+		localVarQueryParams.Add("state", parameterToString(localVarOptionals.State.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Sn.IsSet() {
+		localVarQueryParams.Add("sn", parameterToString(localVarOptionals.Sn.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Model.IsSet() {
+		localVarQueryParams.Add("model", parameterToString(localVarOptionals.Model.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.DboxName.IsSet() {
+		localVarQueryParams.Add("dbox__name", parameterToString(localVarOptionals.DboxName.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.DboxId.IsSet() {
+		localVarQueryParams.Add("dbox__id", parameterToString(localVarOptionals.DboxId.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.FwVersion.IsSet() {
+		localVarQueryParams.Add("fw_version", parameterToString(localVarOptionals.FwVersion.Value(), ""))
+	}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"*/*"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		if localVarHttpResponse.StatusCode == 200 {
+			var v []Nvram
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		return localVarReturnValue, localVarHttpResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHttpResponse, nil
+}
+/*
 NvramsApiService Activate or Deactivate an NVRAM
 This endpoint activates or deactivates an NVRAM.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

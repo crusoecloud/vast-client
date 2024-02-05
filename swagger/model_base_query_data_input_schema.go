@@ -11,4 +11,6 @@ package swagger
 type BaseQueryDataInputSchema struct {
 	// Defines the filters
 	Filters *interface{} `json:"filters"`
+	// Defines which fields should be displayed
+	Fields []string `json:"fields,omitempty"`
 }

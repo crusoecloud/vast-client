@@ -24,32 +24,32 @@ var (
 	_ context.Context
 )
 
-type DnodesApiService service
+type DboxesApiService service
 /*
-DnodesApiService Control DNode LED
-This endpoint controls a DNode LED
+DboxesApiService Control DBox LEDs
+This endpoint controls DBox LEDs (on/off)
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id DNode ID
- * @param optional nil or *DnodesApiDnodesControlLedOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of IdControlLedBody1) - 
-
+ * @param id DBox ID
+ * @param optional nil or *DboxesApiControlLedOpts - Optional Parameters:
+     * @param "Body" (optional.Interface of IdControlLedBody2) - 
+@return AsyncTaskInResponse
 */
 
-type DnodesApiDnodesControlLedOpts struct {
+type DboxesApiControlLedOpts struct {
     Body optional.Interface
 }
 
-func (a *DnodesApiService) DnodesControlLed(ctx context.Context, id string, localVarOptionals *DnodesApiDnodesControlLedOpts) (*http.Response, error) {
+func (a *DboxesApiService) ControlLed(ctx context.Context, id string, localVarOptionals *DboxesApiControlLedOpts) (AsyncTaskInResponse, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		
+		localVarReturnValue AsyncTaskInResponse
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/dnodes/{id}/control_led/"
+	localVarPath := a.client.cfg.BasePath + "/dboxes/{id}/control_led/"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -66,7 +66,7 @@ func (a *DnodesApiService) DnodesControlLed(ctx context.Context, id string, loca
 	}
 
 	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{}
+	localVarHttpHeaderAccepts := []string{"*/*"}
 
 	// set Accept header
 	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
@@ -81,41 +81,64 @@ func (a *DnodesApiService) DnodesControlLed(ctx context.Context, id string, loca
 	}
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
 	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
 	localVarHttpResponse.Body.Close()
 	if err != nil {
-		return localVarHttpResponse, err
+		return localVarReturnValue, localVarHttpResponse, err
 	}
 
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
 
 	if localVarHttpResponse.StatusCode >= 300 {
 		newErr := GenericSwaggerError{
 			body: localVarBody,
 			error: localVarHttpResponse.Status,
 		}
-		return localVarHttpResponse, newErr
+		if localVarHttpResponse.StatusCode == 200 {
+			var v AsyncTaskInResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		return localVarReturnValue, localVarHttpResponse, newErr
 	}
 
-	return localVarHttpResponse, nil
+	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
-DnodesApiService Highlight DNode
-This endpoint highlights a DNode
+DboxesApiService Add DBox
+This endpoint adds a DBox to the cluster.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id DNode ID
+ * @param optional nil or *DboxesApiDboxesAddOpts - Optional Parameters:
+     * @param "Body" (optional.Interface of DboxesAddBody) - 
 @return AsyncTaskInResponse
 */
-func (a *DnodesApiService) DnodesHighlight(ctx context.Context, id string) (AsyncTaskInResponse, *http.Response, error) {
+
+type DboxesApiDboxesAddOpts struct {
+    Body optional.Interface
+}
+
+func (a *DboxesApiService) DboxesAdd(ctx context.Context, localVarOptionals *DboxesApiDboxesAddOpts) (AsyncTaskInResponse, *http.Response, error) {
 	var (
-		localVarHttpMethod = strings.ToUpper("Patch")
+		localVarHttpMethod = strings.ToUpper("Post")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
@@ -123,7 +146,97 @@ func (a *DnodesApiService) DnodesHighlight(ctx context.Context, id string) (Asyn
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/dnodes/{id}/highlight/"
+	localVarPath := a.client.cfg.BasePath + "/dboxes/add/"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"*/*"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	// body params
+	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
+		
+		localVarOptionalBody:= localVarOptionals.Body.Value()
+		localVarPostBody = &localVarOptionalBody
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		if localVarHttpResponse.StatusCode == 201 {
+			var v AsyncTaskInResponse
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		return localVarReturnValue, localVarHttpResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHttpResponse, nil
+}
+/*
+DboxesApiService Delete a DBox
+This endpoint deletes a DBox.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param id DBox ID
+@return AsyncTaskInResponse
+*/
+func (a *DboxesApiService) DboxesDelete(ctx context.Context, id string) (AsyncTaskInResponse, *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Delete")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		localVarReturnValue AsyncTaskInResponse
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/dboxes/{id}/"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -192,41 +305,29 @@ func (a *DnodesApiService) DnodesHighlight(ctx context.Context, id string) (Asyn
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
-DnodesApiService List DNodes
-This endpoint returns a list of Dnodes in the cluster, with optional filtering.
+DboxesApiService List DBoxes
+This endpoint lists the DBoxes that belong to the cluster.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param optional nil or *DnodesApiDnodesListOpts - Optional Parameters:
+ * @param optional nil or *DboxesApiDboxesListOpts - Optional Parameters:
      * @param "Page" (optional.String) - 
-     * @param "Ip" (optional.String) -  Filter by DNode IP
-     * @param "State" (optional.String) -  Filter by DNode state
-     * @param "ClusterName" (optional.String) - 
-     * @param "ClusterId" (optional.Int32) - 
-     * @param "Name" (optional.String) -  Filter by DNode name
-     * @param "Enabled" (optional.Bool) -  List only enabled DNodes
-@return []DNode
+@return []DBox
 */
 
-type DnodesApiDnodesListOpts struct {
+type DboxesApiDboxesListOpts struct {
     Page optional.String
-    Ip optional.String
-    State optional.String
-    ClusterName optional.String
-    ClusterId optional.Int32
-    Name optional.String
-    Enabled optional.Bool
 }
 
-func (a *DnodesApiService) DnodesList(ctx context.Context, localVarOptionals *DnodesApiDnodesListOpts) ([]DNode, *http.Response, error) {
+func (a *DboxesApiService) DboxesList(ctx context.Context, localVarOptionals *DboxesApiDboxesListOpts) ([]DBox, *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody   interface{}
 		localVarFileName   string
 		localVarFileBytes  []byte
-		localVarReturnValue []DNode
+		localVarReturnValue []DBox
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/dnodes/"
+	localVarPath := a.client.cfg.BasePath + "/dboxes/"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -235,24 +336,6 @@ func (a *DnodesApiService) DnodesList(ctx context.Context, localVarOptionals *Dn
 	if localVarOptionals != nil && localVarOptionals.Page.IsSet() {
 		localVarQueryParams.Add("page", parameterToString(localVarOptionals.Page.Value(), ""))
 	}
-	if localVarOptionals != nil && localVarOptionals.Ip.IsSet() {
-		localVarQueryParams.Add("ip", parameterToString(localVarOptionals.Ip.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.State.IsSet() {
-		localVarQueryParams.Add("state", parameterToString(localVarOptionals.State.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.ClusterName.IsSet() {
-		localVarQueryParams.Add("cluster__name", parameterToString(localVarOptionals.ClusterName.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.ClusterId.IsSet() {
-		localVarQueryParams.Add("cluster__id", parameterToString(localVarOptionals.ClusterId.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.Name.IsSet() {
-		localVarQueryParams.Add("name", parameterToString(localVarOptionals.Name.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.Enabled.IsSet() {
-		localVarQueryParams.Add("enabled", parameterToString(localVarOptionals.Enabled.Value(), ""))
-	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{}
 
@@ -300,7 +383,7 @@ func (a *DnodesApiService) DnodesList(ctx context.Context, localVarOptionals *Dn
 			error: localVarHttpResponse.Status,
 		}
 		if localVarHttpResponse.StatusCode == 200 {
-			var v []DNode
+			var v []DBox
 			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
 				if err != nil {
 					newErr.error = err.Error()
@@ -315,203 +398,20 @@ func (a *DnodesApiService) DnodesList(ctx context.Context, localVarOptionals *Dn
 	return localVarReturnValue, localVarHttpResponse, nil
 }
 /*
-DnodesApiService Activate/Deactivate/Replace/Power On/Off DNode
-This endpoint activates, deactivates, replaces, powers off and powers on a DNode.
+DboxesApiService Modify a DBox Description
+This endpoint modifies a DBox description.
  * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id DNode ID
- * @param optional nil or *DnodesApiDnodesPartialUpdateOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of DnodesIdBody) - 
-@return AsyncTaskInResponse
+ * @param id DBox ID
+ * @param optional nil or *DboxesApiDboxesPartialUpdateOpts - Optional Parameters:
+     * @param "Body" (optional.Interface of DboxesIdBody) - 
+
 */
 
-type DnodesApiDnodesPartialUpdateOpts struct {
+type DboxesApiDboxesPartialUpdateOpts struct {
     Body optional.Interface
 }
 
-func (a *DnodesApiService) DnodesPartialUpdate(ctx context.Context, id string, localVarOptionals *DnodesApiDnodesPartialUpdateOpts) (AsyncTaskInResponse, *http.Response, error) {
-	var (
-		localVarHttpMethod = strings.ToUpper("Patch")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		localVarReturnValue AsyncTaskInResponse
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/dnodes/{id}/"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{"application/json"}
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"*/*"}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	// body params
-	if localVarOptionals != nil && localVarOptionals.Body.IsSet() {
-		
-		localVarOptionalBody:= localVarOptionals.Body.Value()
-		localVarPostBody = &localVarOptionalBody
-	}
-	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHttpResponse, err := a.client.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-	localVarHttpResponse.Body.Close()
-	if err != nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode < 300 {
-		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
-			return localVarReturnValue, localVarHttpResponse, err
-		}
-	}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		if localVarHttpResponse.StatusCode == 200 {
-			var v AsyncTaskInResponse
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		return localVarReturnValue, localVarHttpResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHttpResponse, nil
-}
-/*
-DnodesApiService Return Details of a DNode
-This endpoint returns details of a DNode.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id DNode ID
-@return DNode
-*/
-func (a *DnodesApiService) DnodesRead(ctx context.Context, id string) (DNode, *http.Response, error) {
-	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody   interface{}
-		localVarFileName   string
-		localVarFileBytes  []byte
-		localVarReturnValue DNode
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/dnodes/{id}/"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{}
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{"*/*"}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return localVarReturnValue, nil, err
-	}
-
-	localVarHttpResponse, err := a.client.callAPI(r)
-	if err != nil || localVarHttpResponse == nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
-	localVarHttpResponse.Body.Close()
-	if err != nil {
-		return localVarReturnValue, localVarHttpResponse, err
-	}
-
-	if localVarHttpResponse.StatusCode < 300 {
-		// If we succeed, return the data, otherwise pass on to decode error.
-		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-		if err == nil { 
-			return localVarReturnValue, localVarHttpResponse, err
-		}
-	}
-
-	if localVarHttpResponse.StatusCode >= 300 {
-		newErr := GenericSwaggerError{
-			body: localVarBody,
-			error: localVarHttpResponse.Status,
-		}
-		if localVarHttpResponse.StatusCode == 200 {
-			var v DNode
-			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
-				if err != nil {
-					newErr.error = err.Error()
-					return localVarReturnValue, localVarHttpResponse, newErr
-				}
-				newErr.model = v
-				return localVarReturnValue, localVarHttpResponse, newErr
-		}
-		return localVarReturnValue, localVarHttpResponse, newErr
-	}
-
-	return localVarReturnValue, localVarHttpResponse, nil
-}
-/*
-DnodesApiService Rename DNode
-This endpoint renames a DNode.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param id DNode ID
- * @param optional nil or *DnodesApiDnodesRenameOpts - Optional Parameters:
-     * @param "Body" (optional.Interface of IdRenameBody1) - 
-
-*/
-
-type DnodesApiDnodesRenameOpts struct {
-    Body optional.Interface
-}
-
-func (a *DnodesApiService) DnodesRename(ctx context.Context, id string, localVarOptionals *DnodesApiDnodesRenameOpts) (*http.Response, error) {
+func (a *DboxesApiService) DboxesPartialUpdate(ctx context.Context, id string, localVarOptionals *DboxesApiDboxesPartialUpdateOpts) (*http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Patch")
 		localVarPostBody   interface{}
@@ -521,7 +421,7 @@ func (a *DnodesApiService) DnodesRename(ctx context.Context, id string, localVar
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/dnodes/{id}/rename/"
+	localVarPath := a.client.cfg.BasePath + "/dboxes/{id}/"
 	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
 
 	localVarHeaderParams := make(map[string]string)
@@ -577,4 +477,89 @@ func (a *DnodesApiService) DnodesRename(ctx context.Context, id string, localVar
 	}
 
 	return localVarHttpResponse, nil
+}
+/*
+DboxesApiService Return Details of a DBox.
+This endpoint returns details of a DBox.
+ * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param id DBox ID
+@return DBox
+*/
+func (a *DboxesApiService) DboxesRead(ctx context.Context, id string) (DBox, *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody   interface{}
+		localVarFileName   string
+		localVarFileBytes  []byte
+		localVarReturnValue DBox
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/dboxes/{id}/"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", fmt.Sprintf("%v", id), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{"*/*"}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHttpResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHttpResponse == nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHttpResponse.Body)
+	localVarHttpResponse.Body.Close()
+	if err != nil {
+		return localVarReturnValue, localVarHttpResponse, err
+	}
+
+	if localVarHttpResponse.StatusCode < 300 {
+		// If we succeed, return the data, otherwise pass on to decode error.
+		err = a.client.decode(&localVarReturnValue, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+		if err == nil { 
+			return localVarReturnValue, localVarHttpResponse, err
+		}
+	}
+
+	if localVarHttpResponse.StatusCode >= 300 {
+		newErr := GenericSwaggerError{
+			body: localVarBody,
+			error: localVarHttpResponse.Status,
+		}
+		if localVarHttpResponse.StatusCode == 200 {
+			var v DBox
+			err = a.client.decode(&v, localVarBody, localVarHttpResponse.Header.Get("Content-Type"));
+				if err != nil {
+					newErr.error = err.Error()
+					return localVarReturnValue, localVarHttpResponse, newErr
+				}
+				newErr.model = v
+				return localVarReturnValue, localVarHttpResponse, newErr
+		}
+		return localVarReturnValue, localVarHttpResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHttpResponse, nil
 }

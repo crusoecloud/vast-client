@@ -4,33 +4,32 @@ All URIs are relative to */*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DnodesControlLed**](DnodesApi.md#DnodesControlLed) | **Patch** /dnodes/{id}/control_led/ | Control DNode LED
-[**DnodesHighlight**](DnodesApi.md#DnodesHighlight) | **Patch** /dnodes/{id}/highlight/ | Highlight DNode
-[**DnodesList**](DnodesApi.md#DnodesList) | **Get** /dnodes/ | List DNodes
-[**DnodesPartialUpdate**](DnodesApi.md#DnodesPartialUpdate) | **Patch** /dnodes/{id}/ | Activate/Deactivate/Replace/Power On/Off DNode
-[**DnodesRead**](DnodesApi.md#DnodesRead) | **Get** /dnodes/{id}/ | Return Details of a DNode
-[**DnodesRename**](DnodesApi.md#DnodesRename) | **Patch** /dnodes/{id}/rename/ | Rename DNode
+[**ControlLed**](DtraysApi.md#ControlLed) | **Patch** /dtrays/{id}/control_led/ | Control DTray (DNode) LEDs
+[**DtraysList**](DtraysApi.md#DtraysList) | **Get** /dtrays/ | List DTrays
+[**DtraysPartialUpdate**](DtraysApi.md#DtraysPartialUpdate) | **Patch** /dtrays/{id}/ | Activate/Deactivate DTray
+[**DtraysRead**](DtraysApi.md#DtraysRead) | **Get** /dtrays/{id}/ | Return Details of a DTray
+[**Rename**](DtraysApi.md#Rename) | **Patch** /dtrays/{id}/rename/ | Rename Dtray
 
-# **DnodesControlLed**
-> DnodesControlLed(ctx, id, optional)
-Control DNode LED
+# **ControlLed**
+> ControlLed(ctx, id, optional)
+Control DTray (DNode) LEDs
 
-This endpoint controls a DNode LED
+This endpoint controls the DTray (DNode) LEDs
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **id** | **string**| DNode ID | 
- **optional** | ***DnodesApiDnodesControlLedOpts** | optional parameters | nil if no parameters
+  **id** | **string**| DTray ID | 
+ **optional** | ***DtraysApiControlLedOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a DnodesApiDnodesControlLedOpts struct
+Optional parameters are passed through a pointer to a DtraysApiControlLedOpts struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **body** | [**optional.Interface of IdControlLedBody1**](IdControlLedBody1.md)|  | 
+ **body** | [**optional.Interface of IdControlLedBody4**](IdControlLedBody4.md)|  | 
 
 ### Return type
 
@@ -47,62 +46,31 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **DnodesHighlight**
-> AsyncTaskInResponse DnodesHighlight(ctx, id)
-Highlight DNode
+# **DtraysList**
+> []DTray DtraysList(ctx, optional)
+List DTrays
 
-This endpoint highlights a DNode
-
-### Required Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **id** | **string**| DNode ID | 
-
-### Return type
-
-[**AsyncTaskInResponse**](AsyncTaskInResponse.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: */*
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **DnodesList**
-> []DNode DnodesList(ctx, optional)
-List DNodes
-
-This endpoint returns a list of Dnodes in the cluster, with optional filtering.
+This endpoint lists the all DTrays.
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***DnodesApiDnodesListOpts** | optional parameters | nil if no parameters
+ **optional** | ***DtraysApiDtraysListOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a DnodesApiDnodesListOpts struct
+Optional parameters are passed through a pointer to a DtraysApiDtraysListOpts struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **page** | **optional.String**|  | 
- **ip** | **optional.String**| Filter by DNode IP | 
- **state** | **optional.String**| Filter by DNode state | 
- **clusterName** | **optional.String**|  | 
- **clusterId** | **optional.Int32**|  | 
- **name** | **optional.String**| Filter by DNode name | 
- **enabled** | **optional.Bool**| List only enabled DNodes | 
+ **state** | **optional.String**|  | 
+ **name** | **optional.String**|  | 
+ **enabled** | **optional.Bool**|  | 
 
 ### Return type
 
-[**[]DNode**](DNode.md)
+[**[]DTray**](DTray.md)
 
 ### Authorization
 
@@ -115,26 +83,26 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **DnodesPartialUpdate**
-> AsyncTaskInResponse DnodesPartialUpdate(ctx, id, optional)
-Activate/Deactivate/Replace/Power On/Off DNode
+# **DtraysPartialUpdate**
+> AsyncTaskInResponse DtraysPartialUpdate(ctx, id, optional)
+Activate/Deactivate DTray
 
-This endpoint activates, deactivates, replaces, powers off and powers on a DNode.
+This endpoint activates, deactivates a DTray.
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **id** | **string**| DNode ID | 
- **optional** | ***DnodesApiDnodesPartialUpdateOpts** | optional parameters | nil if no parameters
+  **id** | **string**| DTray ID | 
+ **optional** | ***DtraysApiDtraysPartialUpdateOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a DnodesApiDnodesPartialUpdateOpts struct
+Optional parameters are passed through a pointer to a DtraysApiDtraysPartialUpdateOpts struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **body** | [**optional.Interface of DnodesIdBody**](DnodesIdBody.md)|  | 
+ **body** | [**optional.Interface of DtraysIdBody**](DtraysIdBody.md)|  | 
 
 ### Return type
 
@@ -151,22 +119,22 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **DnodesRead**
-> DNode DnodesRead(ctx, id)
-Return Details of a DNode
+# **DtraysRead**
+> DTray DtraysRead(ctx, id)
+Return Details of a DTray
 
-This endpoint returns details of a DNode.
+This endpoint returns details of a DTray.
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **id** | **string**| DNode ID | 
+  **id** | **string**| DTray ID | 
 
 ### Return type
 
-[**DNode**](DNode.md)
+[**DTray**](DTray.md)
 
 ### Authorization
 
@@ -179,26 +147,26 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **DnodesRename**
-> DnodesRename(ctx, id, optional)
-Rename DNode
+# **Rename**
+> Rename(ctx, id, optional)
+Rename Dtray
 
-This endpoint renames a DNode.
+This endpoint renames a Dtray.
 
 ### Required Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-  **id** | **string**| DNode ID | 
- **optional** | ***DnodesApiDnodesRenameOpts** | optional parameters | nil if no parameters
+  **id** | **string**| Dtray ID | 
+ **optional** | ***DtraysApiRenameOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
-Optional parameters are passed through a pointer to a DnodesApiDnodesRenameOpts struct
+Optional parameters are passed through a pointer to a DtraysApiRenameOpts struct
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **body** | [**optional.Interface of IdRenameBody1**](IdRenameBody1.md)|  | 
+ **body** | [**optional.Interface of IdRenameBody2**](IdRenameBody2.md)|  | 
 
 ### Return type
 

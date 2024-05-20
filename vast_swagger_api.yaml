@@ -15667,6 +15667,7 @@ paths:
               hard_limit:
                 type: "integer"
                 description: "Storage usage limit beyond which no writes will be allowed."
+                format: "int64"
               hard_limit_inodes:
                 type: "integer"
                 description: "Number of directories and unique files under the path beyond which no writes will be allowed. A file with multiple hardlinks is counted only once."

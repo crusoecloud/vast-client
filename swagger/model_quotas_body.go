@@ -18,7 +18,7 @@ type QuotasBody struct {
 	// Storage usage limit at which warnings of exceeding the quota are issued.
 	SoftLimit int32 `json:"soft_limit,omitempty"`
 	// Storage usage limit beyond which no writes will be allowed.
-	HardLimit int32 `json:"hard_limit,omitempty"`
+	HardLimit int64 `json:"hard_limit,omitempty"`
 	// Number of directories and unique files under the path beyond which no writes will be allowed. A file with multiple hardlinks is counted only once.
 	HardLimitInodes int32 `json:"hard_limit_inodes,omitempty"`
 	// Number of directories and unique files under the path at which warnings of exceeding the quota will be issued. A file with multiple hardlinks is counted only once.

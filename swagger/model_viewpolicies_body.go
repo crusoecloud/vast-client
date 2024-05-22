@@ -54,7 +54,7 @@ type ViewpoliciesBody struct {
 	// Specify which NFS client hosts have no squash. With no squash, all operations are supported. Use this option if you trust the root user not to perform operations that will corrupt data. Specify array of hosts separated by commas. Each host can be specified as an IP address, a netgroup key beginning with @, a CIDR subnet or a range of IPs indicated by an IP address with a * as a wildcard in place of any of the 8-bit fields in the IP address.
 	NfsNoSquash []string `json:"nfs_no_squash,omitempty"`
 	// Specify which NFS client hosts have root squash. With root squash, the root user is mapped to nobody for all file and folder management operations on the export. This enables you to prevent the strongest super user from corrupting all user data on the VAST Cluster. Specify array of hosts separated by commas. Each host can be specified as an IP address, a netgroup key beginning with @, a CIDR subnet or a range of IPs indicated by an IP address with a * as a wildcard in place of any of the 8-bit fields in the IP address.
-	NfsRootSquash []string `json:"nfs_root_squash,omitempty"`
+	NfsRootSquash []string `json:"nfs_root_squash"`
 	// Specify which NFS client hosts have all squash. With all squash, all client users are mapped to nobody for all file and folder management operations on the export. Specify array of hosts separated by commas. Each host can be specified as an IP address, a netgroup key beginning with @, a CIDR subnet or a range of IPs indicated by an IP address with a * as a wildcard in place of any of the 8-bit fields in the IP address.
 	NfsAllSquash []string `json:"nfs_all_squash,omitempty"`
 	// Force case insensitivity for NFSv4.1

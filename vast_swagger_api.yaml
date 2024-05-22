@@ -9064,6 +9064,7 @@ paths:
                 description: "Accept NFSv3 and NFSv4.1 client mounts only if they are TLS-encrypted. Use only with Minimal Protection Level set to System or None."
             required:
               - "name"
+              - "nfs_root_squash"
           name: "ViewpolicyCreateParams"
       consumes:
         - "application/json"

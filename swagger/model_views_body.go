@@ -14,8 +14,8 @@ type ViewsBody struct {
 	// The Element Store path to exposed through the view
 	Path string `json:"path"`
 	// For NFS-enabled views, an alias that can be used by NFSv3 clients
-	Alias string `json:"alias,omitempty"`
-	Bucket string `json:"bucket,omitempty"`
+	Alias                 string `json:"alias,omitempty"`
+	Bucket                string `json:"bucket,omitempty"`
 	S3ObjectOwnershipRule string `json:"s3_object_ownership_rule,omitempty"`
 	// Specify (by ID) which view policy should be applied to the view
 	PolicyId int32 `json:"policy_id,omitempty"`
@@ -50,9 +50,9 @@ type ViewsBody struct {
 	// The retention mode for new object versions stored in this bucket. You can override this if you upload a new object version with an explicit retention mode and period.
 	S3LocksRetentionMode string `json:"s3_locks_retention_mode,omitempty"`
 	// The amount of time in which the file/object is protected. This is mandatory if an S3 retention mode is set.
-	DefaultRetentionPeriod string `json:"default_retention_period,omitempty"`
-	BucketCreators []string `json:"bucket_creators,omitempty"`
-	BucketCreatorsGroups []string `json:"bucket_creators_groups,omitempty"`
+	DefaultRetentionPeriod string   `json:"default_retention_period,omitempty"`
+	BucketCreators         []string `json:"bucket_creators,omitempty"`
+	BucketCreatorsGroups   []string `json:"bucket_creators_groups,omitempty"`
 	// S3 Versioning
 	S3Versioning bool `json:"s3_versioning,omitempty"`
 	// S3 Unverified Lookup
@@ -64,10 +64,10 @@ type ViewsBody struct {
 	// Indicates whether the view should support simultaneous access to NFS3/NFS4/SMB protocols.
 	NfsInteropFlags string `json:"nfs_interop_flags,omitempty"`
 	// Share-level ACL details
-	ShareAcl *interface{} `json:"share_acl,omitempty"`
-	SelectForLiveMonitoring bool `json:"select_for_live_monitoring,omitempty"`
+	ShareAcl                *interface{} `json:"share_acl,omitempty"`
+	SelectForLiveMonitoring bool         `json:"select_for_live_monitoring,omitempty"`
 	// QoS Policy ID
-	QosPolicyId int32 `json:"qos_policy_id,omitempty"`
+	QosPolicyId *int32 `json:"qos_policy_id"`
 	// QoS Policy
 	QosPolicy string `json:"qos_policy,omitempty"`
 	// Tenant ID

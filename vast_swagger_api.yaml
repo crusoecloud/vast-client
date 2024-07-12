@@ -1099,6 +1099,8 @@ definitions:
         x-cli-header: Disable directory snapshots
       disable_metrics:
         type: boolean
+        description: if enabled cluster will disable gathering developer metrics
+        x-cli-header: Developer Metrics Disabled
       delete_snap_blocks_threshold:
         type: integer
       loopback:
@@ -1233,6 +1235,9 @@ definitions:
       showmount_suppressed:
         type: boolean
         description: Suppress Linux showmount command output on for NFSv3 users
+      showmount_hide_slash:
+        type: boolean
+        description: Suppress Linux showmount command output including "/"
       sw_defined:
         type: boolean
       sw_version:
@@ -1291,6 +1296,9 @@ definitions:
           type: string
         description: Current Rewrite types
       root_certificate:
+        type: string
+        format: password
+      cert_pass:
         type: string
         format: password
       audit_dir_name:
@@ -1417,7 +1425,9 @@ definitions:
         type: string
         description: The source of authentication
       read_write:
-        type: string
+        type: array
+        items:
+          type: string
         description: Hosts with NFS read/write permissions
         x-cli-header: NFS-read-write
       read:
@@ -1433,35 +1443,51 @@ definitions:
         items:
           type: string
       read_only:
-        type: string
+        type: array
+        items:
+          type: string
         description: Hosts with NFS read only permissions
         x-cli-header: NFS-read-only
       nfs_read_write:
-        type: string
+        type: array
+        items:
+          type: string
         description: Hosts with NFS read/write permissions
         x-cli-header: NFS-read-write
       nfs_read_only:
-        type: string
+        type: array
+        items:
+          type: string
         description: Hosts with NFS read only permissions
         x-cli-header: NFS-read-only
       smb_read_write:
-        type: string
+        type: array
+        items:
+          type: string
         description: Hosts with SMB read/write permissions
         x-cli-header: SMB-read-write
       smb_read_only:
-        type: string
+        type: array
+        items:
+          type: string
         description: Hosts with SMB read only permissions
         x-cli-header: SMB-read-only
       s3_read_write:
-        type: string
+        type: array
+        items:
+          type: string
         description: Hosts with S3 read/write permissions
         x-cli-header: S3-read-write
       s3_read_only:
-        type: string
+        type: array
+        items:
+          type: string
         description: Hosts with S3 read only permissions
         x-cli-header: S3-read-only
       trash_access:
-        type: string
+        type: array
+        items:
+          type: string
         description: Hosts with trash permissions
         x-cli-header: NFS-trash-access
       nfs_posix_acl:
@@ -1474,15 +1500,21 @@ definitions:
         description: when using smb use open permissions for files
         x-cli-header: NFS-return-open-permissions
       nfs_no_squash:
-        type: string
+        type: array
+        items:
+          type: string
         description: Hosts with no squash policy
         x-cli-header: NFS-no-squash
       nfs_root_squash:
-        type: string
+        type: array
+        items:
+          type: string
         description: Hosts with root squash policy
         x-cli-header: NFS-root-squash
       nfs_all_squash:
-        type: string
+        type: array
+        items:
+          type: string
         description: Hosts with all squash policy
         x-cli-header: NFS-all-squash
       nfs_case_insensitive:
@@ -1558,7 +1590,7 @@ definitions:
         type: string
       atime_frequency:
         type: string
-        description: Frequency for updating the atime attribute of NFS files. atime is updated on read operations if the difference between the current time and the file's atime value is greater than the atime frequency. Specify as time in seconds. If not filled would use 3600s as default value.
+        description: "Frequency for updating the atime attribute of NFS files. atime is updated on read operations if the difference between the current time and the file's atime value is greater than the atime frequency. Specify as time in seconds. If not filled would use 3600s as default value. For example: 300 or 00:00:30 seconds is supported. Zero value is not supported."
         x-example: 30m
       sync:
         type: string
@@ -1656,6 +1688,12 @@ definitions:
         type: boolean
         description: Accept NFSv3 and NFSv4.1 client mounts only if they are TLS-encrypted. Use only with Minimal Protection Level set to System or None.
         x-cli-header: Enforce use of TLS certificate
+      s3_flavor_allow_free_listing:
+        type: boolean
+        description: Allow NFS clients freely list bucket views and their subdirectories, regardless of individual object permissions.
+      s3_flavor_detect_full_pathname:
+        type: boolean
+        description: When this flag is enabled in S3 flavor, NFS access to objects is determined based on the full resource names specified in the identity policies. When disabled, only the bucket name is compared to the identity policy.
   View:
     type: object
     required:
@@ -1724,6 +1762,9 @@ definitions:
       directory:
         type: boolean
         description: Create the directory if it does not exist
+      views_enabled:
+        type: boolean
+        description: Set View Enabled/Disabled
       s3_versioning:
         type: boolean
         description: S3 Versioning
@@ -1946,6 +1987,27 @@ definitions:
     allOf:
       - $ref: '#/definitions/ClusterAuditingReadOnly'
       - $ref: '#/definitions/AsyncTaskInResponse'
+  ClusterVastDB:
+    type: object
+    required:
+      - vast_db_splits
+      - vast_db_sub_splits
+    properties:
+      vast_db_splits:
+        type: integer
+        description: Number of splits used for query_data scanning speed. Default 8.
+      vast_db_sub_splits:
+        type: integer
+        description: Number of sub-splits used for query_data scanning speed. Default 8.
+  ClusterVastDBModify:
+    type: object
+    properties:
+      vast_db_splits:
+        type: integer
+        description: The number of splits used for query_data scanning speed. Default 8.
+      vast_db_sub_splits:
+        type: integer
+        description: The number of sub-splits used for query_data scanning speed. Default 8.
   SmbClientConnection:
     type: "object"
   SubnetManager:
@@ -2340,6 +2402,10 @@ definitions:
         type: string
         description: Host Name
         x-cli-header: Host Name
+      host_opensm_master:
+        type: string
+        description: If OpenSM master
+        x-cli-header: OpenSM-Master
       sync:
         type: string
         description: Synchronization state with leader
@@ -3479,9 +3545,6 @@ definitions:
           enable:
             type: boolean
             description: Flag indicating the status of vast catalog config
-          splits:
-            type: integer
-            description: The number of splits used for query_data scanning speed
   VastCatalogIndexedColumn:
     type: object
     properties:
@@ -3811,6 +3874,12 @@ definitions:
       alarm_only:
         type: boolean
         description: When this is enabled, only alarms will lead to email and webhook actions
+      cooldown:
+        type: integer
+        description: Minimal time to wait between two consecutive events
+      raise_at_count:
+        type: integer
+        description: Raise an alarm after a specific number of recurrences
       metadata:
         type: object
   EventDefinitionConfig:
@@ -4664,6 +4733,7 @@ definitions:
         x-display-base-type: capacity
         x-format: bytes2tbext
         x-cli-header: Hard Capacity Limit
+        format: int64
       hard_limit_inodes:
         type: integer
         description: Hard inodes quota limit
@@ -5916,6 +5986,8 @@ definitions:
       intersection_reason:
         type: string
       replication_target_name:
+        type: string
+      bucket_name:
         type: string
       peer_connection_state:
         type: string
@@ -7596,6 +7668,12 @@ paths:
               enabled:
                 type: "boolean"
                 description: "start/stop cluster"
+              showmount_suppressed:
+                type: "boolean"
+                description: "Suppress Linux showmount command output on for NFSv3 users"
+              showmount_hide_slash:
+                type: "boolean"
+                description: "Suppress Linux showmount command output including /"
               build:
                 description: "The build to be installed on the cluster"
                 type: "string"
@@ -7770,6 +7848,9 @@ paths:
               root_certificate:
                 type: "string"
                 description: "mTLS Root Certificate"
+              cert_pass:
+                type: "string"
+                description: "Certificate password"
               remove_mtls_certificates:
                 type: "boolean"
                 description: "Remove mTLS certificates from cluster"
@@ -8598,6 +8679,34 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/ClusterAuditingReadOnlyWithAsyncTask'
+  /clusters/{id}/vast_db/:
+    get:
+      operationId: cluster_vast_db_show
+      summary: Show Cluster Vast DB Settings
+      description: This endpoint returns cluster Vast DB settings
+      parameters:
+        - $ref: '#/parameters/ClusterId'
+      tags:
+        - clusters
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/ClusterVastDB'
+    patch:
+      operationId: cluster_vast_db_modify
+      summary: Modify Cluster Vast DB Settings
+      description: This endpoint updates cluster Vast DB settings
+      parameters:
+        - $ref: '#/parameters/ClusterId'
+        - $ref: '#/parameters/ClusterVastDBModifyParamsBody'
+      tags:
+        - clusters
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/ClusterVastDB'
   /clusters/get_snapshoted_paths/:
     get:
       operationId: "get_snapshoted_paths"
@@ -9062,9 +9171,14 @@ paths:
               nfs_enforce_tls:
                 type: "boolean"
                 description: "Accept NFSv3 and NFSv4.1 client mounts only if they are TLS-encrypted. Use only with Minimal Protection Level set to System or None."
+              s3_flavor_allow_free_listing:
+                type: boolean
+                description: Allow NFS clients freely list bucket views and their subdirectories, regardless of individual object permissions.
+              s3_flavor_detect_full_pathname:
+                type: boolean
+                description: When this flag is enabled in S3 flavor, NFS access to objects is determined based on the full resource names specified in the identity policies. When disabled, only the bucket name is compared to the identity policy.
             required:
               - "name"
-              - "nfs_root_squash"
           name: "ViewpolicyCreateParams"
       consumes:
         - "application/json"
@@ -9280,6 +9394,12 @@ paths:
               nfs_enforce_tls:
                 type: "boolean"
                 description: "Accept NFSv3 and NFSv4.1 client mounts only if they are TLS-encrypted. Use only with Minimal Protection Level set to System or None."
+              s3_flavor_allow_free_listing:
+                type: boolean
+                description: Allow NFS clients freely list bucket views and their subdirectories, regardless of individual object permissions.
+              s3_flavor_detect_full_pathname:
+                type: boolean
+                description: When this flag is enabled in S3 flavor, NFS access to objects is determined based on the full resource names specified in the identity policies. When disabled, only the bucket name is compared to the identity policy.
           name: "ViewpolicyModifyParams"
       consumes:
         - "application/json"
@@ -9744,6 +9864,7 @@ paths:
               qos_policy_id:
                 type: "integer"
                 description: "QoS Policy ID"
+                x-nullable: true
               qos_policy:
                 type: "string"
                 description: "QoS Policy"
@@ -12809,6 +12930,84 @@ paths:
       responses:
         200:
           description: "prometheus exporter metrics"
+  /prometheusmetrics/users:
+    get:
+      operationId: "prometheusmetricsusers_read"
+      summary: "prometheus users metrics"
+      x-cli-command: "prometheusmetrics"
+      description: "This endpoint gives prometheus exporter users metrics."
+      tags:
+        - "prometheusmetrics"
+      produces:
+        - text/plain
+      responses:
+        200:
+          description: "prometheus exporter users metrics"
+  /prometheusmetrics/defrag:
+    get:
+      operationId: "prometheusmetricsdefrag_read"
+      summary: "prometheus defrag metrics"
+      x-cli-command: "prometheusmetrics"
+      description: "This endpoint gives prometheus exporter defrag metrics."
+      tags:
+        - "prometheusmetrics"
+      produces:
+        - text/plain
+      responses:
+        200:
+          description: "prometheus exporter defrag metrics"
+  /prometheusmetrics/views:
+    get:
+      operationId: "prometheusmetricsviews_read"
+      summary: "prometheus views metrics"
+      x-cli-command: "prometheusmetrics"
+      description: "This endpoint gives prometheus exporter views metrics."
+      tags:
+        - "prometheusmetrics"
+      produces:
+        - text/plain
+      responses:
+        200:
+          description: "prometheus exporter views metrics"
+  /prometheusmetrics/devices:
+    get:
+      operationId: "prometheusmetricsdevices_read"
+      summary: "prometheus devices metrics"
+      x-cli-command: "prometheusmetrics"
+      description: "This endpoint gives prometheus exporter devices metrics."
+      tags:
+        - "prometheusmetrics"
+      produces:
+        - text/plain
+      responses:
+        200:
+          description: "prometheus exporter devices metrics"
+  /prometheusmetrics/quotas:
+    get:
+      operationId: "prometheusmetricsquotas_read"
+      summary: "prometheus quotas metrics"
+      x-cli-command: "prometheusmetrics"
+      description: "This endpoint gives prometheus exporter quotas metrics."
+      tags:
+        - "prometheusmetrics"
+      produces:
+        - text/plain
+      responses:
+        200:
+          description: "prometheus exporter quotas metrics"
+  /prometheusmetrics/all:
+    get:
+      operationId: "prometheusmetricsall_read"
+      summary: "all prometheus metrics"
+      x-cli-command: "prometheusmetrics"
+      description: "This endpoint gives all prometheus exporter metrics."
+      tags:
+        - "prometheusmetrics"
+      produces:
+        - text/plain
+      responses:
+        200:
+          description: "all prometheus exporter metrics"
   /subnetmanager/:
     get:
       operationId: "subnetmanager_list"
@@ -13029,6 +13228,9 @@ paths:
               md_tool_addresses:
                 type: "string"
                 description: "A comma separated list of block addresses to send to md_tool_cli"
+              tcpdump_args:
+                type: "string"
+                description: "Additional arguments for running tcpdump"
           name: "SupportBundleCreateParams"
       consumes:
         - "application/json"
@@ -18813,9 +19015,18 @@ paths:
               source_dir:
                 type: "string"
                 description: "path to replicate"
+              tenant_id:
+                type: number
+                description: "local tenant id"
               policy_id:
                 type: "string"
                 description: "replication policy id"
+              target_exported_dir:
+                type: "string"
+                description: "path to replicate to"
+              remote_tenant_guid:
+                type: "string"
+                description: "remote tenant guid"
               enabled:
                 type: "boolean"
                 description: "enable/pause replication stream"
@@ -21374,9 +21585,6 @@ paths:
               enable:
                 type: boolean
                 description: Status of enabling Vast Catalog Config
-              splits:
-                type: integer
-                description: The number of splits used for query_data scanning speed
           name: VastCatalogConfigModifyParams
       tags:
         - vastcatalogconfig
@@ -21723,6 +21931,11 @@ parameters:
     schema:
       $ref: '#/definitions/ClusterAuditing'
     name: ClusterAuditingParamsBody
+  ClusterVastDBModifyParamsBody:
+    in: body
+    schema:
+      $ref: '#/definitions/ClusterVastDBModify'
+    name: ClusterVastDBModifyParamsBody
   VastCatalogConfigQueryData:
     in: body
     schema:

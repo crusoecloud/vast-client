@@ -87,7 +87,7 @@ type View struct {
 	// Physical Capacity
 	PhysicalCapacity *int32 `json:"physical_capacity,omitempty"`
 	// Logical Capacity
-	LogicalCapacity *int32 `json:"logical_capacity,omitempty"`
+	LogicalCapacity *int64 `json:"logical_capacity,omitempty"`
 	// Indicates whether the view should support simultaneous access to NFS3/NFS4/SMB protocols.
 	NfsInteropFlags *string `json:"nfs_interop_flags,omitempty"`
 	IsRemote *bool `json:"is_remote,omitempty"`
@@ -1307,9 +1307,9 @@ func (o *View) SetPhysicalCapacity(v int32) {
 }
 
 // GetLogicalCapacity returns the LogicalCapacity field value if set, zero value otherwise.
-func (o *View) GetLogicalCapacity() int32 {
+func (o *View) GetLogicalCapacity() int64 {
 	if o == nil || IsNil(o.LogicalCapacity) {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.LogicalCapacity
@@ -1317,7 +1317,7 @@ func (o *View) GetLogicalCapacity() int32 {
 
 // GetLogicalCapacityOk returns a tuple with the LogicalCapacity field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *View) GetLogicalCapacityOk() (*int32, bool) {
+func (o *View) GetLogicalCapacityOk() (*int64, bool) {
 	if o == nil || IsNil(o.LogicalCapacity) {
 		return nil, false
 	}
@@ -1333,8 +1333,8 @@ func (o *View) HasLogicalCapacity() bool {
 	return false
 }
 
-// SetLogicalCapacity gets a reference to the given int32 and assigns it to the LogicalCapacity field.
-func (o *View) SetLogicalCapacity(v int32) {
+// SetLogicalCapacity gets a reference to the given int64 and assigns it to the LogicalCapacity field.
+func (o *View) SetLogicalCapacity(v int64) {
 	o.LogicalCapacity = &v
 }
 

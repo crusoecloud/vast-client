@@ -1823,6 +1823,7 @@ definitions:
         description: The amount of time in which the file/object is protected. This is mandatory if an S3 retention mode is set.
       physical_capacity:
         type: integer
+        format: int64
         description: Physical Capacity
       logical_capacity:
         type: integer

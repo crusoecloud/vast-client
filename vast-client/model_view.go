@@ -85,7 +85,7 @@ type View struct {
 	// The amount of time in which the file/object is protected. This is mandatory if an S3 retention mode is set.
 	DefaultRetentionPeriod *string `json:"default_retention_period,omitempty"`
 	// Physical Capacity
-	PhysicalCapacity *int32 `json:"physical_capacity,omitempty"`
+	PhysicalCapacity *int64 `json:"physical_capacity,omitempty"`
 	// Logical Capacity
 	LogicalCapacity *int64 `json:"logical_capacity,omitempty"`
 	// Indicates whether the view should support simultaneous access to NFS3/NFS4/SMB protocols.
@@ -1275,9 +1275,9 @@ func (o *View) SetDefaultRetentionPeriod(v string) {
 }
 
 // GetPhysicalCapacity returns the PhysicalCapacity field value if set, zero value otherwise.
-func (o *View) GetPhysicalCapacity() int32 {
+func (o *View) GetPhysicalCapacity() int64 {
 	if o == nil || IsNil(o.PhysicalCapacity) {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.PhysicalCapacity
@@ -1285,7 +1285,7 @@ func (o *View) GetPhysicalCapacity() int32 {
 
 // GetPhysicalCapacityOk returns a tuple with the PhysicalCapacity field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *View) GetPhysicalCapacityOk() (*int32, bool) {
+func (o *View) GetPhysicalCapacityOk() (*int64, bool) {
 	if o == nil || IsNil(o.PhysicalCapacity) {
 		return nil, false
 	}
@@ -1301,8 +1301,8 @@ func (o *View) HasPhysicalCapacity() bool {
 	return false
 }
 
-// SetPhysicalCapacity gets a reference to the given int32 and assigns it to the PhysicalCapacity field.
-func (o *View) SetPhysicalCapacity(v int32) {
+// SetPhysicalCapacity gets a reference to the given int64 and assigns it to the PhysicalCapacity field.
+func (o *View) SetPhysicalCapacity(v int64) {
 	o.PhysicalCapacity = &v
 }
 

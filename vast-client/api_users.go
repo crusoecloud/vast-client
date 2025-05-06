@@ -1073,7 +1073,7 @@ func (a *UsersAPIService) UsersPartialUpdateExecute(r UsersAPIUsersPartialUpdate
 type UsersAPIUsersQueryRequest struct {
 	ctx context.Context
 	ApiService *UsersAPIService
-	uid *string
+	uid *int32
 	username *string
 	sid *string
 	vid *string
@@ -1083,7 +1083,7 @@ type UsersAPIUsersQueryRequest struct {
 }
 
 // NFS UID
-func (r UsersAPIUsersQueryRequest) Uid(uid string) UsersAPIUsersQueryRequest {
+func (r UsersAPIUsersQueryRequest) Uid(uid int32) UsersAPIUsersQueryRequest {
 	r.uid = &uid
 	return r
 }

@@ -712,6 +712,156 @@ func (a *TenantsAPIService) RotateEncryptionGroupKeyExecute(r TenantsAPIRotateEn
 	return localVarHTTPResponse, nil
 }
 
+// this was manually constructed via the swagger definition shown below,
+// and will be replaced when VAST provides an updated vast_swagger_api.yaml file.
+/*
+  /tenants/{id}/client_ip_ranges/:
+    patch:
+      operationId: tenants_client_ip_ranges
+      description: This endpoint presents the Tenants.
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Tenant'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Tenant'
+      tags:
+        - tenants
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this tenant.
+        required: true
+        type: integer
+*/
+
+// TenantsClientIpRangesPatchRequest struct for TenantsAPITenantsClientIpRangesRequest
+type TenantsClientIpRangesPatchRequest struct {
+	// Client IPs to add to the tenant
+	ClientIpRangesToAdd [][]string `json:"client_ip_ranges_to_add,omitempty"`
+	// Client IPs to remove from the tenant
+	ClientIpRangesToRemove [][]string `json:"client_ip_ranges_to_remove,omitempty"`
+}
+
+type TenantsAPITenantsClientIpRangesRequest struct {
+	ctx context.Context
+	ApiService *TenantsAPIService
+	id int32
+	requestParams *TenantsClientIpRangesPatchRequest
+}
+
+func (r TenantsAPITenantsClientIpRangesRequest) TenantClientIpRangesParams(requestParams TenantsClientIpRangesPatchRequest) TenantsAPITenantsClientIpRangesRequest {
+	r.requestParams = &requestParams
+	return r
+}
+
+func (r TenantsAPITenantsClientIpRangesRequest) Execute() (*Tenant, *http.Response, error) {
+	return r.ApiService.TenantsClientIpRangesExecute(r)
+}
+
+/*
+TenantsClientIpRanges Method for TenantsClientIpRanges
+
+This endpoint presents the Tenants.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id A unique integer value identifying this tenant.
+ @return TenantsAPITenantsClientIpRangesRequest
+*/
+func (a *TenantsAPIService) TenantsClientIpRanges(ctx context.Context, id int32) TenantsAPITenantsClientIpRangesRequest {
+	return TenantsAPITenantsClientIpRangesRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return Tenant
+func (a *TenantsAPIService) TenantsClientIpRangesExecute(r TenantsAPITenantsClientIpRangesRequest) (*Tenant, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPatch
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *Tenant
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TenantsAPIService.TenantsClientIpRanges")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/tenants/{id}/client_ip_ranges/"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.requestParams == nil {
+		return localVarReturnValue, nil, reportError("data is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"*/*"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.requestParams
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type TenantsAPITenantsCreateRequest struct {
 	ctx context.Context
 	ApiService *TenantsAPIService

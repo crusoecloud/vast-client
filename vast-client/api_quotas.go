@@ -19,14 +19,13 @@ import (
 	"strings"
 )
 
-
 // QuotasAPIService QuotasAPI service
 type QuotasAPIService service
 
 type QuotasAPIQuotaRefreshUserQuotasRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *QuotasAPIService
-	id string
+	id         string
 }
 
 func (r QuotasAPIQuotaRefreshUserQuotasRequest) Execute() (*http.Response, error) {
@@ -36,24 +35,24 @@ func (r QuotasAPIQuotaRefreshUserQuotasRequest) Execute() (*http.Response, error
 /*
 QuotaRefreshUserQuotas Refresh user quotas of a quota
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id Quota ID
- @return QuotasAPIQuotaRefreshUserQuotasRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id Quota ID
+	@return QuotasAPIQuotaRefreshUserQuotasRequest
 */
 func (a *QuotasAPIService) QuotaRefreshUserQuotas(ctx context.Context, id string) QuotasAPIQuotaRefreshUserQuotasRequest {
 	return QuotasAPIQuotaRefreshUserQuotasRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *QuotasAPIService) QuotaRefreshUserQuotasExecute(r QuotasAPIQuotaRefreshUserQuotasRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPatch
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "QuotasAPIService.QuotaRefreshUserQuotas")
@@ -114,8 +113,8 @@ func (a *QuotasAPIService) QuotaRefreshUserQuotasExecute(r QuotasAPIQuotaRefresh
 }
 
 type QuotasAPIQuotasCreateRequest struct {
-	ctx context.Context
-	ApiService *QuotasAPIService
+	ctx               context.Context
+	ApiService        *QuotasAPIService
 	quotaCreateParams *QuotasCreateRequest
 }
 
@@ -131,24 +130,25 @@ func (r QuotasAPIQuotasCreateRequest) Execute() (*Quota, *http.Response, error) 
 /*
 QuotasCreate Create a Quota
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return QuotasAPIQuotasCreateRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return QuotasAPIQuotasCreateRequest
 */
 func (a *QuotasAPIService) QuotasCreate(ctx context.Context) QuotasAPIQuotasCreateRequest {
 	return QuotasAPIQuotasCreateRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return Quota
+//
+//	@return Quota
 func (a *QuotasAPIService) QuotasCreateExecute(r QuotasAPIQuotasCreateRequest) (*Quota, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Quota
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Quota
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "QuotasAPIService.QuotasCreate")
@@ -219,9 +219,9 @@ func (a *QuotasAPIService) QuotasCreateExecute(r QuotasAPIQuotasCreateRequest) (
 }
 
 type QuotasAPIQuotasDeleteRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *QuotasAPIService
-	id string
+	id         string
 }
 
 func (r QuotasAPIQuotasDeleteRequest) Execute() (*http.Response, error) {
@@ -233,24 +233,24 @@ QuotasDelete Delete Quota
 
 This endpoint deletes a quota.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id Quota ID
- @return QuotasAPIQuotasDeleteRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id Quota ID
+	@return QuotasAPIQuotasDeleteRequest
 */
 func (a *QuotasAPIService) QuotasDelete(ctx context.Context, id string) QuotasAPIQuotasDeleteRequest {
 	return QuotasAPIQuotasDeleteRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *QuotasAPIService) QuotasDeleteExecute(r QuotasAPIQuotasDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "QuotasAPIService.QuotasDelete")
@@ -311,18 +311,18 @@ func (a *QuotasAPIService) QuotasDeleteExecute(r QuotasAPIQuotasDeleteRequest) (
 }
 
 type QuotasAPIQuotasListRequest struct {
-	ctx context.Context
-	ApiService *QuotasAPIService
-	page *string
-	pageSize *string
-	name *string
-	hardLimit *string
-	softLimit *string
-	softLimitInodes *string
-	hardLimitInodes *string
-	systemId *string
-	showUserRules *bool
-	tenantId *int32
+	ctx                 context.Context
+	ApiService          *QuotasAPIService
+	page                *string
+	pageSize            *string
+	name                *string
+	hardLimit           *string
+	softLimit           *string
+	softLimitInodes     *string
+	hardLimitInodes     *string
+	systemId            *string
+	showUserRules       *bool
+	tenantId            *int32
 	tenantNameIcontains *string
 }
 
@@ -387,29 +387,143 @@ func (r QuotasAPIQuotasListRequest) Execute() ([]Quota, *http.Response, error) {
 	return r.ApiService.QuotasListExecute(r)
 }
 
+func (r QuotasAPIQuotasListRequest) ExecutePaginated() (PaginatedQuotaResponse, *http.Response, error) {
+	return r.ApiService.QuotasListExecutePaginated(r)
+}
+
 /*
 QuotasList List Quotas
 
 This endpoint lists quotas. The parameters enable you to filter the list.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return QuotasAPIQuotasListRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return QuotasAPIQuotasListRequest
 */
 func (a *QuotasAPIService) QuotasList(ctx context.Context) QuotasAPIQuotasListRequest {
 	return QuotasAPIQuotasListRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
-//  @return []Quota
+//
+//	@return []Quota
 func (a *QuotasAPIService) QuotasListExecute(r QuotasAPIQuotasListRequest) ([]Quota, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []Quota
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []Quota
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "QuotasAPIService.QuotasList")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/quotas/"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "")
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page_size", r.pageSize, "")
+	}
+	if r.name != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name", r.name, "")
+	}
+	if r.hardLimit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "hard_limit", r.hardLimit, "")
+	}
+	if r.softLimit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "soft_limit", r.softLimit, "")
+	}
+	if r.softLimitInodes != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "soft_limit_inodes", r.softLimitInodes, "")
+	}
+	if r.hardLimitInodes != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "hard_limit_inodes", r.hardLimitInodes, "")
+	}
+	if r.systemId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "system_id", r.systemId, "")
+	}
+	if r.showUserRules != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "show_user_rules", r.showUserRules, "")
+	}
+	if r.tenantId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "tenant_id", r.tenantId, "")
+	}
+	if r.tenantNameIcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "tenant_name__icontains", r.tenantNameIcontains, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"*/*"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+// Execute executes the request
+//
+//	@return PaginatedQuotaResponse
+func (a *QuotasAPIService) QuotasListExecutePaginated(r QuotasAPIQuotasListRequest) (PaginatedQuotaResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue PaginatedQuotaResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "QuotasAPIService.QuotasList")
@@ -511,9 +625,9 @@ func (a *QuotasAPIService) QuotasListExecute(r QuotasAPIQuotasListRequest) ([]Qu
 }
 
 type QuotasAPIQuotasPartialUpdateRequest struct {
-	ctx context.Context
-	ApiService *QuotasAPIService
-	id string
+	ctx               context.Context
+	ApiService        *QuotasAPIService
+	id                string
 	quotaModifyParams *QuotasPartialUpdateRequest
 }
 
@@ -531,24 +645,24 @@ QuotasPartialUpdate Modify Quota
 
 This endpoint modifies a quota.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id Quota ID
- @return QuotasAPIQuotasPartialUpdateRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id Quota ID
+	@return QuotasAPIQuotasPartialUpdateRequest
 */
 func (a *QuotasAPIService) QuotasPartialUpdate(ctx context.Context, id string) QuotasAPIQuotasPartialUpdateRequest {
 	return QuotasAPIQuotasPartialUpdateRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *QuotasAPIService) QuotasPartialUpdateExecute(r QuotasAPIQuotasPartialUpdateRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPatch
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "QuotasAPIService.QuotasPartialUpdate")
@@ -611,9 +725,9 @@ func (a *QuotasAPIService) QuotasPartialUpdateExecute(r QuotasAPIQuotasPartialUp
 }
 
 type QuotasAPIQuotasReadRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *QuotasAPIService
-	id string
+	id         string
 }
 
 func (r QuotasAPIQuotasReadRequest) Execute() (*Quota, *http.Response, error) {
@@ -625,26 +739,27 @@ QuotasRead Return details of a quota.
 
 This endpoint returns details of a specified quota.
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id Quota ID
- @return QuotasAPIQuotasReadRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id Quota ID
+	@return QuotasAPIQuotasReadRequest
 */
 func (a *QuotasAPIService) QuotasRead(ctx context.Context, id string) QuotasAPIQuotasReadRequest {
 	return QuotasAPIQuotasReadRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
-//  @return Quota
+//
+//	@return Quota
 func (a *QuotasAPIService) QuotasReadExecute(r QuotasAPIQuotasReadRequest) (*Quota, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Quota
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Quota
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "QuotasAPIService.QuotasRead")
@@ -714,9 +829,9 @@ func (a *QuotasAPIService) QuotasReadExecute(r QuotasAPIQuotasReadRequest) (*Quo
 }
 
 type QuotasAPIQuotasRecalcRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *QuotasAPIService
-	id *string
+	id         *string
 }
 
 // Quota ID - if not given, will be applied to all quotas
@@ -732,22 +847,22 @@ func (r QuotasAPIQuotasRecalcRequest) Execute() (*http.Response, error) {
 /*
 QuotasRecalc Start recalculation flow all quotas
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return QuotasAPIQuotasRecalcRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return QuotasAPIQuotasRecalcRequest
 */
 func (a *QuotasAPIService) QuotasRecalc(ctx context.Context) QuotasAPIQuotasRecalcRequest {
 	return QuotasAPIQuotasRecalcRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *QuotasAPIService) QuotasRecalcExecute(r QuotasAPIQuotasRecalcRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPatch
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "QuotasAPIService.QuotasRecalc")
@@ -810,7 +925,7 @@ func (a *QuotasAPIService) QuotasRecalcExecute(r QuotasAPIQuotasRecalcRequest) (
 }
 
 type QuotasAPIQuotasRecalcStopRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *QuotasAPIService
 }
 
@@ -821,22 +936,22 @@ func (r QuotasAPIQuotasRecalcStopRequest) Execute() (*http.Response, error) {
 /*
 QuotasRecalcStop Stop recalculation flow for all quotas
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @return QuotasAPIQuotasRecalcStopRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return QuotasAPIQuotasRecalcStopRequest
 */
 func (a *QuotasAPIService) QuotasRecalcStop(ctx context.Context) QuotasAPIQuotasRecalcStopRequest {
 	return QuotasAPIQuotasRecalcStopRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *QuotasAPIService) QuotasRecalcStopExecute(r QuotasAPIQuotasRecalcStopRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPatch
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "QuotasAPIService.QuotasRecalcStop")
@@ -896,9 +1011,9 @@ func (a *QuotasAPIService) QuotasRecalcStopExecute(r QuotasAPIQuotasRecalcStopRe
 }
 
 type QuotasAPIQuotasResetGracePeriodRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *QuotasAPIService
-	id string
+	id         string
 }
 
 func (r QuotasAPIQuotasResetGracePeriodRequest) Execute() (*http.Response, error) {
@@ -908,24 +1023,24 @@ func (r QuotasAPIQuotasResetGracePeriodRequest) Execute() (*http.Response, error
 /*
 QuotasResetGracePeriod Rest the grace period countdown after soft limit is exceeded
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param id Quota ID
- @return QuotasAPIQuotasResetGracePeriodRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param id Quota ID
+	@return QuotasAPIQuotasResetGracePeriodRequest
 */
 func (a *QuotasAPIService) QuotasResetGracePeriod(ctx context.Context, id string) QuotasAPIQuotasResetGracePeriodRequest {
 	return QuotasAPIQuotasResetGracePeriodRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *QuotasAPIService) QuotasResetGracePeriodExecute(r QuotasAPIQuotasResetGracePeriodRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPatch
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "QuotasAPIService.QuotasResetGracePeriod")

@@ -23,12 +23,12 @@ type UsersAddRequest struct {
 	// User name
 	Name string `json:"name"`
 	// NFS UID
-	Uid int32 `json:"uid"`
+	Uid int32 `json:"uid,omitempty"`
 	// Leading GID
 	LeadingGid *int32 `json:"leading_gid,omitempty"`
 	// list of GIDs
 	Gids []int32 `json:"gids,omitempty"`
-	// 
+	//
 	Local *bool `json:"local,omitempty"`
 	// Set to true to give the user permission to create S3 buckets
 	AllowCreateBucket *bool `json:"allow_create_bucket,omitempty"`
@@ -37,7 +37,7 @@ type UsersAddRequest struct {
 	// Set to true to give the user S3 superuser permission
 	S3Superuser *bool `json:"s3_superuser,omitempty"`
 	// list of s3 policy ids
-	S3PoliciesIds map[string]interface{} `json:"s3_policies_ids,omitempty"`
+	S3PoliciesIds        map[string]interface{} `json:"s3_policies_ids,omitempty"`
 	AdditionalProperties map[string]interface{}
 }
 
@@ -335,7 +335,7 @@ func (o *UsersAddRequest) SetS3PoliciesIds(v map[string]interface{}) {
 }
 
 func (o UsersAddRequest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -345,7 +345,9 @@ func (o UsersAddRequest) MarshalJSON() ([]byte, error) {
 func (o UsersAddRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["name"] = o.Name
-	toSerialize["uid"] = o.Uid
+	if o.Uid != 0 {
+		toSerialize["uid"] = o.Uid
+	}
 	if !IsNil(o.LeadingGid) {
 		toSerialize["leading_gid"] = o.LeadingGid
 	}
@@ -381,7 +383,6 @@ func (o *UsersAddRequest) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"name",
-		"uid",
 	}
 
 	allProperties := make(map[string]interface{})
@@ -389,10 +390,10 @@ func (o *UsersAddRequest) UnmarshalJSON(data []byte) (err error) {
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -461,5 +462,3 @@ func (v *NullableUsersAddRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

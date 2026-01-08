@@ -19,13 +19,12 @@ import (
 	"strings"
 )
 
-
 // UsersAPIService UsersAPI service
 type UsersAPIService service
 
 type UsersAPIUsersAddRequest struct {
-	ctx context.Context
-	ApiService *UsersAPIService
+	ctx           context.Context
+	ApiService    *UsersAPIService
 	userAddParams *UsersAddRequest
 }
 
@@ -49,7 +48,7 @@ This endpoint adds a user to the local provider.
 func (a *UsersAPIService) UsersAdd(ctx context.Context) UsersAPIUsersAddRequest {
 	return UsersAPIUsersAddRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -57,10 +56,10 @@ func (a *UsersAPIService) UsersAdd(ctx context.Context) UsersAPIUsersAddRequest 
 //  @return User
 func (a *UsersAPIService) UsersAddExecute(r UsersAPIUsersAddRequest) (*User, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *User
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *User
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UsersAdd")
@@ -131,9 +130,9 @@ func (a *UsersAPIService) UsersAddExecute(r UsersAPIUsersAddRequest) (*User, *ht
 }
 
 type UsersAPIUsersDeleteRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *UsersAPIService
-	id string
+	id         string
 }
 
 func (r UsersAPIUsersDeleteRequest) Execute() (*http.Response, error) {
@@ -152,17 +151,17 @@ This endpoint deletes a specified user.
 func (a *UsersAPIService) UsersDelete(ctx context.Context, id string) UsersAPIUsersDeleteRequest {
 	return UsersAPIUsersDeleteRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *UsersAPIService) UsersDeleteExecute(r UsersAPIUsersDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UsersDelete")
@@ -223,9 +222,9 @@ func (a *UsersAPIService) UsersDeleteExecute(r UsersAPIUsersDeleteRequest) (*htt
 }
 
 type UsersAPIUsersGenerateKeyRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *UsersAPIService
-	id string
+	id         string
 }
 
 func (r UsersAPIUsersGenerateKeyRequest) Execute() (*UserKeyPair, *http.Response, error) {
@@ -244,8 +243,8 @@ This endpoint generates an S3 access key pair for a user.
 func (a *UsersAPIService) UsersGenerateKey(ctx context.Context, id string) UsersAPIUsersGenerateKeyRequest {
 	return UsersAPIUsersGenerateKeyRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
@@ -253,10 +252,10 @@ func (a *UsersAPIService) UsersGenerateKey(ctx context.Context, id string) Users
 //  @return UserKeyPair
 func (a *UsersAPIService) UsersGenerateKeyExecute(r UsersAPIUsersGenerateKeyRequest) (*UserKeyPair, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *UserKeyPair
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *UserKeyPair
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UsersGenerateKey")
@@ -325,11 +324,122 @@ func (a *UsersAPIService) UsersGenerateKeyExecute(r UsersAPIUsersGenerateKeyRequ
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type UsersAPIUsersCreateAccessKeyRequest struct {
+	ctx                        context.Context
+	ApiService                 *UsersAPIService
+	id                         string
+	usersCreateAccessKeyParams *UsersCreateAccessKeyRequest
+}
+
+func (r UsersAPIUsersCreateAccessKeyRequest) UsersCreateAccessKeyParams(usersCreateAccessKeyParams UsersCreateAccessKeyRequest) UsersAPIUsersCreateAccessKeyRequest {
+	r.usersCreateAccessKeyParams = &usersCreateAccessKeyParams
+	return r
+}
+
+func (r UsersAPIUsersCreateAccessKeyRequest) Execute() (*UserKeyPair, *http.Response, error) {
+	return r.ApiService.UsersCreateAccessKeyExecute(r)
+}
+
+/*
+UsersCreateAccessKey Create S3 access key pair for a User with custom credentials
+
+This endpoint creates an S3 access key pair for a user with specified access_key and secret_key.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id user ID
+ @return UsersAPIUsersCreateAccessKeyRequest
+*/
+func (a *UsersAPIService) UsersCreateAccessKey(ctx context.Context, id string) UsersAPIUsersCreateAccessKeyRequest {
+	return UsersAPIUsersCreateAccessKeyRequest{
+		ApiService: a,
+		ctx:        ctx,
+		id:         id,
+	}
+}
+
+//  @return UserKeyPair
+func (a *UsersAPIService) UsersCreateAccessKeyExecute(r UsersAPIUsersCreateAccessKeyRequest) (*UserKeyPair, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *UserKeyPair
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UsersCreateAccessKey")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/users/{id}/access_keys/"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"*/*"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.usersCreateAccessKeyParams
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type UsersAPIUsersListRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *UsersAPIService
-	page *string
-	pageSize *string
+	page       *string
+	pageSize   *string
+	name       *string
 }
 
 func (r UsersAPIUsersListRequest) Page(page string) UsersAPIUsersListRequest {
@@ -339,6 +449,11 @@ func (r UsersAPIUsersListRequest) Page(page string) UsersAPIUsersListRequest {
 
 func (r UsersAPIUsersListRequest) PageSize(pageSize string) UsersAPIUsersListRequest {
 	r.pageSize = &pageSize
+	return r
+}
+
+func (r UsersAPIUsersListRequest) Name(name string) UsersAPIUsersListRequest {
+	r.name = &name
 	return r
 }
 
@@ -357,7 +472,7 @@ This endpoint lists local users.
 func (a *UsersAPIService) UsersList(ctx context.Context) UsersAPIUsersListRequest {
 	return UsersAPIUsersListRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -365,10 +480,10 @@ func (a *UsersAPIService) UsersList(ctx context.Context) UsersAPIUsersListReques
 //  @return []User
 func (a *UsersAPIService) UsersListExecute(r UsersAPIUsersListRequest) ([]User, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []User
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []User
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UsersList")
@@ -387,6 +502,9 @@ func (a *UsersAPIService) UsersListExecute(r UsersAPIUsersListRequest) ([]User, 
 	}
 	if r.pageSize != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "page_size", r.pageSize, "")
+	}
+	if r.name != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name", r.name, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -443,9 +561,9 @@ func (a *UsersAPIService) UsersListExecute(r UsersAPIUsersListRequest) ([]User, 
 }
 
 type UsersAPIUsersModifyKeyRequest struct {
-	ctx context.Context
-	ApiService *UsersAPIService
-	id string
+	ctx                 context.Context
+	ApiService          *UsersAPIService
+	id                  string
 	userModifyKeyParams *UsersModifyKeyRequest
 }
 
@@ -470,17 +588,17 @@ This endpoint enables/disables a specified S3 access key pair for a user.
 func (a *UsersAPIService) UsersModifyKey(ctx context.Context, id string) UsersAPIUsersModifyKeyRequest {
 	return UsersAPIUsersModifyKeyRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *UsersAPIService) UsersModifyKeyExecute(r UsersAPIUsersModifyKeyRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPatch
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UsersModifyKey")
@@ -543,11 +661,11 @@ func (a *UsersAPIService) UsersModifyKeyExecute(r UsersAPIUsersModifyKeyRequest)
 }
 
 type UsersAPIUsersNamesRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *UsersAPIService
-	prefix *string
-	domain *string
-	tenantId *int32
+	prefix     *string
+	domain     *string
+	tenantId   *int32
 }
 
 // Prefix to find the user
@@ -583,7 +701,7 @@ This endpoint queries a user by prefix and domain from ActiveDirectory domains
 func (a *UsersAPIService) UsersNames(ctx context.Context) UsersAPIUsersNamesRequest {
 	return UsersAPIUsersNamesRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -591,10 +709,10 @@ func (a *UsersAPIService) UsersNames(ctx context.Context) UsersAPIUsersNamesRequ
 //  @return map[string]interface{}
 func (a *UsersAPIService) UsersNamesExecute(r UsersAPIUsersNamesRequest) (map[string]interface{}, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  map[string]interface{}
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UsersNames")
@@ -672,8 +790,8 @@ func (a *UsersAPIService) UsersNamesExecute(r UsersAPIUsersNamesRequest) (map[st
 }
 
 type UsersAPIUsersNonLocalGenerateKeyRequest struct {
-	ctx context.Context
-	ApiService *UsersAPIService
+	ctx               context.Context
+	ApiService        *UsersAPIService
 	generateKeyParams *UsersNonLocalGenerateKeyRequest
 }
 
@@ -697,7 +815,7 @@ This endpoint generates an S3 access key pair for a non local user
 func (a *UsersAPIService) UsersNonLocalGenerateKey(ctx context.Context) UsersAPIUsersNonLocalGenerateKeyRequest {
 	return UsersAPIUsersNonLocalGenerateKeyRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -705,10 +823,10 @@ func (a *UsersAPIService) UsersNonLocalGenerateKey(ctx context.Context) UsersAPI
 //  @return UserKeyPair
 func (a *UsersAPIService) UsersNonLocalGenerateKeyExecute(r UsersAPIUsersNonLocalGenerateKeyRequest) (*UserKeyPair, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *UserKeyPair
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *UserKeyPair
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UsersNonLocalGenerateKey")
@@ -779,8 +897,8 @@ func (a *UsersAPIService) UsersNonLocalGenerateKeyExecute(r UsersAPIUsersNonLoca
 }
 
 type UsersAPIUsersNonLocalModifyKeyRequest struct {
-	ctx context.Context
-	ApiService *UsersAPIService
+	ctx                         context.Context
+	ApiService                  *UsersAPIService
 	userNonLocalModifyKeyParams *UsersNonLocalModifyKeyRequest
 }
 
@@ -804,16 +922,16 @@ This endpoint enables or disables an S3 access key pair for a non local user who
 func (a *UsersAPIService) UsersNonLocalModifyKey(ctx context.Context) UsersAPIUsersNonLocalModifyKeyRequest {
 	return UsersAPIUsersNonLocalModifyKeyRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *UsersAPIService) UsersNonLocalModifyKeyExecute(r UsersAPIUsersNonLocalModifyKeyRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPatch
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UsersNonLocalModifyKey")
@@ -875,8 +993,8 @@ func (a *UsersAPIService) UsersNonLocalModifyKeyExecute(r UsersAPIUsersNonLocalM
 }
 
 type UsersAPIUsersNonLocalRemoveKeyRequest struct {
-	ctx context.Context
-	ApiService *UsersAPIService
+	ctx                         context.Context
+	ApiService                  *UsersAPIService
 	userNonLocalRemoveKeyParams *UsersNonLocalRemoveKeyRequest
 }
 
@@ -900,16 +1018,16 @@ This endpoint removes an S3 access key pair for a non local user whose attribute
 func (a *UsersAPIService) UsersNonLocalRemoveKey(ctx context.Context) UsersAPIUsersNonLocalRemoveKeyRequest {
 	return UsersAPIUsersNonLocalRemoveKeyRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *UsersAPIService) UsersNonLocalRemoveKeyExecute(r UsersAPIUsersNonLocalRemoveKeyRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UsersNonLocalRemoveKey")
@@ -971,9 +1089,9 @@ func (a *UsersAPIService) UsersNonLocalRemoveKeyExecute(r UsersAPIUsersNonLocalR
 }
 
 type UsersAPIUsersPartialUpdateRequest struct {
-	ctx context.Context
-	ApiService *UsersAPIService
-	id string
+	ctx              context.Context
+	ApiService       *UsersAPIService
+	id               string
 	userModifyParams *UsersPartialUpdateRequest
 }
 
@@ -998,17 +1116,17 @@ This endpoint modifies a local user.
 func (a *UsersAPIService) UsersPartialUpdate(ctx context.Context, id string) UsersAPIUsersPartialUpdateRequest {
 	return UsersAPIUsersPartialUpdateRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *UsersAPIService) UsersPartialUpdateExecute(r UsersAPIUsersPartialUpdateRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPatch
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UsersPartialUpdate")
@@ -1071,15 +1189,15 @@ func (a *UsersAPIService) UsersPartialUpdateExecute(r UsersAPIUsersPartialUpdate
 }
 
 type UsersAPIUsersQueryRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *UsersAPIService
-	uid *string
-	username *string
-	sid *string
-	vid *string
-	context *string
-	loginName *string
-	tenantId *int32
+	uid        *string
+	username   *string
+	sid        *string
+	vid        *string
+	context    *string
+	loginName  *string
+	tenantId   *int32
 }
 
 // NFS UID
@@ -1138,7 +1256,7 @@ This endpoint queries a user by an identifier.
 func (a *UsersAPIService) UsersQuery(ctx context.Context) UsersAPIUsersQueryRequest {
 	return UsersAPIUsersQueryRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -1146,10 +1264,10 @@ func (a *UsersAPIService) UsersQuery(ctx context.Context) UsersAPIUsersQueryRequ
 //  @return UserQueryData
 func (a *UsersAPIService) UsersQueryExecute(r UsersAPIUsersQueryRequest) (*UserQueryData, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *UserQueryData
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *UserQueryData
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UsersQuery")
@@ -1239,8 +1357,8 @@ func (a *UsersAPIService) UsersQueryExecute(r UsersAPIUsersQueryRequest) (*UserQ
 }
 
 type UsersAPIUsersQueryModifyRequest struct {
-	ctx context.Context
-	ApiService *UsersAPIService
+	ctx                   context.Context
+	ApiService            *UsersAPIService
 	userQueryModifyParams *UsersQueryModifyRequest
 }
 
@@ -1264,16 +1382,16 @@ This endpoint modifies a non-local user's S3 permissions. Specify the user by ei
 func (a *UsersAPIService) UsersQueryModify(ctx context.Context) UsersAPIUsersQueryModifyRequest {
 	return UsersAPIUsersQueryModifyRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *UsersAPIService) UsersQueryModifyExecute(r UsersAPIUsersQueryModifyRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPatch
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UsersQueryModify")
@@ -1335,9 +1453,9 @@ func (a *UsersAPIService) UsersQueryModifyExecute(r UsersAPIUsersQueryModifyRequ
 }
 
 type UsersAPIUsersReadRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *UsersAPIService
-	id string
+	id         string
 }
 
 func (r UsersAPIUsersReadRequest) Execute() (*User, *http.Response, error) {
@@ -1356,8 +1474,8 @@ This endpoint returns details of a specified user on the local provider.
 func (a *UsersAPIService) UsersRead(ctx context.Context, id string) UsersAPIUsersReadRequest {
 	return UsersAPIUsersReadRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
@@ -1365,10 +1483,10 @@ func (a *UsersAPIService) UsersRead(ctx context.Context, id string) UsersAPIUser
 //  @return User
 func (a *UsersAPIService) UsersReadExecute(r UsersAPIUsersReadRequest) (*User, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *User
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *User
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UsersRead")
@@ -1438,8 +1556,8 @@ func (a *UsersAPIService) UsersReadExecute(r UsersAPIUsersReadRequest) (*User, *
 }
 
 type UsersAPIUsersRefreshRequest struct {
-	ctx context.Context
-	ApiService *UsersAPIService
+	ctx               context.Context
+	ApiService        *UsersAPIService
 	userRefreshParams *UsersRefreshRequest
 }
 
@@ -1463,16 +1581,16 @@ This endpoint triggers a fresh query of the user from external providers.
 func (a *UsersAPIService) UsersRefresh(ctx context.Context) UsersAPIUsersRefreshRequest {
 	return UsersAPIUsersRefreshRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
 // Execute executes the request
 func (a *UsersAPIService) UsersRefreshExecute(r UsersAPIUsersRefreshRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPatch
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UsersRefresh")
@@ -1534,9 +1652,9 @@ func (a *UsersAPIService) UsersRefreshExecute(r UsersAPIUsersRefreshRequest) (*h
 }
 
 type UsersAPIUsersRemoveKeyRequest struct {
-	ctx context.Context
-	ApiService *UsersAPIService
-	id string
+	ctx                 context.Context
+	ApiService          *UsersAPIService
+	id                  string
 	userRemoveKeyParams *UsersRemoveKeyRequest
 }
 
@@ -1561,17 +1679,17 @@ This endpoint removes a specified S3 access key pair from a user.
 func (a *UsersAPIService) UsersRemoveKey(ctx context.Context, id string) UsersAPIUsersRemoveKeyRequest {
 	return UsersAPIUsersRemoveKeyRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *UsersAPIService) UsersRemoveKeyExecute(r UsersAPIUsersRemoveKeyRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.UsersRemoveKey")

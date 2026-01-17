@@ -20,7 +20,7 @@ var _ MappedNullable = &ViewpoliciesCreateRequest{}
 
 // ViewpoliciesCreateRequest struct for ViewpoliciesCreateRequest
 type ViewpoliciesCreateRequest struct {
-	// 
+	//
 	Name string `json:"name"`
 	// Frequency for updating the atime attribute of NFS files. atime is updated on read operations if the difference between the current time and the file's atime value is greater than the atime frequency. Specify as time in seconds. If not filled would use 3600s as default value.
 	AtimeFrequency *string `json:"atime_frequency,omitempty"`
@@ -36,7 +36,7 @@ type ViewpoliciesCreateRequest struct {
 	AllowedCharacters *string `json:"allowed_characters,omitempty"`
 	// Sets the VAST Cluster's NFS server to use 32bit file IDs. This setting supports legacy 32-bit applications running over NFS.
 	Use32bitFileid *bool `json:"use_32bit_fileid,omitempty"`
-	// 
+	//
 	ExposeIdInFsid *bool `json:"expose_id_in_fsid,omitempty"`
 	// Specify which NFS client hosts can access the view with read-write access. Specify array of hosts separated by commas. Each host can be specified as an IP address, a netgroup key beginning with @, a CIDR subnet or a range of IPs indicated by an IP address with a * as a wildcard in place of any of the 8-bit fields in the IP address.
 	ReadWrite []string `json:"read_write,omitempty"`
@@ -76,21 +76,21 @@ type ViewpoliciesCreateRequest struct {
 	SmbFileMode *int32 `json:"smb_file_mode,omitempty"`
 	// For multiprotocol views, if the security flavor is NFS, this parameter sets default unix permission bits for directories created by SMB clients. Use three digit numeric notation, each digit representing the user, group and others compontents of the permissions, in that order. Each digit is the sum of the read bit, write bit and execute bit. If reading is permitted, the read bit adds 4 to the component. If writing is permitted, the write bit adds 2 to the component. If execution is permitted, the execute bit adds 1 to the component.
 	SmbDirectoryMode *int32 `json:"smb_directory_mode,omitempty"`
-	// 
+	//
 	S3BucketFullControl []map[string]interface{} `json:"s3_bucket_full_control,omitempty"`
-	// 
+	//
 	S3ObjectAcl map[string]interface{} `json:"s3_object_acl,omitempty"`
-	// 
+	//
 	ClusterId *int32 `json:"cluster_id,omitempty"`
 	// Dedicate VIP Pools to the view policy. Specify VIP Pool IDs in a comma separated list.
 	VipPools []int32 `json:"vip_pools,omitempty"`
-	// 
-	NfsMinimalProtectionLevel *string `json:"nfs_minimal_protection_level,omitempty"`
-	S3Visibility []string `json:"s3_visibility,omitempty"`
-	S3VisibilityGroups []string `json:"s3_visibility_groups,omitempty"`
+	//
+	NfsMinimalProtectionLevel *string  `json:"nfs_minimal_protection_level,omitempty"`
+	S3Visibility              []string `json:"s3_visibility,omitempty"`
+	S3VisibilityGroups        []string `json:"s3_visibility_groups,omitempty"`
 	// apple sid
 	AppleSid *bool `json:"apple_sid,omitempty"`
-	SmbIsCa *bool `json:"smb_is_ca,omitempty"`
+	SmbIsCa  *bool `json:"smb_is_ca,omitempty"`
 	// This will enable object names that contain “//“ or “/../“ and are incompatible with other protocols
 	S3SpecialCharsSupport *bool `json:"s3_special_chars_support,omitempty"`
 	// Map of protocols audit configurations
@@ -102,14 +102,14 @@ type ViewpoliciesCreateRequest struct {
 	// Specifies whether to make the .snapshot directory visible in subdirectories of the View.
 	EnableVisibilityOfSnapshotDir *bool `json:"enable_visibility_of_snapshot_dir,omitempty"`
 	// Tenant ID
-	TenantId *int32 `json:"tenant_id,omitempty"`
+	TenantId *int32 `json:"tenant_id"`
 	// Accept NFSv3 and NFSv4.1 client mounts only if they are TLS-encrypted. Use only with Minimal Protection Level set to System or None.
 	NfsEnforceTls *bool `json:"nfs_enforce_tls,omitempty"`
 	// Allow NFS clients freely list bucket views and their subdirectories, regardless of individual object permissions.
 	S3FlavorAllowFreeListing *bool `json:"s3_flavor_allow_free_listing,omitempty"`
 	// When this flag is enabled in S3 flavor, NFS access to objects is determined based on the full resource names specified in the identity policies. When disabled, only the bucket name is compared to the identity policy.
 	S3FlavorDetectFullPathname *bool `json:"s3_flavor_detect_full_pathname,omitempty"`
-	AdditionalProperties map[string]interface{}
+	AdditionalProperties       map[string]interface{}
 }
 
 type _ViewpoliciesCreateRequest ViewpoliciesCreateRequest
@@ -1597,7 +1597,7 @@ func (o *ViewpoliciesCreateRequest) SetS3FlavorDetectFullPathname(v bool) {
 }
 
 func (o ViewpoliciesCreateRequest) MarshalJSON() ([]byte, error) {
-	toSerialize,err := o.ToMap()
+	toSerialize, err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
 	}
@@ -1730,9 +1730,9 @@ func (o ViewpoliciesCreateRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.EnableVisibilityOfSnapshotDir) {
 		toSerialize["enable_visibility_of_snapshot_dir"] = o.EnableVisibilityOfSnapshotDir
 	}
-	if !IsNil(o.TenantId) {
-		toSerialize["tenant_id"] = o.TenantId
-	}
+	// To allow null values in tenant_id for creating global view_policy
+	toSerialize["tenant_id"] = o.TenantId
+
 	if !IsNil(o.NfsEnforceTls) {
 		toSerialize["nfs_enforce_tls"] = o.NfsEnforceTls
 	}
@@ -1763,10 +1763,10 @@ func (o *ViewpoliciesCreateRequest) UnmarshalJSON(data []byte) (err error) {
 	err = json.Unmarshal(data, &allProperties)
 
 	if err != nil {
-		return err;
+		return err
 	}
 
-	for _, requiredProperty := range(requiredProperties) {
+	for _, requiredProperty := range requiredProperties {
 		if _, exists := allProperties[requiredProperty]; !exists {
 			return fmt.Errorf("no value given for required property %v", requiredProperty)
 		}
@@ -1872,5 +1872,3 @@ func (v *NullableViewpoliciesCreateRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

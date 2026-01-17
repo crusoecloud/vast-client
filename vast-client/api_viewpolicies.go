@@ -19,14 +19,13 @@ import (
 	"strings"
 )
 
-
 // ViewpoliciesAPIService ViewpoliciesAPI service
 type ViewpoliciesAPIService service
 
 type ViewpoliciesAPIAddRemoteMappingRequest struct {
-	ctx context.Context
-	ApiService *ViewpoliciesAPIService
-	id string
+	ctx                    context.Context
+	ApiService             *ViewpoliciesAPIService
+	id                     string
 	addRemoteMappingParams *AddRemoteMappingRequest
 }
 
@@ -49,17 +48,17 @@ AddRemoteMapping Method for AddRemoteMapping
 func (a *ViewpoliciesAPIService) AddRemoteMapping(ctx context.Context, id string) ViewpoliciesAPIAddRemoteMappingRequest {
 	return ViewpoliciesAPIAddRemoteMappingRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *ViewpoliciesAPIService) AddRemoteMappingExecute(r ViewpoliciesAPIAddRemoteMappingRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewpoliciesAPIService.AddRemoteMapping")
@@ -122,9 +121,9 @@ func (a *ViewpoliciesAPIService) AddRemoteMappingExecute(r ViewpoliciesAPIAddRem
 }
 
 type ViewpoliciesAPIRefreshNetgroupsRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ViewpoliciesAPIService
-	id string
+	id         string
 }
 
 func (r ViewpoliciesAPIRefreshNetgroupsRequest) Execute() (*http.Response, error) {
@@ -143,17 +142,17 @@ refresh View policy netgroups
 func (a *ViewpoliciesAPIService) RefreshNetgroups(ctx context.Context, id string) ViewpoliciesAPIRefreshNetgroupsRequest {
 	return ViewpoliciesAPIRefreshNetgroupsRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *ViewpoliciesAPIService) RefreshNetgroupsExecute(r ViewpoliciesAPIRefreshNetgroupsRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPatch
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewpoliciesAPIService.RefreshNetgroups")
@@ -214,9 +213,9 @@ func (a *ViewpoliciesAPIService) RefreshNetgroupsExecute(r ViewpoliciesAPIRefres
 }
 
 type ViewpoliciesAPIRemoveRemoteMappingRequest struct {
-	ctx context.Context
-	ApiService *ViewpoliciesAPIService
-	id string
+	ctx                       context.Context
+	ApiService                *ViewpoliciesAPIService
+	id                        string
 	removeRemoteMappingParams *RemoveRemoteMappingRequest
 }
 
@@ -239,17 +238,17 @@ RemoveRemoteMapping Method for RemoveRemoteMapping
 func (a *ViewpoliciesAPIService) RemoveRemoteMapping(ctx context.Context, id string) ViewpoliciesAPIRemoveRemoteMappingRequest {
 	return ViewpoliciesAPIRemoveRemoteMappingRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *ViewpoliciesAPIService) RemoveRemoteMappingExecute(r ViewpoliciesAPIRemoveRemoteMappingRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewpoliciesAPIService.RemoveRemoteMapping")
@@ -312,8 +311,8 @@ func (a *ViewpoliciesAPIService) RemoveRemoteMappingExecute(r ViewpoliciesAPIRem
 }
 
 type ViewpoliciesAPIViewpoliciesCreateRequest struct {
-	ctx context.Context
-	ApiService *ViewpoliciesAPIService
+	ctx                    context.Context
+	ApiService             *ViewpoliciesAPIService
 	viewpolicyCreateParams *ViewpoliciesCreateRequest
 }
 
@@ -337,7 +336,7 @@ This endpoint creates a view policy.
 func (a *ViewpoliciesAPIService) ViewpoliciesCreate(ctx context.Context) ViewpoliciesAPIViewpoliciesCreateRequest {
 	return ViewpoliciesAPIViewpoliciesCreateRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -345,10 +344,10 @@ func (a *ViewpoliciesAPIService) ViewpoliciesCreate(ctx context.Context) Viewpol
 //  @return ViewPolicy
 func (a *ViewpoliciesAPIService) ViewpoliciesCreateExecute(r ViewpoliciesAPIViewpoliciesCreateRequest) (*ViewPolicy, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ViewPolicy
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ViewPolicy
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewpoliciesAPIService.ViewpoliciesCreate")
@@ -419,9 +418,9 @@ func (a *ViewpoliciesAPIService) ViewpoliciesCreateExecute(r ViewpoliciesAPIView
 }
 
 type ViewpoliciesAPIViewpoliciesDeleteRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ViewpoliciesAPIService
-	id string
+	id         string
 }
 
 func (r ViewpoliciesAPIViewpoliciesDeleteRequest) Execute() (*http.Response, error) {
@@ -440,17 +439,17 @@ This endpoint deletes a view policy.
 func (a *ViewpoliciesAPIService) ViewpoliciesDelete(ctx context.Context, id string) ViewpoliciesAPIViewpoliciesDeleteRequest {
 	return ViewpoliciesAPIViewpoliciesDeleteRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *ViewpoliciesAPIService) ViewpoliciesDeleteExecute(r ViewpoliciesAPIViewpoliciesDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewpoliciesAPIService.ViewpoliciesDelete")
@@ -511,20 +510,20 @@ func (a *ViewpoliciesAPIService) ViewpoliciesDeleteExecute(r ViewpoliciesAPIView
 }
 
 type ViewpoliciesAPIViewpoliciesListRequest struct {
-	ctx context.Context
-	ApiService *ViewpoliciesAPIService
-	atimeFrequency *string
-	page *string
-	name *string
-	clusterName *string
-	clusterId *string
+	ctx                      context.Context
+	ApiService               *ViewpoliciesAPIService
+	atimeFrequency           *string
+	page                     *string
+	name                     *string
+	clusterName              *string
+	clusterId                *string
 	nfsReturnOpenPermissions *bool
-	smbFileMode *int32
-	smbDirectoryMode *int32
-	appleSid *bool
-	tenantId *int32
-	tenantNameIcontains *string
-	servesTenant *string
+	smbFileMode              *int32
+	smbDirectoryMode         *int32
+	appleSid                 *bool
+	tenantId                 *int32
+	tenantNameIcontains      *string
+	servesTenant             *string
 }
 
 // Filter by atime frequency.
@@ -611,7 +610,7 @@ This endpoint lists view policies.<p>By default, all view policies are returned.
 func (a *ViewpoliciesAPIService) ViewpoliciesList(ctx context.Context) ViewpoliciesAPIViewpoliciesListRequest {
 	return ViewpoliciesAPIViewpoliciesListRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -619,10 +618,10 @@ func (a *ViewpoliciesAPIService) ViewpoliciesList(ctx context.Context) Viewpolic
 //  @return []ViewPolicy
 func (a *ViewpoliciesAPIService) ViewpoliciesListExecute(r ViewpoliciesAPIViewpoliciesListRequest) ([]ViewPolicy, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []ViewPolicy
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []ViewPolicy
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewpoliciesAPIService.ViewpoliciesList")
@@ -727,9 +726,9 @@ func (a *ViewpoliciesAPIService) ViewpoliciesListExecute(r ViewpoliciesAPIViewpo
 }
 
 type ViewpoliciesAPIViewpoliciesPartialUpdateRequest struct {
-	ctx context.Context
-	ApiService *ViewpoliciesAPIService
-	id string
+	ctx                    context.Context
+	ApiService             *ViewpoliciesAPIService
+	id                     string
 	viewpolicyModifyParams *ViewpoliciesPartialUpdateRequest
 }
 
@@ -754,17 +753,17 @@ Modify a view policy.
 func (a *ViewpoliciesAPIService) ViewpoliciesPartialUpdate(ctx context.Context, id string) ViewpoliciesAPIViewpoliciesPartialUpdateRequest {
 	return ViewpoliciesAPIViewpoliciesPartialUpdateRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *ViewpoliciesAPIService) ViewpoliciesPartialUpdateExecute(r ViewpoliciesAPIViewpoliciesPartialUpdateRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPatch
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewpoliciesAPIService.ViewpoliciesPartialUpdate")
@@ -827,9 +826,9 @@ func (a *ViewpoliciesAPIService) ViewpoliciesPartialUpdateExecute(r Viewpolicies
 }
 
 type ViewpoliciesAPIViewpoliciesReadRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ViewpoliciesAPIService
-	id string
+	id         string
 }
 
 func (r ViewpoliciesAPIViewpoliciesReadRequest) Execute() (*ViewPolicy, *http.Response, error) {
@@ -848,8 +847,8 @@ This endpoint returns a specified view policy.
 func (a *ViewpoliciesAPIService) ViewpoliciesRead(ctx context.Context, id string) ViewpoliciesAPIViewpoliciesReadRequest {
 	return ViewpoliciesAPIViewpoliciesReadRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
@@ -857,10 +856,10 @@ func (a *ViewpoliciesAPIService) ViewpoliciesRead(ctx context.Context, id string
 //  @return ViewPolicy
 func (a *ViewpoliciesAPIService) ViewpoliciesReadExecute(r ViewpoliciesAPIViewpoliciesReadRequest) (*ViewPolicy, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ViewPolicy
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ViewPolicy
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewpoliciesAPIService.ViewpoliciesRead")

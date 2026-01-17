@@ -19,15 +19,14 @@ import (
 	"strings"
 )
 
-
 // TenantsAPIService TenantsAPI service
 type TenantsAPIService service
 
 type TenantsAPIGetRemoteTenantsRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *TenantsAPIService
-	name *string
-	targetId *string
+	name       *string
+	targetId   *string
 }
 
 // Filter remote tenants by name
@@ -57,7 +56,7 @@ Returns details of remote tenants.
 func (a *TenantsAPIService) GetRemoteTenants(ctx context.Context) TenantsAPIGetRemoteTenantsRequest {
 	return TenantsAPIGetRemoteTenantsRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -65,10 +64,10 @@ func (a *TenantsAPIService) GetRemoteTenants(ctx context.Context) TenantsAPIGetR
 //  @return []RemoteTenant
 func (a *TenantsAPIService) GetRemoteTenantsExecute(r TenantsAPIGetRemoteTenantsRequest) ([]RemoteTenant, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []RemoteTenant
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []RemoteTenant
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TenantsAPIService.GetRemoteTenants")
@@ -143,9 +142,9 @@ func (a *TenantsAPIService) GetRemoteTenantsExecute(r TenantsAPIGetRemoteTenants
 }
 
 type TenantsAPIGetTenantSameEncryptionGroupTenantsRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *TenantsAPIService
-	id int32
+	id         int32
 }
 
 func (r TenantsAPIGetTenantSameEncryptionGroupTenantsRequest) Execute() ([]string, *http.Response, error) {
@@ -164,8 +163,8 @@ Returns names of tenants with the same encryption group.
 func (a *TenantsAPIService) GetTenantSameEncryptionGroupTenants(ctx context.Context, id int32) TenantsAPIGetTenantSameEncryptionGroupTenantsRequest {
 	return TenantsAPIGetTenantSameEncryptionGroupTenantsRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
@@ -173,10 +172,10 @@ func (a *TenantsAPIService) GetTenantSameEncryptionGroupTenants(ctx context.Cont
 //  @return []string
 func (a *TenantsAPIService) GetTenantSameEncryptionGroupTenantsExecute(r TenantsAPIGetTenantSameEncryptionGroupTenantsRequest) ([]string, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []string
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []string
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TenantsAPIService.GetTenantSameEncryptionGroupTenants")
@@ -240,8 +239,8 @@ func (a *TenantsAPIService) GetTenantSameEncryptionGroupTenantsExecute(r Tenants
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -259,9 +258,9 @@ func (a *TenantsAPIService) GetTenantSameEncryptionGroupTenantsExecute(r Tenants
 }
 
 type TenantsAPIGetTenantVippoolIpRangesRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *TenantsAPIService
-	id int32
+	id         int32
 }
 
 func (r TenantsAPIGetTenantVippoolIpRangesRequest) Execute() (*VIPPoolIPRanges, *http.Response, error) {
@@ -280,8 +279,8 @@ Returns IP ranges of VIP Pools that can be used with the tenant.
 func (a *TenantsAPIService) GetTenantVippoolIpRanges(ctx context.Context, id int32) TenantsAPIGetTenantVippoolIpRangesRequest {
 	return TenantsAPIGetTenantVippoolIpRangesRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
@@ -289,10 +288,10 @@ func (a *TenantsAPIService) GetTenantVippoolIpRanges(ctx context.Context, id int
 //  @return VIPPoolIPRanges
 func (a *TenantsAPIService) GetTenantVippoolIpRangesExecute(r TenantsAPIGetTenantVippoolIpRangesRequest) (*VIPPoolIPRanges, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *VIPPoolIPRanges
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *VIPPoolIPRanges
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TenantsAPIService.GetTenantVippoolIpRanges")
@@ -365,9 +364,9 @@ func (a *TenantsAPIService) GetTenantVippoolIpRangesExecute(r TenantsAPIGetTenan
 }
 
 type TenantsAPIReinstateEncryptionGroupRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *TenantsAPIService
-	id int32
+	id         int32
 }
 
 func (r TenantsAPIReinstateEncryptionGroupRequest) Execute() (*http.Response, error) {
@@ -386,17 +385,17 @@ Reinstate tenant's encryption group.
 func (a *TenantsAPIService) ReinstateEncryptionGroup(ctx context.Context, id int32) TenantsAPIReinstateEncryptionGroupRequest {
 	return TenantsAPIReinstateEncryptionGroupRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *TenantsAPIService) ReinstateEncryptionGroupExecute(r TenantsAPIReinstateEncryptionGroupRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TenantsAPIService.ReinstateEncryptionGroup")
@@ -460,8 +459,8 @@ func (a *TenantsAPIService) ReinstateEncryptionGroupExecute(r TenantsAPIReinstat
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 503 {
@@ -471,8 +470,8 @@ func (a *TenantsAPIService) ReinstateEncryptionGroupExecute(r TenantsAPIReinstat
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -481,9 +480,9 @@ func (a *TenantsAPIService) ReinstateEncryptionGroupExecute(r TenantsAPIReinstat
 }
 
 type TenantsAPIRevokeEncryptionGroupRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *TenantsAPIService
-	id int32
+	id         int32
 }
 
 func (r TenantsAPIRevokeEncryptionGroupRequest) Execute() (*http.Response, error) {
@@ -502,17 +501,17 @@ Revoke tenant's encryption group.
 func (a *TenantsAPIService) RevokeEncryptionGroup(ctx context.Context, id int32) TenantsAPIRevokeEncryptionGroupRequest {
 	return TenantsAPIRevokeEncryptionGroupRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *TenantsAPIService) RevokeEncryptionGroupExecute(r TenantsAPIRevokeEncryptionGroupRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TenantsAPIService.RevokeEncryptionGroup")
@@ -576,8 +575,8 @@ func (a *TenantsAPIService) RevokeEncryptionGroupExecute(r TenantsAPIRevokeEncry
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 503 {
@@ -587,8 +586,8 @@ func (a *TenantsAPIService) RevokeEncryptionGroupExecute(r TenantsAPIRevokeEncry
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -597,9 +596,9 @@ func (a *TenantsAPIService) RevokeEncryptionGroupExecute(r TenantsAPIRevokeEncry
 }
 
 type TenantsAPIRotateEncryptionGroupKeyRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *TenantsAPIService
-	id int32
+	id         int32
 }
 
 func (r TenantsAPIRotateEncryptionGroupKeyRequest) Execute() (*http.Response, error) {
@@ -618,17 +617,17 @@ Rotate tenant's encryption group key.
 func (a *TenantsAPIService) RotateEncryptionGroupKey(ctx context.Context, id int32) TenantsAPIRotateEncryptionGroupKeyRequest {
 	return TenantsAPIRotateEncryptionGroupKeyRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *TenantsAPIService) RotateEncryptionGroupKeyExecute(r TenantsAPIRotateEncryptionGroupKeyRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPost
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TenantsAPIService.RotateEncryptionGroupKey")
@@ -692,8 +691,8 @@ func (a *TenantsAPIService) RotateEncryptionGroupKeyExecute(r TenantsAPIRotateEn
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 503 {
@@ -703,8 +702,8 @@ func (a *TenantsAPIService) RotateEncryptionGroupKeyExecute(r TenantsAPIRotateEn
 				newErr.error = err.Error()
 				return localVarHTTPResponse, newErr
 			}
-					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-					newErr.model = v
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -749,9 +748,9 @@ type TenantsClientIpRangesPatchRequest struct {
 }
 
 type TenantsAPITenantsClientIpRangesRequest struct {
-	ctx context.Context
-	ApiService *TenantsAPIService
-	id int32
+	ctx           context.Context
+	ApiService    *TenantsAPIService
+	id            int32
 	requestParams *TenantsClientIpRangesPatchRequest
 }
 
@@ -776,8 +775,8 @@ This endpoint presents the Tenants.
 func (a *TenantsAPIService) TenantsClientIpRanges(ctx context.Context, id int32) TenantsAPITenantsClientIpRangesRequest {
 	return TenantsAPITenantsClientIpRangesRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
@@ -785,10 +784,10 @@ func (a *TenantsAPIService) TenantsClientIpRanges(ctx context.Context, id int32)
 //  @return Tenant
 func (a *TenantsAPIService) TenantsClientIpRangesExecute(r TenantsAPITenantsClientIpRangesRequest) (*Tenant, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Tenant
+		localVarHTTPMethod  = http.MethodPatch
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Tenant
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TenantsAPIService.TenantsClientIpRanges")
@@ -863,8 +862,8 @@ func (a *TenantsAPIService) TenantsClientIpRangesExecute(r TenantsAPITenantsClie
 }
 
 type TenantsAPITenantsCreateRequest struct {
-	ctx context.Context
-	ApiService *TenantsAPIService
+	ctx                context.Context
+	ApiService         *TenantsAPIService
 	tenantCreateParams *TenantsCreateRequest
 }
 
@@ -886,7 +885,7 @@ TenantsCreate Create Tenant
 func (a *TenantsAPIService) TenantsCreate(ctx context.Context) TenantsAPITenantsCreateRequest {
 	return TenantsAPITenantsCreateRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -894,10 +893,10 @@ func (a *TenantsAPIService) TenantsCreate(ctx context.Context) TenantsAPITenants
 //  @return Tenant
 func (a *TenantsAPIService) TenantsCreateExecute(r TenantsAPITenantsCreateRequest) (*Tenant, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Tenant
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Tenant
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TenantsAPIService.TenantsCreate")
@@ -968,9 +967,9 @@ func (a *TenantsAPIService) TenantsCreateExecute(r TenantsAPITenantsCreateReques
 }
 
 type TenantsAPITenantsDeleteRequest struct {
-	ctx context.Context
-	ApiService *TenantsAPIService
-	id int32
+	ctx         context.Context
+	ApiService  *TenantsAPIService
+	id          int32
 	forceRemove *bool
 }
 
@@ -996,17 +995,17 @@ Deletes a specified tenant.
 func (a *TenantsAPIService) TenantsDelete(ctx context.Context, id int32) TenantsAPITenantsDeleteRequest {
 	return TenantsAPITenantsDeleteRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *TenantsAPIService) TenantsDeleteExecute(r TenantsAPITenantsDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TenantsAPIService.TenantsDelete")
@@ -1073,10 +1072,10 @@ func (a *TenantsAPIService) TenantsDeleteExecute(r TenantsAPITenantsDeleteReques
 }
 
 type TenantsAPITenantsIsOperationHealthyRequest struct {
-	ctx context.Context
-	ApiService *TenantsAPIService
-	id int32
-	operation *string
+	ctx                            context.Context
+	ApiService                     *TenantsAPIService
+	id                             int32
+	operation                      *string
 	tenantIsOperationHealthyParams *TenantsIsOperationHealthyRequest
 }
 
@@ -1106,8 +1105,8 @@ Returns warnings about the future state if operation is performed.
 func (a *TenantsAPIService) TenantsIsOperationHealthy(ctx context.Context, id int32) TenantsAPITenantsIsOperationHealthyRequest {
 	return TenantsAPITenantsIsOperationHealthyRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
@@ -1115,10 +1114,10 @@ func (a *TenantsAPIService) TenantsIsOperationHealthy(ctx context.Context, id in
 //  @return Warnings
 func (a *TenantsAPIService) TenantsIsOperationHealthyExecute(r TenantsAPITenantsIsOperationHealthyRequest) (*Warnings, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Warnings
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Warnings
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TenantsAPIService.TenantsIsOperationHealthy")
@@ -1196,11 +1195,12 @@ func (a *TenantsAPIService) TenantsIsOperationHealthyExecute(r TenantsAPITenants
 }
 
 type TenantsAPITenantsListRequest struct {
-	ctx context.Context
-	ApiService *TenantsAPIService
-	page *int32
-	pageSize *int32
+	ctx           context.Context
+	ApiService    *TenantsAPIService
+	page          *int32
+	pageSize      *int32
 	nameIcontains *string
+	name          *string
 }
 
 func (r TenantsAPITenantsListRequest) Page(page int32) TenantsAPITenantsListRequest {
@@ -1219,6 +1219,12 @@ func (r TenantsAPITenantsListRequest) NameIcontains(nameIcontains string) Tenant
 	return r
 }
 
+// Name to fetch
+func (r TenantsAPITenantsListRequest) Name(name string) TenantsAPITenantsListRequest {
+	r.name = &name
+	return r
+}
+
 func (r TenantsAPITenantsListRequest) Execute() ([]Tenant, *http.Response, error) {
 	return r.ApiService.TenantsListExecute(r)
 }
@@ -1234,7 +1240,7 @@ List tenants.
 func (a *TenantsAPIService) TenantsList(ctx context.Context) TenantsAPITenantsListRequest {
 	return TenantsAPITenantsListRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -1242,10 +1248,10 @@ func (a *TenantsAPIService) TenantsList(ctx context.Context) TenantsAPITenantsLi
 //  @return []Tenant
 func (a *TenantsAPIService) TenantsListExecute(r TenantsAPITenantsListRequest) ([]Tenant, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []Tenant
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []Tenant
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TenantsAPIService.TenantsList")
@@ -1267,6 +1273,9 @@ func (a *TenantsAPIService) TenantsListExecute(r TenantsAPITenantsListRequest) (
 	}
 	if r.nameIcontains != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "name__icontains", r.nameIcontains, "")
+	}
+	if r.name != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name", r.name, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1323,9 +1332,9 @@ func (a *TenantsAPIService) TenantsListExecute(r TenantsAPITenantsListRequest) (
 }
 
 type TenantsAPITenantsPartialUpdateRequest struct {
-	ctx context.Context
-	ApiService *TenantsAPIService
-	id int32
+	ctx                context.Context
+	ApiService         *TenantsAPIService
+	id                 int32
 	tenantModifyParams *TenantsPartialUpdateRequest
 }
 
@@ -1350,8 +1359,8 @@ Modifies a specified tenant.
 func (a *TenantsAPIService) TenantsPartialUpdate(ctx context.Context, id int32) TenantsAPITenantsPartialUpdateRequest {
 	return TenantsAPITenantsPartialUpdateRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
@@ -1359,10 +1368,10 @@ func (a *TenantsAPIService) TenantsPartialUpdate(ctx context.Context, id int32) 
 //  @return Tenant
 func (a *TenantsAPIService) TenantsPartialUpdateExecute(r TenantsAPITenantsPartialUpdateRequest) (*Tenant, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Tenant
+		localVarHTTPMethod  = http.MethodPatch
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Tenant
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TenantsAPIService.TenantsPartialUpdate")
@@ -1437,9 +1446,9 @@ func (a *TenantsAPIService) TenantsPartialUpdateExecute(r TenantsAPITenantsParti
 }
 
 type TenantsAPITenantsReadRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *TenantsAPIService
-	id int32
+	id         int32
 }
 
 func (r TenantsAPITenantsReadRequest) Execute() (*Tenant, *http.Response, error) {
@@ -1458,8 +1467,8 @@ Returns details of a specified tenant.
 func (a *TenantsAPIService) TenantsRead(ctx context.Context, id int32) TenantsAPITenantsReadRequest {
 	return TenantsAPITenantsReadRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
@@ -1467,10 +1476,10 @@ func (a *TenantsAPIService) TenantsRead(ctx context.Context, id int32) TenantsAP
 //  @return Tenant
 func (a *TenantsAPIService) TenantsReadExecute(r TenantsAPITenantsReadRequest) (*Tenant, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *Tenant
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *Tenant
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TenantsAPIService.TenantsRead")

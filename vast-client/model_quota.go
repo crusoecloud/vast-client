@@ -40,7 +40,7 @@ type Quota struct {
 	// Grace period expiration time
 	TimeToBlock *string `json:"time_to_block,omitempty"`
 	// Soft quota limit
-	SoftLimit *int32 `json:"soft_limit,omitempty"`
+	SoftLimit *int64 `json:"soft_limit,omitempty"`
 	// Hard quota limit
 	HardLimit *int64 `json:"hard_limit,omitempty"`
 	// Hard inodes quota limit

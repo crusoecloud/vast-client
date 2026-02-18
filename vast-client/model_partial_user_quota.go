@@ -21,7 +21,7 @@ var _ MappedNullable = &PartialUserQuota{}
 type PartialUserQuota struct {
 	QuotaSystemId *int32 `json:"quota_system_id,omitempty"`
 	// Soft quota limit
-	SoftLimit *int64 `json:"soft_limit,omitempty"`
+	SoftLimit *int32 `json:"soft_limit,omitempty"`
 	// Hard quota limit
 	HardLimit *int32 `json:"hard_limit,omitempty"`
 	// Hard inodes quota limit

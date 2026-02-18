@@ -26,7 +26,7 @@ type QuotasCreateRequest struct {
 	// Quota enforcement grace period. An alarm is triggered and write operations are blocked if storage usage continues to exceed the soft limit for the grace period. Format: [DD] [HH:[MM:]]ss
 	GracePeriod *string `json:"grace_period,omitempty"`
 	// Storage usage limit at which warnings of exceeding the quota are issued.
-	SoftLimit *int64 `json:"soft_limit,omitempty"`
+	SoftLimit *int32 `json:"soft_limit,omitempty"`
 	// Storage usage limit beyond which no writes will be allowed.
 	HardLimit *int64 `json:"hard_limit,omitempty"`
 	// Number of directories and unique files under the path beyond which no writes will be allowed. A file with multiple hardlinks is counted only once.

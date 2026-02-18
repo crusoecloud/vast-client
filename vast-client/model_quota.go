@@ -524,9 +524,9 @@ func (o *Quota) SetTimeToBlock(v string) {
 }
 
 // GetSoftLimit returns the SoftLimit field value if set, zero value otherwise.
-func (o *Quota) GetSoftLimit() int32 {
+func (o *Quota) GetSoftLimit() int64 {
 	if o == nil || IsNil(o.SoftLimit) {
-		var ret int32
+		var ret int64
 		return ret
 	}
 	return *o.SoftLimit
@@ -534,7 +534,7 @@ func (o *Quota) GetSoftLimit() int32 {
 
 // GetSoftLimitOk returns a tuple with the SoftLimit field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Quota) GetSoftLimitOk() (*int32, bool) {
+func (o *Quota) GetSoftLimitOk() (*int64, bool) {
 	if o == nil || IsNil(o.SoftLimit) {
 		return nil, false
 	}
@@ -551,7 +551,7 @@ func (o *Quota) HasSoftLimit() bool {
 }
 
 // SetSoftLimit gets a reference to the given int32 and assigns it to the SoftLimit field.
-func (o *Quota) SetSoftLimit(v int32) {
+func (o *Quota) SetSoftLimit(v int64) {
 	o.SoftLimit = &v
 }
 

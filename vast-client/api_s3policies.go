@@ -19,13 +19,12 @@ import (
 	"strings"
 )
 
-
 // S3policiesAPIService S3policiesAPI service
 type S3policiesAPIService service
 
 type S3policiesAPIS3policiesCreateRequest struct {
-	ctx context.Context
-	ApiService *S3policiesAPIService
+	ctx                  context.Context
+	ApiService           *S3policiesAPIService
 	s3PolicyCreateParams *S3policiesCreateRequest
 }
 
@@ -47,7 +46,7 @@ S3policiesCreate Create S3 policy
 func (a *S3policiesAPIService) S3policiesCreate(ctx context.Context) S3policiesAPIS3policiesCreateRequest {
 	return S3policiesAPIS3policiesCreateRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -55,10 +54,10 @@ func (a *S3policiesAPIService) S3policiesCreate(ctx context.Context) S3policiesA
 //  @return S3Policy
 func (a *S3policiesAPIService) S3policiesCreateExecute(r S3policiesAPIS3policiesCreateRequest) (*S3Policy, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *S3Policy
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *S3Policy
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "S3policiesAPIService.S3policiesCreate")
@@ -129,9 +128,9 @@ func (a *S3policiesAPIService) S3policiesCreateExecute(r S3policiesAPIS3policies
 }
 
 type S3policiesAPIS3policiesDeleteRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *S3policiesAPIService
-	id string
+	id         string
 }
 
 func (r S3policiesAPIS3policiesDeleteRequest) Execute() (*http.Response, error) {
@@ -150,17 +149,17 @@ This endpoint deletes a specified S3 policy
 func (a *S3policiesAPIService) S3policiesDelete(ctx context.Context, id string) S3policiesAPIS3policiesDeleteRequest {
 	return S3policiesAPIS3policiesDeleteRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *S3policiesAPIService) S3policiesDeleteExecute(r S3policiesAPIS3policiesDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "S3policiesAPIService.S3policiesDelete")
@@ -221,13 +220,19 @@ func (a *S3policiesAPIService) S3policiesDeleteExecute(r S3policiesAPIS3policies
 }
 
 type S3policiesAPIS3policiesListRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *S3policiesAPIService
-	page *string
+	page       *string
+	name       *string
 }
 
 func (r S3policiesAPIS3policiesListRequest) Page(page string) S3policiesAPIS3policiesListRequest {
 	r.page = &page
+	return r
+}
+
+func (r S3policiesAPIS3policiesListRequest) Name(name string) S3policiesAPIS3policiesListRequest {
+	r.name = &name
 	return r
 }
 
@@ -246,7 +251,7 @@ This endpoint is not yet implemented.
 func (a *S3policiesAPIService) S3policiesList(ctx context.Context) S3policiesAPIS3policiesListRequest {
 	return S3policiesAPIS3policiesListRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -254,10 +259,10 @@ func (a *S3policiesAPIService) S3policiesList(ctx context.Context) S3policiesAPI
 //  @return []S3Policy
 func (a *S3policiesAPIService) S3policiesListExecute(r S3policiesAPIS3policiesListRequest) ([]S3Policy, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []S3Policy
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []S3Policy
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "S3policiesAPIService.S3policiesList")
@@ -273,6 +278,9 @@ func (a *S3policiesAPIService) S3policiesListExecute(r S3policiesAPIS3policiesLi
 
 	if r.page != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "")
+	}
+	if r.name != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name", r.name, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -329,9 +337,9 @@ func (a *S3policiesAPIService) S3policiesListExecute(r S3policiesAPIS3policiesLi
 }
 
 type S3policiesAPIS3policiesPartialUpdateRequest struct {
-	ctx context.Context
-	ApiService *S3policiesAPIService
-	id string
+	ctx                  context.Context
+	ApiService           *S3policiesAPIService
+	id                   string
 	s3PolicyModifyParams *S3policiesPartialUpdateRequest
 }
 
@@ -356,17 +364,17 @@ Modify S3 policy
 func (a *S3policiesAPIService) S3policiesPartialUpdate(ctx context.Context, id string) S3policiesAPIS3policiesPartialUpdateRequest {
 	return S3policiesAPIS3policiesPartialUpdateRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *S3policiesAPIService) S3policiesPartialUpdateExecute(r S3policiesAPIS3policiesPartialUpdateRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPatch
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "S3policiesAPIService.S3policiesPartialUpdate")
@@ -429,9 +437,9 @@ func (a *S3policiesAPIService) S3policiesPartialUpdateExecute(r S3policiesAPIS3p
 }
 
 type S3policiesAPIS3policiesReadRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *S3policiesAPIService
-	id string
+	id         string
 }
 
 func (r S3policiesAPIS3policiesReadRequest) Execute() (*S3Policy, *http.Response, error) {
@@ -450,8 +458,8 @@ get S3 policy
 func (a *S3policiesAPIService) S3policiesRead(ctx context.Context, id string) S3policiesAPIS3policiesReadRequest {
 	return S3policiesAPIS3policiesReadRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
@@ -459,10 +467,10 @@ func (a *S3policiesAPIService) S3policiesRead(ctx context.Context, id string) S3
 //  @return S3Policy
 func (a *S3policiesAPIService) S3policiesReadExecute(r S3policiesAPIS3policiesReadRequest) (*S3Policy, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *S3Policy
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *S3Policy
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "S3policiesAPIService.S3policiesRead")

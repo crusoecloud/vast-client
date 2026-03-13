@@ -19,14 +19,13 @@ import (
 	"strings"
 )
 
-
 // ViewsAPIService ViewsAPI service
 type ViewsAPIService service
 
 type ViewsAPICheckPermissionsTemplatesRequest struct {
-	ctx context.Context
-	ApiService *ViewsAPIService
-	id string
+	ctx                                  context.Context
+	ApiService                           *ViewsAPIService
+	id                                   string
 	viewsCheckPermissionsTemplatesParams *CheckPermissionsTemplatesRequest
 }
 
@@ -51,8 +50,8 @@ This endpoint checks provided dir and file template for bulk permission update.
 func (a *ViewsAPIService) CheckPermissionsTemplates(ctx context.Context, id string) ViewsAPICheckPermissionsTemplatesRequest {
 	return ViewsAPICheckPermissionsTemplatesRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
@@ -60,10 +59,10 @@ func (a *ViewsAPIService) CheckPermissionsTemplates(ctx context.Context, id stri
 //  @return ViewsCheckPermissionsTemplatesResponse
 func (a *ViewsAPIService) CheckPermissionsTemplatesExecute(r ViewsAPICheckPermissionsTemplatesRequest) (*ViewsCheckPermissionsTemplatesResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *ViewsCheckPermissionsTemplatesResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ViewsCheckPermissionsTemplatesResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewsAPIService.CheckPermissionsTemplates")
@@ -135,12 +134,12 @@ func (a *ViewsAPIService) CheckPermissionsTemplatesExecute(r ViewsAPICheckPermis
 }
 
 type ViewsAPICloseSmbHandleRequest struct {
-	ctx context.Context
-	ApiService *ViewsAPIService
-	filePath *string
-	sessionId *string
+	ctx                   context.Context
+	ApiService            *ViewsAPIService
+	filePath              *string
+	sessionId             *string
 	sessionHandleUniqueId *string
-	tenantGuid *string
+	tenantGuid            *string
 }
 
 // File path
@@ -182,7 +181,7 @@ This endpoint closes open smb filehandles.
 func (a *ViewsAPIService) CloseSmbHandle(ctx context.Context) ViewsAPICloseSmbHandleRequest {
 	return ViewsAPICloseSmbHandleRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -190,10 +189,10 @@ func (a *ViewsAPIService) CloseSmbHandle(ctx context.Context) ViewsAPICloseSmbHa
 //  @return map[string]interface{}
 func (a *ViewsAPIService) CloseSmbHandleExecute(r ViewsAPICloseSmbHandleRequest) (map[string]interface{}, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  map[string]interface{}
+		localVarHTTPMethod  = http.MethodDelete
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewsAPIService.CloseSmbHandle")
@@ -277,9 +276,9 @@ func (a *ViewsAPIService) CloseSmbHandleExecute(r ViewsAPICloseSmbHandleRequest)
 }
 
 type ViewsAPIListOpenSmbHandlesRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ViewsAPIService
-	filePath *string
+	filePath   *string
 	tenantGuid *string
 }
 
@@ -310,7 +309,7 @@ This endpoint queries open smb filehandles.
 func (a *ViewsAPIService) ListOpenSmbHandles(ctx context.Context) ViewsAPIListOpenSmbHandlesRequest {
 	return ViewsAPIListOpenSmbHandlesRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -318,10 +317,10 @@ func (a *ViewsAPIService) ListOpenSmbHandles(ctx context.Context) ViewsAPIListOp
 //  @return map[string]interface{}
 func (a *ViewsAPIService) ListOpenSmbHandlesExecute(r ViewsAPIListOpenSmbHandlesRequest) (map[string]interface{}, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  map[string]interface{}
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewsAPIService.ListOpenSmbHandles")
@@ -397,9 +396,9 @@ func (a *ViewsAPIService) ListOpenSmbHandlesExecute(r ViewsAPIListOpenSmbHandles
 }
 
 type ViewsAPIListSeamlessPeersRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ViewsAPIService
-	filePath *string
+	filePath   *string
 	tenantGuid *string
 }
 
@@ -430,7 +429,7 @@ This endpoint lists available seamless peers
 func (a *ViewsAPIService) ListSeamlessPeers(ctx context.Context) ViewsAPIListSeamlessPeersRequest {
 	return ViewsAPIListSeamlessPeersRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -438,10 +437,10 @@ func (a *ViewsAPIService) ListSeamlessPeers(ctx context.Context) ViewsAPIListSea
 //  @return []SeamlessPeer
 func (a *ViewsAPIService) ListSeamlessPeersExecute(r ViewsAPIListSeamlessPeersRequest) ([]SeamlessPeer, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []SeamlessPeer
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []SeamlessPeer
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewsAPIService.ListSeamlessPeers")
@@ -518,9 +517,9 @@ func (a *ViewsAPIService) ListSeamlessPeersExecute(r ViewsAPIListSeamlessPeersRe
 }
 
 type ViewsAPIStartPermissionsRepairRequest struct {
-	ctx context.Context
-	ApiService *ViewsAPIService
-	id string
+	ctx                     context.Context
+	ApiService              *ViewsAPIService
+	id                      string
 	permissionsRepairParams *StartPermissionsRepairRequest
 }
 
@@ -545,8 +544,8 @@ This endpoint starts bulk permission update.
 func (a *ViewsAPIService) StartPermissionsRepair(ctx context.Context, id string) ViewsAPIStartPermissionsRepairRequest {
 	return ViewsAPIStartPermissionsRepairRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
@@ -554,10 +553,10 @@ func (a *ViewsAPIService) StartPermissionsRepair(ctx context.Context, id string)
 //  @return AsyncTaskInResponse
 func (a *ViewsAPIService) StartPermissionsRepairExecute(r ViewsAPIStartPermissionsRepairRequest) (*AsyncTaskInResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *AsyncTaskInResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *AsyncTaskInResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewsAPIService.StartPermissionsRepair")
@@ -629,9 +628,9 @@ func (a *ViewsAPIService) StartPermissionsRepairExecute(r ViewsAPIStartPermissio
 }
 
 type ViewsAPIStopPermissionsRepairRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ViewsAPIService
-	id string
+	id         string
 }
 
 func (r ViewsAPIStopPermissionsRepairRequest) Execute() (*http.Response, error) {
@@ -650,17 +649,17 @@ This endpoint stops bulk permission update.
 func (a *ViewsAPIService) StopPermissionsRepair(ctx context.Context, id string) ViewsAPIStopPermissionsRepairRequest {
 	return ViewsAPIStopPermissionsRepairRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *ViewsAPIService) StopPermissionsRepairExecute(r ViewsAPIStopPermissionsRepairRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewsAPIService.StopPermissionsRepair")
@@ -721,8 +720,8 @@ func (a *ViewsAPIService) StopPermissionsRepairExecute(r ViewsAPIStopPermissions
 }
 
 type ViewsAPIViewsCreateRequest struct {
-	ctx context.Context
-	ApiService *ViewsAPIService
+	ctx              context.Context
+	ApiService       *ViewsAPIService
 	viewCreateParams *ViewsCreateRequest
 }
 
@@ -746,7 +745,7 @@ This endpoint creates a view.
 func (a *ViewsAPIService) ViewsCreate(ctx context.Context) ViewsAPIViewsCreateRequest {
 	return ViewsAPIViewsCreateRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -754,10 +753,10 @@ func (a *ViewsAPIService) ViewsCreate(ctx context.Context) ViewsAPIViewsCreateRe
 //  @return View
 func (a *ViewsAPIService) ViewsCreateExecute(r ViewsAPIViewsCreateRequest) (*View, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *View
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *View
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewsAPIService.ViewsCreate")
@@ -828,9 +827,9 @@ func (a *ViewsAPIService) ViewsCreateExecute(r ViewsAPIViewsCreateRequest) (*Vie
 }
 
 type ViewsAPIViewsDeleteRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ViewsAPIService
-	id string
+	id         string
 }
 
 func (r ViewsAPIViewsDeleteRequest) Execute() (*http.Response, error) {
@@ -849,17 +848,17 @@ This endpoint deletes a view.
 func (a *ViewsAPIService) ViewsDelete(ctx context.Context, id string) ViewsAPIViewsDeleteRequest {
 	return ViewsAPIViewsDeleteRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *ViewsAPIService) ViewsDeleteExecute(r ViewsAPIViewsDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewsAPIService.ViewsDelete")
@@ -920,20 +919,21 @@ func (a *ViewsAPIService) ViewsDeleteExecute(r ViewsAPIViewsDeleteRequest) (*htt
 }
 
 type ViewsAPIViewsListRequest struct {
-	ctx context.Context
-	ApiService *ViewsAPIService
-	page *int32
-	pageSize *int32
-	name *string
-	path *string
-	alias *string
-	bucket *string
-	share *string
-	policyName *string
-	policyId *string
-	clusterName *string
-	clusterId *string
-	tenantId *int32
+	ctx                 context.Context
+	ApiService          *ViewsAPIService
+	page                *int32
+	pageSize            *int32
+	name                *string
+	path                *string
+	alias               *string
+	bucket              *string
+	bucketOwner         *string
+	share               *string
+	policyName          *string
+	policyId            *string
+	clusterName         *string
+	clusterId           *string
+	tenantId            *int32
 	tenantNameIcontains *string
 }
 
@@ -967,6 +967,11 @@ func (r ViewsAPIViewsListRequest) Alias(alias string) ViewsAPIViewsListRequest {
 
 func (r ViewsAPIViewsListRequest) Bucket(bucket string) ViewsAPIViewsListRequest {
 	r.bucket = &bucket
+	return r
+}
+
+func (r ViewsAPIViewsListRequest) BucketOwner(bucketOwner string) ViewsAPIViewsListRequest {
+	r.bucketOwner = &bucketOwner
 	return r
 }
 
@@ -1025,7 +1030,7 @@ This endpoint lists views, with optional filtering
 func (a *ViewsAPIService) ViewsList(ctx context.Context) ViewsAPIViewsListRequest {
 	return ViewsAPIViewsListRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -1033,10 +1038,10 @@ func (a *ViewsAPIService) ViewsList(ctx context.Context) ViewsAPIViewsListReques
 //  @return []View
 func (a *ViewsAPIService) ViewsListExecute(r ViewsAPIViewsListRequest) ([]View, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []View
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []View
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewsAPIService.ViewsList")
@@ -1067,6 +1072,9 @@ func (a *ViewsAPIService) ViewsListExecute(r ViewsAPIViewsListRequest) ([]View, 
 	}
 	if r.bucket != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "bucket", r.bucket, "")
+	}
+	if r.bucketOwner != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "bucket_owner", r.bucketOwner, "")
 	}
 	if r.share != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "share", r.share, "")
@@ -1144,9 +1152,9 @@ func (a *ViewsAPIService) ViewsListExecute(r ViewsAPIViewsListRequest) ([]View, 
 }
 
 type ViewsAPIViewsPartialUpdateRequest struct {
-	ctx context.Context
-	ApiService *ViewsAPIService
-	id string
+	ctx              context.Context
+	ApiService       *ViewsAPIService
+	id               string
 	viewModifyParams *ViewsPartialUpdateRequest
 }
 
@@ -1171,17 +1179,17 @@ This endpoint modifies a view.
 func (a *ViewsAPIService) ViewsPartialUpdate(ctx context.Context, id string) ViewsAPIViewsPartialUpdateRequest {
 	return ViewsAPIViewsPartialUpdateRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *ViewsAPIService) ViewsPartialUpdateExecute(r ViewsAPIViewsPartialUpdateRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPatch
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewsAPIService.ViewsPartialUpdate")
@@ -1244,9 +1252,9 @@ func (a *ViewsAPIService) ViewsPartialUpdateExecute(r ViewsAPIViewsPartialUpdate
 }
 
 type ViewsAPIViewsReadRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ViewsAPIService
-	id string
+	id         string
 }
 
 func (r ViewsAPIViewsReadRequest) Execute() (*View, *http.Response, error) {
@@ -1265,8 +1273,8 @@ This endpoint returns details of a view.
 func (a *ViewsAPIService) ViewsRead(ctx context.Context, id string) ViewsAPIViewsReadRequest {
 	return ViewsAPIViewsReadRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
@@ -1274,10 +1282,10 @@ func (a *ViewsAPIService) ViewsRead(ctx context.Context, id string) ViewsAPIView
 //  @return View
 func (a *ViewsAPIService) ViewsReadExecute(r ViewsAPIViewsReadRequest) (*View, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *View
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *View
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewsAPIService.ViewsRead")
@@ -1347,10 +1355,10 @@ func (a *ViewsAPIService) ViewsReadExecute(r ViewsAPIViewsReadRequest) (*View, *
 }
 
 type ViewsAPIViewsUpdateRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *ViewsAPIService
-	id string
-	data *ViewsUpdateRequest
+	id         string
+	data       *ViewsUpdateRequest
 }
 
 func (r ViewsAPIViewsUpdateRequest) Data(data ViewsUpdateRequest) ViewsAPIViewsUpdateRequest {
@@ -1374,17 +1382,17 @@ This endpoint modifies a view.
 func (a *ViewsAPIService) ViewsUpdate(ctx context.Context, id string) ViewsAPIViewsUpdateRequest {
 	return ViewsAPIViewsUpdateRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *ViewsAPIService) ViewsUpdateExecute(r ViewsAPIViewsUpdateRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPut
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodPut
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ViewsAPIService.ViewsUpdate")

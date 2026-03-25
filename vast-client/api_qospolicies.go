@@ -19,13 +19,12 @@ import (
 	"strings"
 )
 
-
 // QospoliciesAPIService QospoliciesAPI service
 type QospoliciesAPIService service
 
 type QospoliciesAPIQospoliciesCreateRequest struct {
-	ctx context.Context
-	ApiService *QospoliciesAPIService
+	ctx                   context.Context
+	ApiService            *QospoliciesAPIService
 	qOSPolicyCreateParams *QospoliciesCreateRequest
 }
 
@@ -47,7 +46,7 @@ QospoliciesCreate Create QoS Policy
 func (a *QospoliciesAPIService) QospoliciesCreate(ctx context.Context) QospoliciesAPIQospoliciesCreateRequest {
 	return QospoliciesAPIQospoliciesCreateRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -55,10 +54,10 @@ func (a *QospoliciesAPIService) QospoliciesCreate(ctx context.Context) Qospolici
 //  @return QOSPolicy
 func (a *QospoliciesAPIService) QospoliciesCreateExecute(r QospoliciesAPIQospoliciesCreateRequest) (*QOSPolicy, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *QOSPolicy
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *QOSPolicy
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "QospoliciesAPIService.QospoliciesCreate")
@@ -129,9 +128,9 @@ func (a *QospoliciesAPIService) QospoliciesCreateExecute(r QospoliciesAPIQospoli
 }
 
 type QospoliciesAPIQospoliciesDeleteRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *QospoliciesAPIService
-	id int32
+	id         int32
 }
 
 func (r QospoliciesAPIQospoliciesDeleteRequest) Execute() (*http.Response, error) {
@@ -150,17 +149,17 @@ Deletes a specified QoS Policy.
 func (a *QospoliciesAPIService) QospoliciesDelete(ctx context.Context, id int32) QospoliciesAPIQospoliciesDeleteRequest {
 	return QospoliciesAPIQospoliciesDeleteRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
 // Execute executes the request
 func (a *QospoliciesAPIService) QospoliciesDeleteExecute(r QospoliciesAPIQospoliciesDeleteRequest) (*http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
+		localVarHTTPMethod = http.MethodDelete
+		localVarPostBody   interface{}
+		formFiles          []formFile
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "QospoliciesAPIService.QospoliciesDelete")
@@ -224,10 +223,11 @@ func (a *QospoliciesAPIService) QospoliciesDeleteExecute(r QospoliciesAPIQospoli
 }
 
 type QospoliciesAPIQospoliciesListRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *QospoliciesAPIService
-	page *int32
-	pageSize *int32
+	page       *int32
+	pageSize   *int32
+	name       *string
 }
 
 func (r QospoliciesAPIQospoliciesListRequest) Page(page int32) QospoliciesAPIQospoliciesListRequest {
@@ -237,6 +237,11 @@ func (r QospoliciesAPIQospoliciesListRequest) Page(page int32) QospoliciesAPIQos
 
 func (r QospoliciesAPIQospoliciesListRequest) PageSize(pageSize int32) QospoliciesAPIQospoliciesListRequest {
 	r.pageSize = &pageSize
+	return r
+}
+
+func (r QospoliciesAPIQospoliciesListRequest) Name(name string) QospoliciesAPIQospoliciesListRequest {
+	r.name = &name
 	return r
 }
 
@@ -253,7 +258,7 @@ QospoliciesList List QoS Policies
 func (a *QospoliciesAPIService) QospoliciesList(ctx context.Context) QospoliciesAPIQospoliciesListRequest {
 	return QospoliciesAPIQospoliciesListRequest{
 		ApiService: a,
-		ctx: ctx,
+		ctx:        ctx,
 	}
 }
 
@@ -261,10 +266,10 @@ func (a *QospoliciesAPIService) QospoliciesList(ctx context.Context) Qospolicies
 //  @return []QOSPolicy
 func (a *QospoliciesAPIService) QospoliciesListExecute(r QospoliciesAPIQospoliciesListRequest) ([]QOSPolicy, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  []QOSPolicy
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue []QOSPolicy
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "QospoliciesAPIService.QospoliciesList")
@@ -283,6 +288,9 @@ func (a *QospoliciesAPIService) QospoliciesListExecute(r QospoliciesAPIQospolici
 	}
 	if r.pageSize != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "page_size", r.pageSize, "")
+	}
+	if r.name != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name", r.name, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -339,9 +347,9 @@ func (a *QospoliciesAPIService) QospoliciesListExecute(r QospoliciesAPIQospolici
 }
 
 type QospoliciesAPIQospoliciesPartialUpdateRequest struct {
-	ctx context.Context
-	ApiService *QospoliciesAPIService
-	id int32
+	ctx                   context.Context
+	ApiService            *QospoliciesAPIService
+	id                    int32
 	qOSPolicyModifyParams *QospoliciesPartialUpdateRequest
 }
 
@@ -366,8 +374,8 @@ Modifies a specified QoS Policy.
 func (a *QospoliciesAPIService) QospoliciesPartialUpdate(ctx context.Context, id int32) QospoliciesAPIQospoliciesPartialUpdateRequest {
 	return QospoliciesAPIQospoliciesPartialUpdateRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
@@ -375,10 +383,10 @@ func (a *QospoliciesAPIService) QospoliciesPartialUpdate(ctx context.Context, id
 //  @return QOSPolicy
 func (a *QospoliciesAPIService) QospoliciesPartialUpdateExecute(r QospoliciesAPIQospoliciesPartialUpdateRequest) (*QOSPolicy, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPatch
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *QOSPolicy
+		localVarHTTPMethod  = http.MethodPatch
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *QOSPolicy
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "QospoliciesAPIService.QospoliciesPartialUpdate")
@@ -453,9 +461,9 @@ func (a *QospoliciesAPIService) QospoliciesPartialUpdateExecute(r QospoliciesAPI
 }
 
 type QospoliciesAPIQospoliciesReadRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *QospoliciesAPIService
-	id int32
+	id         int32
 }
 
 func (r QospoliciesAPIQospoliciesReadRequest) Execute() (*QOSPolicy, *http.Response, error) {
@@ -472,8 +480,8 @@ QospoliciesRead Return Details of QoS Policy
 func (a *QospoliciesAPIService) QospoliciesRead(ctx context.Context, id int32) QospoliciesAPIQospoliciesReadRequest {
 	return QospoliciesAPIQospoliciesReadRequest{
 		ApiService: a,
-		ctx: ctx,
-		id: id,
+		ctx:        ctx,
+		id:         id,
 	}
 }
 
@@ -481,10 +489,10 @@ func (a *QospoliciesAPIService) QospoliciesRead(ctx context.Context, id int32) Q
 //  @return QOSPolicy
 func (a *QospoliciesAPIService) QospoliciesReadExecute(r QospoliciesAPIQospoliciesReadRequest) (*QOSPolicy, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *QOSPolicy
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *QOSPolicy
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "QospoliciesAPIService.QospoliciesRead")
